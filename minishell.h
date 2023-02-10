@@ -21,6 +21,10 @@ typedef struct	s_data
 //frees.c
 void    exit_function(t_data *data, char *error_message, int error);
 
+//signals.c
+void	ctrl_c(int sig);
+void	ctrl_d(int sig);
+
 //terminal.c
 void	terminal_loop(t_data *data);
 void	get_prompt(t_data *data);
