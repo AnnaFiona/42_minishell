@@ -3,15 +3,12 @@
 
 void	terminal_loop(t_data *data)
 {
-	signal(SIGINT, SIG_IGN);
-	signal(SIGINT, ctrl_c);
-	/* signal(SIGQUIT, SIG_IGN);
-	signal(SIGQUIT, ctrl_d); */
-
-	ft_printf("köfdhg");
 	while (1)
 	{
 		data->line = readline(data->prompt);
+		split_line(data, data->line);
+		free_double_array(data->args);
+		data->args = NULL;
 	}
 	return ;
 }

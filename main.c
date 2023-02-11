@@ -3,6 +3,7 @@
 
 static void	initialize_data(t_data *data)
 {
+	data->args = NULL;
 	data->prompt = NULL;
 	data->line = NULL;
 	return ;

@@ -13,17 +13,22 @@
 
 typedef struct	s_data
 {
+	char	**args;
 	char	*prompt;
 	char	*line;
 }	t_data;
 
-
 //frees.c
+void	free_double_array(char **arrarr);
+void	free_data(t_data *data);
 void    exit_function(t_data *data, char *error_message, int error);
 
 //signals.c
 void	ctrl_c(int sig);
 void	ctrl_d(int sig);
+
+//split_input.c
+void	split_line(t_data *data, char *input);
 
 //terminal.c
 void	terminal_loop(t_data *data);
