@@ -22,10 +22,10 @@ typedef struct	s_data
 void	free_double_array(char **arrarr);
 void	free_data(t_data *data);
 void    exit_function(t_data *data, char *error_message, int error);
+void	ctrl_d_exit(t_data *data);
 
 //signals.c
-void	ctrl_c(int sig);
-void	ctrl_d(int sig);
+void	sig_controler(int status);
 
 //split_input.c
 void	split_line(t_data *data, char *input);

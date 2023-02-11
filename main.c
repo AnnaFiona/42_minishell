@@ -9,9 +9,9 @@ static void	initialize_data(t_data *data)
 	return ;
 }
 
-int	main()
+int	main(void)
 {
-	t_data	*data;
+	t_data *data;
 
 	data = malloc(sizeof(t_data));
 	initialize_data(data);

@@ -1,16 +1,29 @@
 
 #include "minishell.h"
 
-void	ctrl_c(int sig)
+void	str_c(int sig)
 {
-	if(sig != SIGINT)
-		return ;
-	exit(0);
+	(void)sig;
+	write(1, "\n", 1);
+	rl_replace_line("", 1);
+	rl_on_new_line();
+	rl_redisplay();
 	return ;
 }
 
-void	ctrl_d(int sig)
+//maybe we need more signals delete if not
+//chils should not use this signals
+void	sig_controler(int status)
 {
-	if(sig == SIGQUIT)
-		return;
+	if (status == 0)
+	{
+		signal(SIGINT, str_c);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (status == 1) // for child prozess, that the signals a default
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+	}
+	return ;
 }
