@@ -18,6 +18,10 @@ void	free_data(t_data *data)
 {
 	if (data->args != NULL)
 		free_double_array(data->args);
+	if (data->env != NULL)
+		free_double_array(data->env);
+	if (data->path != NULL)
+		free_double_array(data->path);
 	if (data->prompt != NULL)
 		free(data->prompt);
 	if (data->line != NULL)

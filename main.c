@@ -6,16 +6,21 @@ static void	initialize_data(t_data *data)
 	data->args = NULL;
 	data->prompt = NULL;
 	data->line = NULL;
+	data->path = NULL;
+	data->env = NULL;
 	return ;
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_data *data;
 
+	(void) argc;
+	(void) argv;
 	data = malloc(sizeof(t_data));
 	initialize_data(data);
 	get_prompt(data);
+	envp_to_path(data, envp);
 	terminal_loop(data);
 	exit_function(data, NULL, 0);
 	return (0);
