@@ -25,3 +25,17 @@ int	main(int argc, char **argv, char **envp)
 	exit_function(data, NULL, 0);
 	return (0);
 }
+
+void	print_double_array(char **arrarr)
+{
+	int	y;
+
+	y = 0;
+	if (arrarr == NULL)
+		return ;
+	while (arrarr[y])
+	{
+		ft_printf("%s\n", arrarr[y]);
+		y++;
+	}
+}

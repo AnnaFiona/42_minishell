@@ -6,6 +6,8 @@ void	free_double_array(char **arrarr)
 	int	y;
 
 	y = 0;
+	if (arrarr == NULL)
+		return ;
 	while (arrarr[y])
 	{
 		free(arrarr[y]);
@@ -18,10 +20,10 @@ void	free_data(t_data *data)
 {
 	if (data->args != NULL)
 		free_double_array(data->args);
-	if (data->env != NULL)
-		free_double_array(data->env);
 	if (data->path != NULL)
 		free_double_array(data->path);
+	if (data->env != NULL)
+		free_double_array(data->env);
 	if (data->prompt != NULL)
 		free(data->prompt);
 	if (data->line != NULL)
@@ -33,9 +35,9 @@ void	free_data(t_data *data)
 
 void	exit_function(t_data *data, char *error_message, int error)
 {
-	free_data(data);
-	if (error != 0)
+	if (error_message != NULL)
 		ft_printf("%s", error_message);
+	free_data(data);
 	exit(error);
 	return ;
 }

@@ -11,6 +11,20 @@ void	str_c(int sig)
 	return ;
 }
 
+void	kill_child(int sig)
+{
+	(void)sig;
+	exit (0);
+	return ;
+}
+
+void	new_line(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	return ;
+}
+
 //maybe we need more signals delete if not
 //chils should not use this signals
 void	sig_controler(int status)
@@ -22,8 +36,13 @@ void	sig_controler(int status)
 	}
 	else if (status == 1) // for child prozess, that the signals a default
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, kill_child);
 		signal(SIGQUIT, SIG_DFL);
+	}
+	if (status == 2)
+	{
+		signal(SIGINT, new_line);
+		signal(SIGQUIT, SIG_IGN);
 	}
 	return ;
 }

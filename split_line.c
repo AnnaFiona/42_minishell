@@ -82,19 +82,6 @@ void	print_list(t_list *head)
 	}
 	return ;
 }
-
-void	print_double_array(char **arrarr)
-{
-	int	y;
-
-	y = 0;
-	while(arrarr[y] != NULL)
-	{
-		ft_printf("array: %s\n", arrarr[y]);
-		y++;
-	}
-	return ;
-}
 //////////////////////////////////////////////
 
 static void	put_list_in_double_array(t_data *data, t_list **head)
@@ -143,7 +130,7 @@ void	split_line(t_data *data, char *line)
 		x += len;
 	}
 	put_list_in_double_array(data, &head);
-	print_double_array(data->args);
+	//print_double_array(data->args);
 	free(line);
 	data->line = NULL;
 	return ;

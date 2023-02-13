@@ -8,6 +8,7 @@ char	*rl_with_history(char *line, char *prompt)
 		free(line);
 		line = (char *)NULL;
 	}
+	sig_controler(0);
 	line = readline(prompt);
 	if (line && *line)
 		add_history(line);
@@ -19,9 +20,11 @@ void	terminal_loop(t_data *data)
 	sig_controler(0);
 	while (1)
 	{
+
 		if (!(data->line = rl_with_history(data->line, data->prompt)))
 			ctrl_d_exit(data);
 		split_line(data, data->line);
+		redirect_children(data);
 		//change_dir(data);
 		free_double_array(data->args);
 		data->args = NULL;

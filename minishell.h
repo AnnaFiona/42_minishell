@@ -18,10 +18,20 @@ typedef struct	s_data
 	char	**env;
 	char	*prompt;
 	char	*line;
+	int		pipe_count;
 }	t_data;
 
 //change_dir.c
 void	change_dir(t_data *data);
+
+//children_utils.c
+void	count_pipes(t_data *data);
+char	*get_path(char	**paths, char *command);
+char	**get_commands(t_data *data, char **args, int y);
+void    wait_for_children(t_data *data);
+
+//children.c
+void	redirect_children(t_data *data);
 
 //envp_to_path.c
 void	envp_to_path(t_data *data, char **envp);
@@ -41,5 +51,8 @@ void	split_line(t_data *data, char *input);
 //terminal.c
 void	terminal_loop(t_data *data);
 void	get_prompt(t_data *data);
+
+//main.c
+void	print_double_array(char **arrarr);
 
 #endif
