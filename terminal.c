@@ -24,8 +24,8 @@ void	terminal_loop(t_data *data)
 		if (!(data->line = rl_with_history(data->line, data->prompt)))
 			ctrl_d_exit(data);
 		split_line(data, data->line);
-		redirect_children(data);
-		//change_dir(data);
+		if(builtins(data) == 1)
+			redirect_children(data);
 		free_double_array(data->args);
 		data->args = NULL;
 	}

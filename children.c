@@ -26,7 +26,7 @@ void	redirect_children(t_data *data)
 {
 	if (data->args == NULL)
 		return ;
-	count_pipes(data);
+	//count_pipes(data);
 	if (data->pipe_count == 0)
 		one_command(data);
 	sig_controler(2);

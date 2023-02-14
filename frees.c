@@ -30,6 +30,7 @@ void	free_data(t_data *data)
 		free(data->line);
 	if (data != NULL)
 		free(data);
+	clear_history();
 	return ;
 }
 

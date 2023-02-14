@@ -22,7 +22,7 @@ typedef struct	s_data
 }	t_data;
 
 //change_dir.c
-void	change_dir(t_data *data);
+int		builtins(t_data *data);
 
 //children_utils.c
 void	count_pipes(t_data *data);
