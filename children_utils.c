@@ -15,7 +15,7 @@ void	count_pipes(t_data *data)
 	return ;
 }
 
-char	*get_path(char	**paths, char *command)
+char	*get_path(char **paths, char *command)
 {
 	char	*path_with_command;
 	char	*temp_path;
@@ -35,38 +35,39 @@ char	*get_path(char	**paths, char *command)
 	return (NULL);
 }
 
-char	**get_commands(t_data *data, char **args, int y)
+char	**get_commands(t_data *data, char **args)
 {
 	char	**commands;
 	int		x;
 
 	x = 0;
 	commands = NULL;
-	while (args[y] && args[y][0] != '|')
+	while (args[data->args_y] && args[data->args_y][0] != '|')
 	{
+		data->args_y++;
 		x++;
-		y++;
 	}
-	y -= x;
+	data->args_y -= x;
 	commands = malloc(sizeof(char *) * (x + 1));
-	ft_printf("x: %d\n", x);
 	if (!commands)
 		exit_function(data, "Error: malloc failed at \"get_commands\" \
 		in \"children_utils.c\"", 1);
 	x = 0;
-	while (args[y] && args[y][0] != '|')
+	while (args[data->args_y] && args[data->args_y][0] != '|')
 	{
-		commands[x] = ft_strdup(args[y]);
+		commands[x] = ft_strdup(args[data->args_y]);
+		data->args_y++;
 		x++;
-		y++;
 	}
 	commands[x] = NULL;
-	print_double_array(commands);
+	if (args[data->args_y] != NULL && args[data->args_y][0] == '|')
+		data->args_y++;
 	return (commands);
 }
 
 void	wait_for_children(t_data *data)
 {
+	data->pipe_count++;
 	while (data->pipe_count > 0)
 	{
 		waitpid(-1, NULL, 0);

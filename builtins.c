@@ -28,6 +28,8 @@ void	ft_cd(t_data *data)
 
 int	builtins(t_data *data)
 {
+	if (data->args == NULL)
+		return (0);
 	count_pipes(data);
 	if (dubble_strchar(data->args, '|') || data->pipe_count > 0)
 		return (1);

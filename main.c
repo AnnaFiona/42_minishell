@@ -9,6 +9,7 @@ static void	initialize_data(t_data *data)
 	data->path = NULL;
 	data->env = NULL;
 	data->pipe_count = -1;
+	data->args_y = -1;
 	return ;
 }
 

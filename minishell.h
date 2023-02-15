@@ -19,6 +19,7 @@ typedef struct	s_data
 	char	*prompt;
 	char	*line;
 	int		pipe_count;
+	int		args_y;
 }	t_data;
 
 //change_dir.c
@@ -26,8 +27,8 @@ int		builtins(t_data *data);
 
 //children_utils.c
 void	count_pipes(t_data *data);
-char	*get_path(char	**paths, char *command);
-char	**get_commands(t_data *data, char **args, int y);
+char	*get_path(char **paths, char *command);
+char	**get_commands(t_data *data, char **args);
 void    wait_for_children(t_data *data);
 
 //children.c
