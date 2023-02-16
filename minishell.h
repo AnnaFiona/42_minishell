@@ -22,6 +22,15 @@ typedef struct	s_data
 	int		args_y;
 }	t_data;
 
+typedef struct	s_child
+{
+	char	**commands;
+	int		*pipe_fd;
+	int		count;
+	int		input_fd;
+	int		pid;
+}	t_child;
+
 //change_dir.c
 int		builtins(t_data *data);
 

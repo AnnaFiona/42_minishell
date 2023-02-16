@@ -1,6 +1,30 @@
 #include "minishell.h"
 
-void	child_process(t_data *data, char **commands, int input_fd, int output_fd)
+static void	initialize_child(t_child *kid)
+{
+	kid->commands = NULL;
+	kid->pipe_fd = malloc(sizeof(int) * 2);
+	kid->count = 0;
+	kid->input_fd = -1;
+	kid->pid = -1;
+	return ;
+}
+
+static void	close_pipes(t_data *data, t_child *kid)
+{
+	if (kid->count != 0)
+		close(kid->input_fd);
+	if (kid->count != data->pipe_count)
+		kid->input_fd = dup(kid->pipe_fd[0]);
+	if (kid->count != 0)
+		close(kid->pipe_fd[0]);
+	if (kid->count != data->pipe_count)
+		close(kid->pipe_fd[1]);
+	return ;
+}
+
+void	child_process(t_data *data, char **commands, int input_fd,
+		int output_fd)
 {
 	char	*path;
 
@@ -20,35 +44,29 @@ void	child_process(t_data *data, char **commands, int input_fd, int output_fd)
 
 void	make_child(t_data *data)
 {
-	char	**commands;
-	int		pipe_fd[2];
-	int		child_count;
-	int		input_fd;
-	int		pid;
+	t_child	*kid;
 
-	input_fd = -1;
-	child_count = 0;
-	commands = NULL;
-	while (child_count <= data->pipe_count)
+	kid = malloc(sizeof(t_child));
+	initialize_child(kid);
+	while (kid->count <= data->pipe_count)
 	{
-		if (child_count == data->pipe_count)
-			pipe_fd[1] = -1;
+		if (kid->count == data->pipe_count)
+			kid->pipe_fd[1] = -1;
 		else
-			pipe(pipe_fd);
-		commands = get_commands(data, data->args);
-		pid = fork();
-		if (pid == 0)
-			child_process(data, commands, input_fd, pipe_fd[1]);
-		free(commands);
-		commands = NULL;
-		if (child_count != 0)
-			close (input_fd);
-		input_fd = dup(pipe_fd[0]);
-		close(pipe_fd[0]);
-		close(pipe_fd[1]);
-		child_count++;
+			pipe(kid->pipe_fd);
+		kid->commands = get_commands(data, data->args);
+		kid->pid = fork();
+		if (kid->pid == 0)
+			child_process(data, kid->commands, kid->input_fd, kid->pipe_fd[1]);
+		free_double_array(kid->commands);
+		kid->commands = NULL;
+		close_pipes(data, kid);
+		kid->count++;
 	}
-	close (input_fd);
+	if (kid->input_fd != -1)
+		close(kid->input_fd);
+	free(kid->pipe_fd);
+	free(kid);
 	return ;
 }
 
