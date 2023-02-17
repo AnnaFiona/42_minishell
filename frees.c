@@ -28,6 +28,8 @@ void	free_data(t_data *data)
 		free(data->prompt);
 	if (data->line != NULL)
 		free(data->line);
+	if (data->env_list != NULL)
+		free_env_list(&data->env_list);
 	if (data != NULL)
 		free(data);
 	clear_history();

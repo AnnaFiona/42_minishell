@@ -6,15 +6,20 @@
 #    By: nprljic <nprljic@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 12:24:01 by aplank            #+#    #+#              #
-#    Updated: 2023/02/14 14:52:18 by nprljic          ###   ########.fr        #
+#    Updated: 2023/02/17 15:32:09 by nprljic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-MY_SOURCES = builtins.c \
+MY_SOURCES = builtins_export_sort.c \
+			builtins_export.c \
+			builtins_utils.c \
+			builtins.c \
 			children_utils.c \
 			children.c \
+			env_list_utils.c \
+			env_list.c \
 			envp_to_path.c \
 			frees.c \
 			main.c \

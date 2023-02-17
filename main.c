@@ -3,6 +3,7 @@
 
 static void	initialize_data(t_data *data)
 {
+	data->env_list = NULL;
 	data->args = NULL;
 	data->prompt = NULL;
 	data->line = NULL;
@@ -23,6 +24,7 @@ int	main(int argc, char **argv, char **envp)
 	initialize_data(data);
 	get_prompt(data);
 	envp_to_path(data, envp);
+	matrix_to_list(data, data->env, &data->env_list);
 	terminal_loop(data);
 	exit_function(data, NULL, 0);
 	return (0);

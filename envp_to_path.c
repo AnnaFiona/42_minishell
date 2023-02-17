@@ -11,21 +11,22 @@ int	size_2d(char **envp)
 	return (i);
 }
 
-void 	save_envp(t_data *data, char **envp)
+char	**save_envp(char **envp)
 {
 	int i;
 	int len;
+	char **matrix;
 
 	i = 0;
 	len = size_2d(envp) + 1;
-	data->env = (char **) malloc(len * sizeof(char *));
+	matrix = (char **) malloc(len * sizeof(char *));
 	while(envp[i])
 	{
-		data->env[i] = ft_strdup(envp[i]);
+		matrix[i] = ft_strdup(envp[i]);
 		i++;
 	}
-	data->env[i] = NULL;
-	return ;
+	matrix[i] = NULL;
+	return (matrix);
 }
 
 void	envp_to_path(t_data *data, char **envp)
@@ -39,6 +40,6 @@ void	envp_to_path(t_data *data, char **envp)
 	line = ft_substr(envp[i], 5, ft_strlen(envp[i]) - 5);
 	data->path = ft_split(line, ':');
 	free(line);
-	save_envp(data, envp);
+	data->env = save_envp(envp);
     return ;
 }

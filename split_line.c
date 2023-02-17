@@ -130,7 +130,7 @@ void	split_line(t_data *data, char *line)
 		x += len;
 	}
 	put_list_in_double_array(data, &head);
-	//print_double_array(data->args);
+	print_double_array(data->args);
 	free(line);
 	data->line = NULL;
 	return ;
