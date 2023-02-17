@@ -5,10 +5,11 @@ static void	initialize_data(t_data *data)
 {
 	data->env_list = NULL;
 	data->args = NULL;
-	data->prompt = NULL;
-	data->line = NULL;
 	data->path = NULL;
 	data->env = NULL;
+	data->prompt = NULL;
+	data->line = NULL;
+	data->quote = '\0';
 	data->pipe_count = -1;
 	data->args_y = -1;
 	return ;

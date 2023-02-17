@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nprljic <nprljic@student.42.fr>            +#+  +:+       +#+         #
+#    By: aplank <aplank@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 12:24:01 by aplank            #+#    #+#              #
-#    Updated: 2023/02/17 15:32:09 by nprljic          ###   ########.fr        #
+#    Updated: 2023/02/17 19:13:21 by aplank           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,10 @@ MY_SOURCES = builtins_export_sort.c \
 			env_list.c \
 			envp_to_path.c \
 			frees.c \
+			get_args_utils.c \
+			get_args.c \
 			main.c \
 			signals.c \
-			split_line.c \
 			terminal.c
 
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
