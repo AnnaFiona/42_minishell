@@ -29,6 +29,7 @@ typedef struct s_data
 	char		quote;
 	int			pipe_count;
 	int			args_y;
+	int			len_env;
 }				t_data;
 
 typedef struct s_child
@@ -47,6 +48,7 @@ int		builtins(t_data *data);
 void	ft_export(t_data *data);
 
 //builtins_export_sort.c
+void	env_list_to_matrix(t_data *data);
 void	sort_env(t_data *data, char **env);
 
 //builtins_ultils.c
@@ -67,9 +69,13 @@ void	redirect_children(t_data *data);
 //env_list_utils.c
 void	print_env_list(t_env_list *top);
 void	free_env_list(t_env_list **top);
+int		size_of_list(t_env_list *top);
 
 //env_list.c
-void	matrix_to_list(t_data *data, char **env, t_env_list **list);
+void	add_list_end(t_data *data, t_env_list *top, char *var,
+			char *value);
+void	matrix_to_list(t_data *data, char **env,
+			t_env_list **list);
 
 //envp_to_path.c
 int		size_2d(char **envp);

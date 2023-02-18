@@ -6,10 +6,11 @@ void	print_env_list(t_env_list *top)
 	int	i;
 
 	i = 0;
-	while(top != NULL)
+	while (top != NULL)
 	{
 		ft_printf("var:   %s\n", top->var);
-		ft_printf("value: %s\n", top->value);
+		if(top->value != NULL)
+			ft_printf("value: %s\n", top->value);
 		top = top->next;
 		i++;
 	}
@@ -27,8 +28,22 @@ void	free_env_list(t_env_list **top)
 	{
 		temp = *top;
 		*top = (*top)->next;
-        free(temp->var);
-        free(temp->value);
+		free(temp->var);
+		if(temp->value != NULL)
+			free(temp->value);
 		free(temp);
 	}
+}
+
+int	size_of_list(t_env_list *top)
+{
+	int i;
+
+	i = 0;
+	while (top != NULL)
+	{
+		top = top->next;
+		i++;
+	}
+	return (i);
 }

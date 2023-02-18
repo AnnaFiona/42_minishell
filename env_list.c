@@ -41,9 +41,14 @@ void	matrix_to_list(t_data *data, char **env, t_env_list **list)
 	free_double_array(matrix);
 	while (env[y])
 	{
-		matrix = ft_split(env[y], '=');
-		add_list_end(data, *list, ft_strdup(matrix[0]), ft_strdup(matrix[1]));
-		free_double_array(matrix);
+		if(ft_strchr(env[y], '='))
+		{
+			matrix = ft_split(env[y], '=');
+			add_list_end(data, *list, ft_strdup(matrix[0]), ft_strdup(matrix[1]));
+			free_double_array(matrix);
+		}
+		else
+			add_list_end(data, *list, ft_strdup(env[y]), NULL);
 		y++;
 	}
 	return ;
