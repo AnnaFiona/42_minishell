@@ -28,6 +28,27 @@ void	env_list_to_matrix(t_data *data)
 	return ;
 }
 
+int	is_dublicate(t_data *data, char *var, char *value)
+{
+	t_env_list	*tmp;
+
+	tmp = data->env_list;
+	while (tmp != NULL)
+	{
+		if (ft_strcmp(var, tmp->var) == 0)
+		{
+			if(value != NULL)
+			{
+				free(tmp->value);
+				tmp->value = value;
+			}
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
 void	save_var(t_data *data)
 {
 	char	**matrix;
@@ -35,11 +56,14 @@ void	save_var(t_data *data)
 	if (ft_strchr(data->args[1], '=') != NULL)
 	{
 		matrix = ft_split(data->args[1], '=');
-		add_list_end(data, data->env_list, ft_strdup(matrix[0]),
+		if(!is_dublicate(data, ft_strdup(matrix[0]), ft_strdup(matrix[1])))
+		{
+			add_list_end(data, data->env_list, ft_strdup(matrix[0]),
 				ft_strdup(matrix[1]));
+		}
 		free_double_array(matrix);
 	}
-	else
+	else if(!(is_dublicate(data, ft_strdup(data->args[1]), NULL)))
 		add_list_end(data, data->env_list, ft_strdup(data->args[1]), NULL);
 	env_list_to_matrix(data);
 	return ;

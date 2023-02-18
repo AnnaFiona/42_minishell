@@ -41,5 +41,6 @@ void	envp_to_path(t_data *data, char **envp)
 	data->path = ft_split(line, ':');
 	free(line);
 	data->env = save_envp(envp);
+	data->len_env = size_2d(data->env);
     return ;
 }
