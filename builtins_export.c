@@ -66,7 +66,7 @@ void	save_var(t_data *data)
 	else if(!(is_dublicate(data, ft_strdup(data->args[1]), NULL)))
 		add_list_end(data, data->env_list, ft_strdup(data->args[1]), NULL);
 	env_list_to_matrix(data);
-	return ;
+	return;
 }
 
 void	ft_export(t_data *data)
