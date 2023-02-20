@@ -84,6 +84,7 @@ char	**save_envp(char **envp);
 
 //frees.c
 void	free_double_array(char **arrarr);
+void	free_kid(t_child *kid);
 void	free_data(t_data *data);
 void	exit_function(t_data *data, char *error_message, int error);
 

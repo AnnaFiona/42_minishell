@@ -23,26 +23,32 @@ static void	close_pipes(t_data *data, t_child *kid)
 	return ;
 }
 
-void	child_process(t_data *data, char **commands, int input_fd,
-		int output_fd)
+static void	child_process(t_data *data, t_child *kid, int output_fd)
 {
 	char	*path;
 
 	path = NULL;
-	if (input_fd != -1)
-		dup2(input_fd, STDIN_FILENO);
+	if (kid->input_fd != -1)
+		dup2(kid->input_fd, STDIN_FILENO);
 	if (output_fd != -1)
 		dup2(output_fd, STDOUT_FILENO);
-	path = get_path(data->path, commands[0]);
-	if (path == NULL)
+	if(ft_strcmp(kid->commands[0], "export") == 0)
 	{
-		ft_printf("%s: command not found\n", commands[0]);
+		sort_env(data, data->env);
+		free_kid(kid);
 		exit_function(data, NULL, 1);
 	}
-	execve(path, commands, data->env);
+	path = get_path(data->path, kid->commands[0]);
+	if (path == NULL)
+	{
+		ft_printf("%s: command not found\n", kid->commands[0]);
+		free_kid(kid);
+		exit_function(data, NULL, 1);
+	}
+	execve(path, kid->commands, data->env);
 }
 
-void	make_child(t_data *data)
+static void	make_child(t_data *data)
 {
 	t_child	*kid;
 
@@ -57,7 +63,7 @@ void	make_child(t_data *data)
 		kid->commands = get_commands(data, data->args);
 		kid->pid = fork();
 		if (kid->pid == 0)
-			child_process(data, kid->commands, kid->input_fd, kid->pipe_fd[1]);
+			child_process(data, kid, kid->pipe_fd[1]);
 		free_double_array(kid->commands);
 		kid->commands = NULL;
 		close_pipes(data, kid);
@@ -65,8 +71,7 @@ void	make_child(t_data *data)
 	}
 	if (kid->input_fd != -1)
 		close(kid->input_fd);
-	free(kid->pipe_fd);
-	free(kid);
+	free_kid(kid);
 	return ;
 }
 

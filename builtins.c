@@ -69,6 +69,8 @@ int	is_builtin_last(t_data *data)
 
 int	builtins(t_data *data)
 {
+	if (data->args == NULL)
+		return (0);
 	count_pipes(data);
 	if (is_builtin_last(data) == 1)
 		return (0);

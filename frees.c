@@ -16,6 +16,16 @@ void	free_double_array(char **arrarr)
 	free(arrarr);
 }
 
+void	free_kid(t_child *kid)
+{
+	if (kid->commands != NULL)
+		free_double_array(kid->commands);
+	if (kid->pipe_fd != NULL)
+		free(kid->pipe_fd);
+	if (kid != NULL)
+		free (kid);
+}
+
 void	free_data(t_data *data)
 {
 	if (data->args != NULL)
