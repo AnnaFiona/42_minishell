@@ -57,11 +57,11 @@ int	is_builtin_last(t_data *data)
 		return (1);
 	else if (!ft_strcmp(data->args[last], "cd"))
 		return (1);
-	else if (!ft_strcmp(data->args[last], "export"))
+	/* else if (!ft_strcmp(data->args[last], "export"))
 	{
 		sort_env(data, data->env);
 		return (1);
-	}
+	} */
 	else if (!ft_strcmp(data->args[last], "unset"))
 		return (1);
 	return (0);

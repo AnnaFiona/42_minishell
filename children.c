@@ -32,16 +32,18 @@ static void	child_process(t_data *data, t_child *kid, int output_fd)
 		dup2(kid->input_fd, STDIN_FILENO);
 	if (output_fd != -1)
 		dup2(output_fd, STDOUT_FILENO);
-	if(ft_strcmp(kid->commands[0], "export") == 0)
+	if(!ft_strcmp(kid->commands[0], "export"))
 	{
-		sort_env(data, data->env);
+		if (kid->commands[1] == NULL)
+			sort_env(data, data->env);
 		free_kid(kid);
 		exit_function(data, NULL, 1);
 	}
 	path = get_path(data->path, kid->commands[0]);
 	if (path == NULL)
 	{
-		ft_printf("%s: command not found\n", kid->commands[0]);
+		write (2, kid->commands[0], ft_strlen(kid->commands[0]));
+		write (2, ": command not found\n", 20);
 		free_kid(kid);
 		exit_function(data, NULL, 1);
 	}
