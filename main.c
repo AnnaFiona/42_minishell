@@ -45,3 +45,19 @@ void	print_double_array(char **arrarr)
 		y++;
 	}
 }
+
+char *ft_getenv(t_data *data, char *var)
+{
+	t_env_list *tmp;
+
+	if(!var)
+		return (NULL);
+	tmp = data->env_list;
+	while(tmp->next != NULL)
+	{
+		if(!ft_strcmp(var, tmp->var))
+			return(ft_strdup(tmp->var));
+		tmp = tmp->next;
+	}
+	return(NULL);
+}

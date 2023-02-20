@@ -103,5 +103,6 @@ void	get_prompt(t_data *data);
 
 //main.c
 void	print_double_array(char **arrarr);
+char	*ft_getenv(t_data *data, char *var);
 
 #endif
