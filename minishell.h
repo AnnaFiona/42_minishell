@@ -46,13 +46,11 @@ int		builtins(t_data *data);
 
 //builtins_export.c
 void	ft_export(t_data *data);
+int		ft_strcmp(const char *s1, const char *s2);
 
 //builtins_export_sort.c
 void	env_list_to_matrix(t_data *data);
 void	sort_env(t_data *data, char **env);
-
-//builtins_ultils.c
-int		ft_strcmp(const char *s1, const char *s2);
 
 //change_dir.c
 int		builtins(t_data *data);
@@ -105,5 +103,6 @@ void	get_prompt(t_data *data);
 
 //main.c
 void	print_double_array(char **arrarr);
+char	*ft_getenv(t_data *data, char *var);
 
 #endif
