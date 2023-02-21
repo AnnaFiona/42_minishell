@@ -6,13 +6,14 @@
 #    By: nprljic <nprljic@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 12:24:01 by aplank            #+#    #+#              #
-#    Updated: 2023/02/20 17:38:25 by nprljic          ###   ########.fr        #
+#    Updated: 2023/02/21 14:25:24 by nprljic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-MY_SOURCES = builtins_export_sort.c \
+MY_SOURCES = builtins_export_utils.c \
+			builtins_export_sort.c \
 			builtins_export.c \
 			builtins.c \
 			children_utils.c \

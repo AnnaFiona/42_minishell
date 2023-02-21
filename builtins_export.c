@@ -28,26 +28,34 @@ void	env_list_to_matrix(t_data *data)
 	return ;
 }
 
-int	is_dublicate(t_data *data, char *var, char *value)
+int		is_valid_var(char *var)
 {
-	t_env_list	*tmp;
+	int i;
 
-	tmp = data->env_list;
-	while (tmp != NULL)
+	i = 0;
+	if(var[i] >= 'A' && var[i] <= 'Z')
+		return (1);
+	while(var[i])
 	{
-		if (ft_strcmp(var, tmp->var) == 0)
-		{
-			if(value != NULL)
-			{
-				free(tmp->value);
-				tmp->value = value;
-			}
+		if(!ft_isalpha(var[i]))
 			return (1);
-		}
-		tmp = tmp->next;
+		i++;
 	}
-	return (0);
+	return(0);
 }
+
+void second_arg_null(t_data *data)
+{
+	if(is_dub_in_ori(data, data->args[1], NULL) && is_valid_var(data->args[1]))
+		return;
+	if(!(is_dublicate(data, data->args[1], NULL)))
+	{
+		add_list_end(data, data->env_list, ft_strdup(data->args[1]), NULL);
+		env_list_to_matrix(data);
+	}
+	return ;
+}
+
 
 void	save_var(t_data *data)
 {
@@ -56,17 +64,22 @@ void	save_var(t_data *data)
 	if (ft_strchr(data->args[1], '=') != NULL)
 	{
 		matrix = ft_split(data->args[1], '=');
-		if(!is_dublicate(data, ft_strdup(matrix[0]), ft_strdup(matrix[1])))
+		if(is_dub_in_ori(data, matrix[0], matrix[1]) && is_valid_var(data->args[1]))
+		{
+			free_double_array(matrix);
+			return ;
+		}
+		if(!is_dublicate(data, matrix[0], matrix[1]))
 		{
 			add_list_end(data, data->env_list, ft_strdup(matrix[0]),
 				ft_strdup(matrix[1]));
 		}
+		env_list_to_matrix(data);
 		free_double_array(matrix);
+		return ;
 	}
-	else if(!(is_dublicate(data, ft_strdup(data->args[1]), NULL)))
-		add_list_end(data, data->env_list, ft_strdup(data->args[1]), NULL);
-	env_list_to_matrix(data);
-	return;
+	second_arg_null(data);
+	return ;
 }
 
 void	ft_export(t_data *data)
@@ -76,18 +89,4 @@ void	ft_export(t_data *data)
 	else if (data->args[1])
 		save_var(data);
 	return ;
-}
-
-int ft_strcmp(const char *s1, const char *s2)
-{
-	int i;
-
-	i = 0;
-	while(s1[i] || s2[i])
-	{
-		if(s1[i] != s2[i])
-			return(s1[i] - s2[i]);
-		i++;
-	}
-	return (0);
 }

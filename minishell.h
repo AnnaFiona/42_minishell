@@ -41,18 +41,20 @@ typedef struct s_child
 	int		pid;
 }			t_child;
 
-//builtins.c
-int		builtins(t_data *data);
-
-//builtins_export.c
-void	ft_export(t_data *data);
-int		ft_strcmp(const char *s1, const char *s2);
 
 //builtins_export_sort.c
 void	env_list_to_matrix(t_data *data);
 void	sort_env(t_data *data, char **env);
 
-//change_dir.c
+//builtins_export_utils.c
+int 	ft_strcmp(const char *s1, const char *s2);
+int		is_dublicate(t_data *data, char *var, char *value);
+int		is_dub_in_ori(t_data *data, char *var, char *value);
+
+//builtins_export.c
+void	ft_export(t_data *data);
+
+//builtins.c
 int		builtins(t_data *data);
 
 //children_utils.c
@@ -87,8 +89,8 @@ void	free_data(t_data *data);
 void	exit_function(t_data *data, char *error_message, int error);
 
 //get_args_utils.c
-int	find_second_quote(char *line, char quote, int x);
-int	search_for_break(t_data *data, char *line, char *breakers, int x);
+int		find_second_quote(char *line, char quote, int x);
+int		search_for_break(t_data *data, char *line, char *breakers, int x);
 
 //get_args.c
 void	get_args(t_data *data, char *line);
