@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nprljic <nprljic@student.42.fr>            +#+  +:+       +#+         #
+#    By: aplank <aplank@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 12:24:01 by aplank            #+#    #+#              #
-#    Updated: 2023/02/21 14:25:24 by nprljic          ###   ########.fr        #
+#    Updated: 2023/02/21 14:52:56 by aplank           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ MY_SOURCES = builtins_export_utils.c \
 			env_list.c \
 			envp_to_path.c \
 			frees.c \
+			get_args_quotes.c \
 			get_args_utils.c \
 			get_args.c \
 			main.c \
@@ -55,3 +56,13 @@ re: fclean all
 
 debug: CFLAGS += -g
 debug: re
+
+val: all
+	make -C ./ clean
+	valgrind --leak-check=full \
+		--show-leak-kinds=all \
+		--track-origins=yes \
+		--verbose \
+		--log-file=valgrind-out.txt \
+		./$(NAME)
+	code valgrind-out.txt

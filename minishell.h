@@ -88,6 +88,11 @@ void	free_kid(t_child *kid);
 void	free_data(t_data *data);
 void	exit_function(t_data *data, char *error_message, int error);
 
+//get_args_quotes.c
+int		cut_quotes(t_data *data, int y, int x);
+char	*strdup_or_strjoin(char const *s_1, char const *s_2);
+int		replace_variables(t_data *data, int y, int x);
+
 //get_args_utils.c
 int		find_second_quote(char *line, char quote, int x);
 int		search_for_break(t_data *data, char *line, char *breakers, int x);

@@ -48,6 +48,8 @@ char	**get_commands(t_data *data, char **args)
 		x++;
 	}
 	data->args_y -= x;
+	if (x == 0)
+		return (NULL);
 	commands = malloc(sizeof(char *) * (x + 1));
 	if (!commands)
 		exit_function(data, "Error: malloc failed at \"get_commands\" \

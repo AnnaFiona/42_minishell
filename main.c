@@ -56,7 +56,7 @@ char *ft_getenv(t_data *data, char *var)
 	while(tmp->next != NULL)
 	{
 		if(!ft_strcmp(var, tmp->var))
-			return(ft_strdup(tmp->var));
+			return(ft_strdup(tmp->value));
 		tmp = tmp->next;
 	}
 	return(NULL);

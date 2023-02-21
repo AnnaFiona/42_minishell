@@ -63,6 +63,8 @@ static void	make_child(t_data *data)
 		else
 			pipe(kid->pipe_fd);
 		kid->commands = get_commands(data, data->args);
+		if (kid->commands == NULL)
+			return ;
 		kid->pid = fork();
 		if (kid->pid == 0)
 			child_process(data, kid, kid->pipe_fd[1]);

@@ -35,21 +35,22 @@ static int	where_to_break(t_data *data, char breaker, int x, int start)
 	int	len;
 
 	len = 0;
-	if (data->quote == '\0' && breaker == ' ')
-		return (0);
 	if (breaker == '"' || breaker == '\'')
 	{
 		switch_data_quote(data, data->line, breaker, x);
 		return (-1);
 	}
-	else if (data->quote == '\0' && start == 0 && \
-		(breaker == '<' || breaker == '>'))
+	if (data->quote != '\0')
+		return (-1);
+	if (breaker == ' ')
+		return (0);
+	else if (start == 0 && (breaker == '<' || breaker == '>'))
 	{
 		len++;
 		if (data->line[x + 1] == breaker)
 			len++;
 	}
-	else if (data->quote == '\0' && start == 0 && breaker == '|')
+	else if (start == 0 && breaker == '|')
 		len = 1;
 	return (len);
 }
