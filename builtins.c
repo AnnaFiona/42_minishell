@@ -27,7 +27,7 @@ void	ft_unset(t_data *data)
 {
 	t_env_list	*tmp;
 
-	if (!data->args[1])
+	if (!data->args[1] || ft_strchr(data->args[1], '='))
 		return ;
 	tmp = data->env_list;
 	while (tmp->next != NULL)

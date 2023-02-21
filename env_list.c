@@ -36,6 +36,7 @@ void	matrix_to_list(t_data *data, char **env, t_env_list **list)
 	char **matrix;
 
 	y = 1;
+	free_env_list(&data->env_list);
 	matrix = ft_split(env[0], '=');
 	create_env_list(data, list, ft_strdup(matrix[0]), ft_strdup(matrix[1]));
 	free_double_array(matrix);
