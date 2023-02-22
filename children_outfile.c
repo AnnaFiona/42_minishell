@@ -61,8 +61,7 @@ static void	cut_outfile(t_child *kid)
 	}
 	temp = malloc (sizeof(char *) * (len + 1));
 	if (!temp)
-		//protection
-	ft_printf("len: %d\n", len);
+		return ;//protection
 	while (y < len)
 	{
 		temp[y] = ft_strdup(kid->commands[y]);

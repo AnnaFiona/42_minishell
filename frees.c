@@ -20,6 +20,8 @@ void	free_kid(t_child *kid)
 {
 	if (kid->commands != NULL)
 		free_double_array(kid->commands);
+	if (kid->in_quotes != NULL)
+		free(kid->in_quotes);
 	if (kid->pipe_fd != NULL)
 		free(kid->pipe_fd);
 	if (kid->outfile_fd != -1)
@@ -36,6 +38,8 @@ void	free_data(t_data *data)
 		free_double_array(data->path);
 	if (data->env != NULL)
 		free_double_array(data->env);
+	if (data->in_quotes != NULL)
+		free(data->in_quotes);
 	if (data->prompt != NULL)
 		free(data->prompt);
 	if (data->line != NULL)

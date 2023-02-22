@@ -3,6 +3,7 @@
 static void	initialize_child(t_child *kid)
 {
 	kid->commands = NULL;
+	kid->in_quotes = NULL;
 	kid->pipe_fd = malloc(sizeof(int) * 2);
 	kid->outfile_fd = -1;
 	kid->infile_fd = -1;
@@ -74,7 +75,7 @@ static void	make_child(t_data *data)
 			kid->pipe_fd[1] = -1;
 		else
 			pipe(kid->pipe_fd);
-		kid->commands = get_commands(data, data->args);
+		get_commands(data, kid, data->args);
 		if (kid->commands == NULL)
 			return ;
 		kid->pid = fork();

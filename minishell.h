@@ -24,6 +24,7 @@ typedef struct s_data
 	char		**args;
 	char		**path;
 	char		**env;
+	char		*in_quotes;
 	char		*prompt;
 	char		*line;
 	char		quote;
@@ -35,6 +36,7 @@ typedef struct s_data
 typedef struct s_child
 {
 	char	**commands;
+	char	*in_quotes;
 	int		*pipe_fd;
 	int		outfile_fd;
 	int		infile_fd;
@@ -65,7 +67,7 @@ void	search_for_outfile(t_data *data, t_child *kid, char **commands);
 //children_utils.c
 void	count_pipes(t_data *data);
 char	*get_path(char **paths, char *command);
-char	**get_commands(t_data *data, char **args);
+void	get_commands(t_data *data, t_child *kid, char **args);
 void	wait_for_children(t_data *data);
 
 //children.c

@@ -7,6 +7,7 @@ static void	initialize_data(t_data *data)
 	data->args = NULL;
 	data->path = NULL;
 	data->env = NULL;
+	data->in_quotes = NULL;
 	data->prompt = NULL;
 	data->line = NULL;
 	data->quote = '\0';

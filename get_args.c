@@ -31,6 +31,29 @@ static void	finish_input(t_data *data, char **args)
 	}
 }
 
+static void	get_in_quotes(t_data *data)
+{
+	int	y;
+
+	y = 0;
+	while (data->args[y])
+		y++;
+	data->in_quotes = malloc(sizeof(char) * (y + 1));
+	if (data->in_quotes == NULL)
+		return ;//protection
+	y = 0;
+	while (data->args[y])
+	{
+		if (data->args[y][0] == '"' || data->args[y][0] == '\'')
+			data->in_quotes[y] = 'q';
+		else
+			data->in_quotes[y] = '-';
+		y++;
+	}
+	data->in_quotes[y] = '\0';
+	return ;
+}
+
 static void	put_list_in_double_array(t_data *data, t_list **head)
 {
 	t_list	*temp;
@@ -83,6 +106,7 @@ void	get_args(t_data *data, char *line)
 	head = NULL;
 	split_line(data, &head, line);
 	put_list_in_double_array(data, &head);
+	get_in_quotes(data);
 	free(line);
 	data->line = NULL;
 	finish_input(data, data->args);
