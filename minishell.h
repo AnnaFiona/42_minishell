@@ -36,8 +36,10 @@ typedef struct s_child
 {
 	char	**commands;
 	int		*pipe_fd;
-	int		count;
+	int		outfile_fd;
+	int		infile_fd;
 	int		input_fd;
+	int		count;
 	int		pid;
 }			t_child;
 
@@ -56,6 +58,9 @@ void	ft_export(t_data *data);
 
 //builtins.c
 int		builtins(t_data *data);
+
+//children_outfile.c
+void	search_for_outfile(t_data *data, t_child *kid, char **commands);
 
 //children_utils.c
 void	count_pipes(t_data *data);
@@ -99,6 +104,9 @@ int		search_for_break(t_data *data, char *line, char *breakers, int x);
 
 //get_args.c
 void	get_args(t_data *data, char *line);
+
+//heredoc.c
+int		heredoc(t_child *kid);
 
 //signals.c
 void	ctrl_d_exit(t_data *data);

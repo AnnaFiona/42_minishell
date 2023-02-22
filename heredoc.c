@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-char	*join_free(char *s1, char *s2)
+static char	*join_free(char *s1, char *s2)
 {
 	char	*str;
 
@@ -25,7 +25,7 @@ char	*join_free(char *s1, char *s2)
 	return (str);
 }
 
-void	free_kid_command(t_child *kid)
+static void	free_kid_command(t_child *kid)
 {
 	char *tmp;
 
@@ -47,7 +47,6 @@ int		heredoc(t_child *kid)
 	char *line;
 	char *line_end;
 
-	kid->heredoc_line = NULL;
 	if (ft_strcmp(kid->commands[1], "<<") || !kid->commands[2])
 		return (0);
 	i = 0;

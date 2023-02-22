@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nprljic <nprljic@student.42.fr>            +#+  +:+       +#+         #
+#    By: aplank <aplank@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 12:24:01 by aplank            #+#    #+#              #
-#    Updated: 2023/02/21 16:08:44 by nprljic          ###   ########.fr        #
+#    Updated: 2023/02/22 14:21:37 by aplank           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ MY_SOURCES = builtins_export_utils.c \
 			builtins_export_sort.c \
 			builtins_export.c \
 			builtins.c \
+			children_outfile.c \
 			children_utils.c \
 			children.c \
 			env_list_utils.c \
@@ -25,6 +26,7 @@ MY_SOURCES = builtins_export_utils.c \
 			get_args_quotes.c \
 			get_args_utils.c \
 			get_args.c \
+			heredoc.c \
 			main.c \
 			signals.c \
 			terminal.c

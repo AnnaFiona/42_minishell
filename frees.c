@@ -22,6 +22,8 @@ void	free_kid(t_child *kid)
 		free_double_array(kid->commands);
 	if (kid->pipe_fd != NULL)
 		free(kid->pipe_fd);
+	if (kid->outfile_fd != -1)
+		close (kid->outfile_fd);
 	if (kid != NULL)
 		free (kid);
 }

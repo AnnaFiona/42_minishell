@@ -4,8 +4,10 @@ static void	initialize_child(t_child *kid)
 {
 	kid->commands = NULL;
 	kid->pipe_fd = malloc(sizeof(int) * 2);
-	kid->count = 0;
+	kid->outfile_fd = -1;
+	kid->infile_fd = -1;
 	kid->input_fd = -1;
+	kid->count = 0;
 	kid->pid = -1;
 	return ;
 }
@@ -23,15 +25,25 @@ static void	close_pipes(t_data *data, t_child *kid)
 	return ;
 }
 
+static void	dup_input_output(t_data *data, t_child *kid, int output_fd)
+{
+	heredoc(kid);
+	search_for_outfile(data, kid, kid->commands);
+	if (kid->input_fd != -1)
+		dup2(kid->input_fd, STDIN_FILENO);
+	if (kid->outfile_fd != -1)
+		dup2(kid->outfile_fd, STDOUT_FILENO);
+	else if (output_fd != -1)
+		dup2(output_fd, STDOUT_FILENO);
+	return ;
+}
+
 static void	child_process(t_data *data, t_child *kid, int output_fd)
 {
 	char	*path;
 
 	path = NULL;
-	if (kid->input_fd != -1)
-		dup2(kid->input_fd, STDIN_FILENO);
-	if (output_fd != -1)
-		dup2(output_fd, STDOUT_FILENO);
+	dup_input_output(data, kid, output_fd);
 	if(!ft_strcmp(kid->commands[0], "export"))
 	{
 		if (kid->commands[1] == NULL)
