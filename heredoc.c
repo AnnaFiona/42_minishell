@@ -25,7 +25,6 @@ static char	*join_free(char *s1, char *s2)
 	return (str);
 }
 
-
 static void	pipe_heredoc(t_child *kid, char *line)
 {
 	int	pipes[2];
@@ -71,7 +70,7 @@ static void	free_kid_command(t_child *kid)
 		return ;
 	while (i < (len - 2))
 	{
-		if(!ft_strcmp(kid->commands[x], "<<"))
+		if (!ft_strcmp(kid->commands[x], "<<"))
 			x += 2;
 		tmp[i] = ft_strdup(kid->commands[x]);
 		x++;
