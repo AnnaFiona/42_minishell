@@ -25,50 +25,88 @@ static char	*join_free(char *s1, char *s2)
 	return (str);
 }
 
-static void	free_kid_command(t_child *kid)
-{
-	char *tmp;
 
-	if(!kid->commands)
-		return ;
-	tmp = ft_strdup(kid->commands[0]);
-	free_double_array(kid->commands);
-	kid->commands = (char **)malloc(2 * sizeof(char *));
-	kid->commands[0] = tmp;
-	kid->commands[1] = NULL;
+static void	pipe_heredoc(t_child *kid, char *line)
+{
+	int	pipes[2];
+
+	if (kid->input_fd != -1)
+		close(kid->input_fd);
+	pipe(pipes);
+	kid->input_fd = dup(pipes[0]);
+	write(pipes[1], line, ft_strlen(line));
+	close(pipes[1]);
+	free(line);
 	return ;
 }
 
-int		heredoc(t_child *kid)
+static int	is_valid_heredoc(t_child *kid)
 {
-	int pipes[2];
-	int i;
-	char *line_nl;
-	char *line;
-	char *line_end;
+	int	len;
 
-	if (ft_strcmp(kid->commands[1], "<<") || !kid->commands[2])
-		return (0);
+	if (!kid->commands)
+		return (-1);
+	len = 0;
+	if (!ft_strcmp(kid->commands[0], "<<"))
+		return (-1);
+	while (ft_strcmp(kid->commands[len], "<<") && kid->commands[len])
+		len++;
+	if (!kid->commands[len])
+		return (-1);
+	return (len);
+}
+
+static void	free_kid_command(t_child *kid)
+{
+	int		len;
+	int		i;
+	int		x;
+	char	**tmp;
+
 	i = 0;
+	x = 0;
+	len = size_2d(kid->commands);
+	tmp = (char **)malloc((len - 1) * sizeof(char *));
+	if (!kid->commands)
+		return ;
+	while (i < (len - 2))
+	{
+		if(!ft_strcmp(kid->commands[x], "<<"))
+			x += 2;
+		tmp[i] = ft_strdup(kid->commands[x]);
+		x++;
+		i++;
+	}
+	tmp[i] = NULL;
+	free_double_array(kid->commands);
+	kid->commands = tmp;
+	return ;
+}
+
+int	heredoc(t_child *kid)
+{
+	int		len;
+	char	*buf;
+	char	*line;
+	char	*line_nl;
+
+	len = is_valid_heredoc(kid);
+	if (len == -1)
+		return (1);
+	buf = NULL;
 	line = NULL;
 	line_nl = NULL;
-	line_end = NULL;
-	while (ft_strcmp(line, kid->commands[2]))
+	while (ft_strcmp(line, kid->commands[len + 1]))
 	{
 		if (line)
 			free(line);
 		line = readline("> ");
 		line_nl = ft_strjoin(line, "\n");
-		line_end = join_free(line_end, line_nl);
+		buf = join_free(buf, line_nl);
 	}
-	free_kid_command(kid);
 	if (line)
 		free(line);
-	if(kid->input_fd != -1)
-		close(kid->input_fd);
-	pipe(pipes);
-	kid->input_fd = dup(pipes[0]);
-	write(pipes[1], line_end, ft_strlen(line_end));
-	close(pipes[1]);
+	free_kid_command(kid);
+	pipe_heredoc(kid, buf);
 	return (1);
 }
