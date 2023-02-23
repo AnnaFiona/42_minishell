@@ -45,6 +45,16 @@ typedef struct s_child
 	int		pid;
 }			t_child;
 
+typedef struct s_here
+{
+	int 	len;
+	int		index;
+	int		token;
+	int		arrows;
+	char	*line;
+	char	**order;
+}			t_here;
+
 
 //builtins_export_sort.c
 void	env_list_to_matrix(t_data *data);
@@ -107,7 +117,12 @@ int		search_for_break(t_data *data, char *line, char *breakers, int x);
 //get_args.c
 void	get_args(t_data *data, char *line);
 
+//heredoc_utils.c
+char 	*make_heredoc_line(t_child *kid, t_here *doc, char *buf);
+void 	make_order(t_child *kid, t_here *doc);
+
 //heredoc.c
+char	*join_free(char *s1, char *s2);
 int		heredoc(t_child *kid);
 
 //signals.c
