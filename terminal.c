@@ -1,7 +1,22 @@
 
 #include "minishell.h"
 
-char	*rl_with_history(char *line, char *prompt)
+static void	renew_data(t_data *data)
+{
+	if (data->args != NULL)
+	{
+		free_double_array(data->args);
+		data->args = NULL;
+	}
+	if (data->in_quotes != NULL)
+	{
+		free(data->in_quotes);
+		data->in_quotes = NULL;
+	}
+	return ;
+}
+
+static char	*rl_with_history(char *line, char *prompt)
 {
 	if (line)
 	{
@@ -20,14 +35,12 @@ void	terminal_loop(t_data *data)
 	sig_controler(0);
 	while (1)
 	{
-
 		if (!(data->line = rl_with_history(data->line, data->prompt)))
 			ctrl_d_exit(data);
 		get_args(data, data->line);
 		if(builtins(data) == 1)
 			redirect_children(data);
-		free_double_array(data->args);
-		data->args = NULL;
+		renew_data(data);
 	}
 	return ;
 }

@@ -70,7 +70,6 @@ static void	cut_outfile(t_child *kid)
 	temp[y] = NULL;
 	free_double_array(kid->commands);
 	kid->commands = temp;
-	print_double_array(kid->commands);
 	return ;
 }
 
@@ -81,12 +80,12 @@ void	search_for_outfile(t_data *data, t_child *kid, char **commands)
 	y = 0;
 	while(commands[y])
 	{
-		if (ft_strcmp(commands[y], ">") == 0)
+		if (ft_strcmp(commands[y], ">") == 0 && kid->in_quotes[y] != 'q')
 		{
 			is_it_a_token(data, kid, kid->commands, y + 1);
 			open_outfile(data, kid, commands[y + 1], 0);
 		}
-		if (ft_strcmp(commands[y], ">>") == 0)
+		if (ft_strcmp(commands[y], ">>") == 0 && kid->in_quotes[y] != 'q')
 		{
 			is_it_a_token(data, kid, kid->commands, y + 1);
 			open_outfile(data, kid, commands[y + 1], 1);

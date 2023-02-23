@@ -12,7 +12,6 @@ void	count_pipes(t_data *data)
 			data->pipe_count++;
 		y++;
 	}
-	//ft_printf("pipe_count: %d\n", data->pipe_count);
 	return ;
 }
 
@@ -50,6 +49,7 @@ static void	copy_commands(t_data *data, t_child *kid, char **args)
 	}
 	kid->commands[x] = NULL;
 	kid->in_quotes[x] = '\0';
+	ft_printf("kid->in_quotes: %s\nx: %d\n", kid->in_quotes, x);
 	return ;
 }
 
@@ -58,7 +58,7 @@ void	get_commands(t_data *data, t_child *kid, char **args)
 	int	x;
 
 	x = 0;
-	while (args[data->args_y] && args[data->args_y][0] != '|')
+	while (args[data->args_y] && !(args[data->args_y][0] == '|' && data->in_quotes[data->args_y] == '-'))
 	{
 		data->args_y++;
 		x++;

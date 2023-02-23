@@ -25,8 +25,6 @@ void	new_line(int sig)
 	return ;
 }
 
-//maybe we need more signals delete if not
-//chils should not use this signals
 void	sig_controler(int status)
 {
 	if (status == 0)

@@ -13,8 +13,12 @@ static void	initialize_child(t_child *kid)
 	return ;
 }
 
-static void	close_pipes(t_data *data, t_child *kid)
+static void	close_pipes_and_free(t_data *data, t_child *kid)
 {
+	free_double_array(kid->commands);
+	kid->commands = NULL;
+	free(kid->in_quotes);
+	kid->in_quotes = NULL;
 	if (kid->count != 0)
 		close(kid->input_fd);
 	if (kid->count != data->pipe_count)
@@ -81,9 +85,7 @@ static void	make_child(t_data *data)
 		kid->pid = fork();
 		if (kid->pid == 0)
 			child_process(data, kid, kid->pipe_fd[1]);
-		free_double_array(kid->commands);
-		kid->commands = NULL;
-		close_pipes(data, kid);
+		close_pipes_and_free(data, kid);
 		kid->count++;
 	}
 	if (kid->input_fd != -1)
