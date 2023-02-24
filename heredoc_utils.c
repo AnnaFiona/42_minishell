@@ -10,7 +10,6 @@ static int	count_fill_order(t_child *kid, t_here *doc, char fill)
 	x = 0;
 	while (kid->commands[i] && i < doc->range)
 	{
-		ft_printf("+ \n");
 		if (!ft_strcmp(kid->commands[i], "<<") && kid->commands[i + 1])
 		{
 			i++;

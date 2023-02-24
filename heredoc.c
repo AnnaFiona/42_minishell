@@ -52,7 +52,6 @@ static void	free_kid_command(t_child *kid, t_here *doc)
 	tmp[i] = NULL;
 	free_double_array(kid->commands);
 	kid->commands = tmp;
-	print_double_array(kid->commands);
 	return ;
 }
 
@@ -68,7 +67,7 @@ static void	init_doc_struct(t_data *data, t_here *doc)
 	doc->data = data;
 }
 
-void	heredoc(t_child *kid, t_data *data)
+void	heredoc(t_data *data, t_child *kid)
 {
 	t_here *doc;
 	int 	len;
