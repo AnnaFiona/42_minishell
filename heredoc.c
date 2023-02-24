@@ -25,61 +25,6 @@ char	*join_free(char *s1, char *s2)
 	return (str);
 }
 
-int is_arrow(t_child *kid)
-{
-	int i;
-
-	i = 0;
-	while(kid->commands[i])
-	{
-		if(!ft_strcmp(kid->commands[i], "<<"))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static int	is_valid_heredoc(t_child *kid, t_here *doc)
-{
-	int i;
-	int	len;
-
-	i = 0;
-	if (!kid->commands)
-		return (-1);
-	len = 0;
-	if (!ft_strcmp(kid->commands[0], "<<") || !kid->commands[1])
-		return (-1);
-	if(!is_arrow(kid))
-		return (-1);
-	while (kid->commands[i])
-	{
-		if(!ft_strcmp(kid->commands[i], "<<") && !ft_strcmp(kid->commands[i + 1], "<<"))
-		{
-			ft_printf("bash: syntax error near unexpected token `<<'\n");
-			if(len == 0)
-			{
-				free_kid(kid);
-				exit(0); 
-			}
-			doc->range = i - 1;
-			return (len);
-		}
-		if(!ft_strcmp(kid->commands[i], "<<") && !kid->commands[i + 1])
-		{
-			free_kid(kid);
-			exit(0); 
-		}
-		if(!ft_strcmp(kid->commands[i], "<<"))
-			len++;
-		i++;
-	}
-	if (!kid->commands[len])
-		return (-1);
-	doc->range = size_2d(kid->commands);
-	return (len);
-}
-
 static void	free_kid_command(t_child *kid, t_here *doc)
 {
 	int		len;
@@ -111,7 +56,7 @@ static void	free_kid_command(t_child *kid, t_here *doc)
 	return ;
 }
 
-void init_doc_struct(t_here *doc)
+static void	init_doc_struct(t_data *data, t_here *doc)
 {
 	doc->len = 0;
 	doc->range = 0;
@@ -120,9 +65,10 @@ void init_doc_struct(t_here *doc)
 	doc->arrows = 0;
 	doc->line = NULL;
 	doc->order = NULL;
+	doc->data = data;
 }
 
-int	heredoc(t_child *kid)
+int	heredoc(t_child *kid, t_data *data)
 {
 	t_here *doc;
 	int 	len;
@@ -131,11 +77,17 @@ int	heredoc(t_child *kid)
 
 	doc = malloc(sizeof(t_here));
 	if(!doc)
+	{
+		free(doc);
 		return (1);
-	init_doc_struct(doc);
+	}
+	init_doc_struct(data, doc);
 	len = is_valid_heredoc(kid, doc);
 	if (len == -1)
+	{
+		free(doc);
 		return (1);
+	}
 	doc->len = len;
 	buf = NULL;
 	make_order(kid, doc);

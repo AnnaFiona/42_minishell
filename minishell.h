@@ -54,6 +54,7 @@ typedef struct s_here
 	int		arrows;
 	char	*line;
 	char	**order;
+	struct 	s_data *data;
 }			t_here;
 
 
@@ -118,13 +119,16 @@ int		search_for_break(t_data *data, char *line, char *breakers, int x);
 //get_args.c
 void	get_args(t_data *data, char *line);
 
+//heredoc_is_valid.c
+int		is_valid_heredoc(t_child *kid, t_here *doc);
+
 //heredoc_utils.c
 char 	*make_heredoc_line(t_child *kid, t_here *doc, char *buf);
 void 	make_order(t_child *kid, t_here *doc);
 
 //heredoc.c
 char	*join_free(char *s1, char *s2);
-int		heredoc(t_child *kid);
+int		heredoc(t_child *kid, t_data *data);
 
 //signals.c
 void	ctrl_d_exit(t_data *data);
