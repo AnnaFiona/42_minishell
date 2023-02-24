@@ -73,10 +73,12 @@ void	ft_export(t_data *data);
 //builtins.c
 int		builtins(t_data *data);
 
-//children_outfile.c
+//children_arrows_utils.c
 void	is_it_a_token(t_data *data, t_child *kid, char **commands, int y);
 void	cut_token(t_child *kid, int to_cut);
-void	search_for_outfile(t_data *data, t_child *kid);
+
+//children_arrows.c
+void	search_for_arrows(t_data *data, t_child *kid);
 
 //children_utils.c
 void	count_pipes(t_data *data);
