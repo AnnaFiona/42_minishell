@@ -73,10 +73,8 @@ void	ft_export(t_data *data);
 //builtins.c
 int		builtins(t_data *data);
 
-//children_infile.c
-void	search_for_infile(t_data *data, t_child *kid);
-
 //children_outfile.c
+void	is_it_a_token(t_data *data, t_child *kid, char **commands, int y);
 void	cut_token(t_child *kid, int to_cut);
 void	search_for_outfile(t_data *data, t_child *kid);
 
@@ -132,7 +130,7 @@ void 	make_order(t_child *kid, t_here *doc);
 
 //heredoc.c
 char	*join_free(char *s1, char *s2);
-void	heredoc(t_data *data, t_child *kid);
+int		heredoc(t_data *data, t_child *kid);
 
 //signals.c
 void	ctrl_d_exit(t_data *data);

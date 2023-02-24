@@ -4,7 +4,6 @@ MY_SOURCES = builtins_export_utils.c \
 			builtins_export_sort.c \
 			builtins_export.c \
 			builtins.c \
-			children_infile.c \
 			children_outfile.c \
 			children_utils.c \
 			children.c \

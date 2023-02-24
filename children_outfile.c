@@ -16,7 +16,7 @@ static void		syntax_error_func(t_data *data, t_child *kid, char *token)
 	return ;
 }
 
-static void	is_it_a_token(t_data *data, t_child *kid, char **commands, int y)
+void	is_it_a_token(t_data *data, t_child *kid, char **commands, int y)
 {
 	if (commands[y] == NULL)
 		syntax_error_func(data, kid, commands[y]);
@@ -36,6 +36,20 @@ static void	open_outfile(t_data *data, t_child *kid, char *file_name, int append
 	else if (append == 1)
 		kid->outfile_fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	if (kid->outfile_fd == -1)
+	{
+		ft_printf("could not open %s\n", file_name);
+		free_kid(kid);
+		exit_function(data, NULL, 1);
+	}
+	return ;
+}
+
+static void	open_infile(t_data *data, t_child *kid, char *file_name)
+{
+	if (kid->input_fd != -1)
+		close(kid->input_fd);
+	kid->input_fd = open (file_name, O_RDONLY);
+	if (kid->input_fd == -1)
 	{
 		ft_printf("could not open %s\n", file_name);
 		free_kid(kid);
@@ -79,6 +93,17 @@ void	cut_token(t_child *kid, int to_cut)
 	return ;
 }
 
+static int	in_or_out(t_data *data, t_child *kid, int y, int redirect)
+{
+	is_it_a_token(data, kid, kid->commands, y + 1);
+	if (redirect == 0 || redirect == 1)
+		open_outfile(data, kid, kid->commands[y + 1], redirect);
+	else if (redirect == 2)
+		open_infile(data, kid, kid->commands[y + 1]);
+	cut_token(kid, y);
+	return (-1);
+}
+
 void	search_for_outfile(t_data *data, t_child *kid)
 {
 	int	y;
@@ -86,20 +111,14 @@ void	search_for_outfile(t_data *data, t_child *kid)
 	y = 0;
 	while(kid->commands[y])
 	{
-		if (ft_strcmp(kid->commands[y], ">") == 0 && kid->in_quotes[y] != 'q')
-		{
-			is_it_a_token(data, kid, kid->commands, y + 1);
-			open_outfile(data, kid, kid->commands[y + 1], 0);
-			cut_token(kid, y);
-			y--;
-		}
-		if (ft_strcmp(kid->commands[y], ">>") == 0 && kid->in_quotes[y] != 'q')
-		{
-			is_it_a_token(data, kid, kid->commands, y + 1);
-			open_outfile(data, kid, kid->commands[y + 1], 1);
-			cut_token(kid, y);
-			y--;
-		}
+		if (ft_strcmp(kid->commands[y], "<<") == 0 && kid->in_quotes[y] != 'q')
+			y = heredoc(data, kid);
+		else if (ft_strcmp(kid->commands[y], ">") == 0 && kid->in_quotes[y] != 'q')
+			y = in_or_out(data, kid, y, 0);
+		else if (ft_strcmp(kid->commands[y], ">>") == 0 && kid->in_quotes[y] != 'q')
+			y = in_or_out(data, kid, y, 1);
+		else if (ft_strcmp(kid->commands[y], "<") == 0 && kid->in_quotes[y] != 'q')
+			y = in_or_out(data, kid, y, 2);
 		y++;
 	}
 	return ;

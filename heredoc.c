@@ -67,7 +67,7 @@ static void	init_doc_struct(t_data *data, t_here *doc)
 	doc->data = data;
 }
 
-void	heredoc(t_data *data, t_child *kid)
+int	heredoc(t_data *data, t_child *kid)
 {
 	t_here *doc;
 	int 	len;
@@ -78,14 +78,14 @@ void	heredoc(t_data *data, t_child *kid)
 	if(!doc)
 	{
 		//protection
-		return ;
+		return (0);
 	}
 	init_doc_struct(data, doc);
 	len = is_valid_heredoc(kid, doc);
 	if (len == -1)
 	{
 		free(doc);
-		return ;
+		return (0);
 	}
 	doc->len = len;
 	buf = NULL;
@@ -99,5 +99,5 @@ void	heredoc(t_data *data, t_child *kid)
 	write(pipes[1], buf, ft_strlen(buf));
 	close(pipes[1]);
 	free(buf);
-	return ;
+	return (-1);
 }
