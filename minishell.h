@@ -47,6 +47,7 @@ typedef struct s_child
 
 typedef struct s_here
 {
+	int 	range;
 	int 	len;
 	int		index;
 	int		token;

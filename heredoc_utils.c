@@ -1,7 +1,6 @@
 
 #include "minishell.h"
 
-
 static int	count_fill_order(t_child *kid, t_here *doc, char fill)
 {
 	int	i;
@@ -9,8 +8,9 @@ static int	count_fill_order(t_child *kid, t_here *doc, char fill)
 
 	i = 0;
 	x = 0;
-	while (kid->commands[i])
+	while (kid->commands[i] && i < doc->range)
 	{
+		ft_printf("+ \n");
 		if (!ft_strcmp(kid->commands[i], "<<") && kid->commands[i + 1])
 		{
 			i++;
@@ -23,7 +23,7 @@ static int	count_fill_order(t_child *kid, t_here *doc, char fill)
 	doc->arrows = x;
 	if (fill == 'y')
 		doc->order[x] = NULL;
-	return (i);
+	return (x);
 }
 
 void	make_order(t_child *kid, t_here *doc)
@@ -31,7 +31,7 @@ void	make_order(t_child *kid, t_here *doc)
 	int	i;
 
 	i = count_fill_order(kid, doc, 'n');
-	doc->order = malloc(sizeof(char *) * i + 1);
+	doc->order = malloc(sizeof(char *) * (i + 1));
 	if (!doc->order)
 		return ;
 	count_fill_order(kid, doc, 'y');
@@ -40,7 +40,6 @@ void	make_order(t_child *kid, t_here *doc)
 
 static int	join_error_handling(t_child *kid, t_here *doc, int line_count)
 {
-	line_count++;
 	doc->line = readline("> ");
 	if (!doc->line)
 	{
@@ -57,8 +56,6 @@ static int	start_stop(t_here *doc)
 	if (doc->arrows == 1)
 	{
 		doc->token = 1;
-		if(!doc->line)
-			return (-1);
 		return (ft_strcmp(doc->line, doc->order[doc->index]));
 	}
 	else
@@ -89,11 +86,9 @@ char	*make_heredoc_line(t_child *kid, t_here *doc, char *buf)
 	{
 		if (doc->line)
 			free(doc->line);
+		line_count++;
 		if (join_error_handling(kid, doc, line_count) == 0)
-		{
-			ft_printf("break");
 			break ;
-		}
 		line_nl = ft_strjoin(doc->line, "\n");
 		buf = join_free(buf, line_nl);
 	}

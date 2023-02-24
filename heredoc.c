@@ -25,8 +25,6 @@ char	*join_free(char *s1, char *s2)
 	return (str);
 }
 
-//make a valid check!!!!
-
 int is_arrow(t_child *kid)
 {
 	int i;
@@ -41,7 +39,7 @@ int is_arrow(t_child *kid)
 	return (0);
 }
 
-static int	is_valid_heredoc(t_child *kid)
+static int	is_valid_heredoc(t_child *kid, t_here *doc)
 {
 	int i;
 	int	len;
@@ -64,6 +62,7 @@ static int	is_valid_heredoc(t_child *kid)
 				free_kid(kid);
 				exit(0); 
 			}
+			doc->range = i - 1;
 			return (len);
 		}
 		if(!ft_strcmp(kid->commands[i], "<<") && !kid->commands[i + 1])
@@ -77,6 +76,7 @@ static int	is_valid_heredoc(t_child *kid)
 	}
 	if (!kid->commands[len])
 		return (-1);
+	doc->range = size_2d(kid->commands);
 	return (len);
 }
 
@@ -114,6 +114,7 @@ static void	free_kid_command(t_child *kid, t_here *doc)
 void init_doc_struct(t_here *doc)
 {
 	doc->len = 0;
+	doc->range = 0;
 	doc->index = 0;
 	doc->token = 0;
 	doc->arrows = 0;
@@ -128,11 +129,12 @@ int	heredoc(t_child *kid)
 	int		pipes[2];
 	char	*buf;
 
-	len = is_valid_heredoc(kid);
-	if (len == -1)
-		return (1);
 	doc = malloc(sizeof(t_here));
 	if(!doc)
+		return (1);
+	init_doc_struct(doc);
+	len = is_valid_heredoc(kid, doc);
+	if (len == -1)
 		return (1);
 	doc->len = len;
 	buf = NULL;
