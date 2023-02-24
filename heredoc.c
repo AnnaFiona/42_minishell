@@ -78,7 +78,7 @@ int	heredoc(t_child *kid, t_data *data)
 	doc = malloc(sizeof(t_here));
 	if(!doc)
 	{
-		free(doc);
+		//protection
 		return (1);
 	}
 	init_doc_struct(data, doc);
