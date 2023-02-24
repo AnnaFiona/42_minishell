@@ -32,7 +32,7 @@ static void	close_pipes_and_free(t_data *data, t_child *kid)
 
 static void	dup_input_output(t_data *data, t_child *kid, int output_fd)
 {
-	heredoc(kid);
+	heredoc(kid, data);
 	search_for_outfile(data, kid);
 	if (kid->input_fd != -1)
 		dup2(kid->input_fd, STDIN_FILENO);
