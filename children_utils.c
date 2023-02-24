@@ -49,7 +49,6 @@ static void	copy_commands(t_data *data, t_child *kid, char **args)
 	}
 	kid->commands[x] = NULL;
 	kid->in_quotes[x] = '\0';
-	ft_printf("kid->in_quotes: %s\nx: %d\n", kid->in_quotes, x);
 	return ;
 }
 

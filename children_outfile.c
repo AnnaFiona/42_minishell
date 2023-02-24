@@ -20,9 +20,9 @@ static void	is_it_a_token(t_data *data, t_child *kid, char **commands, int y)
 {
 	if (commands[y] == NULL)
 		syntax_error_func(data, kid, commands[y]);
-	if (commands[y][0] == '<')
+	if (commands[y][0] == '<' && kid->in_quotes[y] != 'q')
 		syntax_error_func(data, kid, commands[y]);
-	if (commands[y][0] == '>')
+	if (commands[y][0] == '>' && kid->in_quotes[y] != 'q')
 		syntax_error_func(data, kid, commands[y]);
 	return ;
 }
@@ -44,55 +44,63 @@ static void	open_outfile(t_data *data, t_child *kid, char *file_name, int append
 	return ;
 }
 
-static void	cut_outfile(t_child *kid)
+void	cut_token(t_child *kid, int to_cut)
 {
-	char	**temp;
+	char	**temp_com;
+	char	*temp_quote;
 	int		len;
 	int		y;
 
-	y = 0;
 	len = 0;
+	y = 0;
 	while(kid->commands[len])
+		len++;
+	temp_com = malloc (sizeof(char *) * (len - 1));
+	temp_quote = malloc (sizeof(char) * (len - 1));
+	if (!temp_com || !temp_quote)
+		return ;//protection
+	len = 0;
+	while (kid->commands[len])
 	{
-		if (ft_strcmp(kid->commands[len], ">") == 0 || \
-			ft_strcmp(kid->commands[len], ">>") == 0)
-			break ;
+		if (len != to_cut && len != to_cut + 1)
+		{
+			temp_com[y] = ft_strdup(kid->commands[len]);
+			temp_quote[y] = kid->in_quotes[len];
+			y++;
+		}
 		len++;
 	}
-	temp = malloc (sizeof(char *) * (len + 1));
-	if (!temp)
-		return ;//protection
-	while (y < len)
-	{
-		temp[y] = ft_strdup(kid->commands[y]);
-		y++;
-	}
-	temp[y] = NULL;
+	temp_com[y] = NULL;
+	temp_quote[y] = '\0';
 	free_double_array(kid->commands);
-	kid->commands = temp;
+	kid->commands = temp_com;
+	free(kid->in_quotes);
+	kid->in_quotes = temp_quote;
 	return ;
 }
 
-void	search_for_outfile(t_data *data, t_child *kid, char **commands)
+void	search_for_outfile(t_data *data, t_child *kid)
 {
 	int	y;
 
 	y = 0;
-	while(commands[y])
+	while(kid->commands[y])
 	{
-		if (ft_strcmp(commands[y], ">") == 0 && kid->in_quotes[y] != 'q')
+		if (ft_strcmp(kid->commands[y], ">") == 0 && kid->in_quotes[y] != 'q')
 		{
 			is_it_a_token(data, kid, kid->commands, y + 1);
-			open_outfile(data, kid, commands[y + 1], 0);
+			open_outfile(data, kid, kid->commands[y + 1], 0);
+			cut_token(kid, y);
+			y--;
 		}
-		if (ft_strcmp(commands[y], ">>") == 0 && kid->in_quotes[y] != 'q')
+		if (ft_strcmp(kid->commands[y], ">>") == 0 && kid->in_quotes[y] != 'q')
 		{
 			is_it_a_token(data, kid, kid->commands, y + 1);
-			open_outfile(data, kid, commands[y + 1], 1);
+			open_outfile(data, kid, kid->commands[y + 1], 1);
+			cut_token(kid, y);
+			y--;
 		}
 		y++;
 	}
-	if (kid->outfile_fd != -1)
-		cut_outfile(kid);
 	return ;
 }

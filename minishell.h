@@ -62,7 +62,8 @@ void	ft_export(t_data *data);
 int		builtins(t_data *data);
 
 //children_outfile.c
-void	search_for_outfile(t_data *data, t_child *kid, char **commands);
+void	cut_token(t_child *kid, int to_cut);
+void	search_for_outfile(t_data *data, t_child *kid);
 
 //children_utils.c
 void	count_pipes(t_data *data);
