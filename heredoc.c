@@ -67,15 +67,34 @@ static void	init_doc_struct(t_data *data, t_here *doc)
 	doc->data = data;
 }
 
+void	set_pipe_cmd(t_child *kid, t_here *doc, char *buf)
+{
+	int	pipes[2];
+
+	free_kid_command(kid, doc);
+	kill(0, SIGUSR2);
+	if (kid->input_fd != -1)
+		close(kid->input_fd);
+	pipe(pipes);
+	kid->input_fd = dup(pipes[0]);
+	write(pipes[1], buf, ft_strlen(buf));
+	close(pipes[1]);
+	free(buf);
+	if (doc->order)
+		free_double_array(doc->order);
+	free(doc);
+	sig_controler(0);
+	return ;
+}
+
 int	heredoc(t_data *data, t_child *kid)
 {
-	t_here *doc;
-	int 	len;
-	int		pipes[2];
+	t_here	*doc;
+	int		len;
 	char	*buf;
 
 	doc = malloc(sizeof(t_here));
-	if(!doc)
+	if (!doc)
 		return (0);
 	init_doc_struct(data, doc);
 	len = is_valid_heredoc(kid, doc);
@@ -91,18 +110,6 @@ int	heredoc(t_data *data, t_child *kid)
 	buf = NULL;
 	make_order(kid, doc);
 	buf = make_heredoc_line(kid, doc, buf);
-	free_kid_command(kid, doc);
-	if (kid->input_fd != -1)
-		close(kid->input_fd);
-	kill(0, SIGUSR2);
-	pipe(pipes);
-	kid->input_fd = dup(pipes[0]);
-	write(pipes[1], buf, ft_strlen(buf));
-	close(pipes[1]);
-	free(buf);
-	if(doc->order)
-		free_double_array(doc->order);
-	free(doc);
-	sig_controler(0);
+	set_pipe_cmd(kid, doc, buf);
 	return (-1);
 }

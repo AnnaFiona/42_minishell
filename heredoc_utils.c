@@ -61,20 +61,32 @@ static int	start_stop(t_here *doc)
 {
 	if (doc->arrows == 1)
 	{
-		doc->token = 1;
+		if (doc->order && doc->index == size_2d(doc->order))
+			return (0);
 		return (ft_strcmp(doc->line, doc->order[doc->index]));
 	}
 	else
 	{
-		if(!ft_strcmp(doc->line, doc->order[doc->index]))
-		{
-			doc->token = 1;
-			doc->index++;
-		}
 		if (doc->order && doc->index == size_2d(doc->order))
 			return (0);
 	}
 	return (1);
+}
+
+static void	is_order(t_here *doc)
+{
+	if(!ft_strcmp(doc->line, doc->order[doc->index]))
+	{
+		doc->token = 1;
+		doc->index++;
+		free(doc->line);
+		doc->line = NULL;
+	}
+	else if(doc->token == 0 && doc->arrows > 1)
+	{
+		free(doc->line);
+		doc->line = NULL;
+	}
 }
 
 char	*make_heredoc_line(t_child *kid, t_here *doc, char *buf)
@@ -95,6 +107,7 @@ char	*make_heredoc_line(t_child *kid, t_here *doc, char *buf)
 		line_count++;
 		if (join_error_handling(kid, doc, line_count) == 0)
 			break ;
+		is_order(doc);
 		line_nl = ft_strjoin(doc->line, "\n");
 		buf = join_free(buf, line_nl);
 	}
