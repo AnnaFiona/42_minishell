@@ -1,6 +1,8 @@
 
 #include "minishell.h"
 
+int global_heredoc;
+
 static void	initialize_data(t_data *data)
 {
 	data->env_list = NULL;
@@ -14,6 +16,7 @@ static void	initialize_data(t_data *data)
 	data->pipe_count = -1;
 	data->args_y = -1;
 	data->len_env = 0;
+	global_heredoc = 0;
 	return ;
 }
 

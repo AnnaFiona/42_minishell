@@ -1,12 +1,12 @@
 
 #include "minishell.h"
 
-static void free_doc(t_child *kid, t_here *doc)
+void free_doc(t_child *kid, t_here *doc)
 {
 	free_kid(kid);
-	if(!doc->line)
+	if(doc->line)
 		free(doc->line);
-	if(!doc->order)
+	if(doc->order)
 		free_double_array(doc->order);
 	free_data(doc->data);
 	free(doc);

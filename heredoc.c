@@ -77,14 +77,16 @@ int	heredoc(t_data *data, t_child *kid)
 	doc = malloc(sizeof(t_here));
 	if(!doc)
 		return (0);
-	sig_controler(3);
 	init_doc_struct(data, doc);
 	len = is_valid_heredoc(kid, doc);
+	sig_controler(3);
 	if (len == -1)
 	{
 		free(doc);
+		sig_controler(0);
 		return (0);
 	}
+	kill(0, SIGUSR1);
 	doc->len = len;
 	buf = NULL;
 	make_order(kid, doc);
@@ -92,6 +94,7 @@ int	heredoc(t_data *data, t_child *kid)
 	free_kid_command(kid, doc);
 	if (kid->input_fd != -1)
 		close(kid->input_fd);
+	kill(0, SIGUSR2);
 	pipe(pipes);
 	kid->input_fd = dup(pipes[0]);
 	write(pipes[1], buf, ft_strlen(buf));

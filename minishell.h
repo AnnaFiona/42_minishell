@@ -11,6 +11,8 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+extern int global_heredoc;
+
 typedef struct s_env_list
 {
 	char				*var;
@@ -124,6 +126,7 @@ int		search_for_break(t_data *data, char *line, char *breakers, int x);
 void	get_args(t_data *data, char *line);
 
 //heredoc_is_valid.c
+void 	free_doc(t_child *kid, t_here *doc);
 int		is_valid_heredoc(t_child *kid, t_here *doc);
 
 //heredoc_utils.c
