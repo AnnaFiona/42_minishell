@@ -23,7 +23,6 @@ static char	*rl_with_history(char *line, char *prompt)
 		free(line);
 		line = (char *)NULL;
 	}
-	sig_controler(0);
 	line = readline(prompt);
 	if (line && *line)
 		add_history(line);
@@ -32,7 +31,6 @@ static char	*rl_with_history(char *line, char *prompt)
 
 void	terminal_loop(t_data *data)
 {
-	sig_controler(0);
 	while (1)
 	{
 		if (!(data->line = rl_with_history(data->line, data->prompt)))

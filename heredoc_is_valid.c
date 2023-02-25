@@ -1,20 +1,6 @@
 
 #include "minishell.h"
 
-/* int is_arrow(t_child *kid)
-{
-	int i;
-
-	i = 0;
-	while(kid->commands[i])
-	{
-		if(!ft_strcmp(kid->commands[i], "<<"))
-			return (1);
-		i++;
-	}
-	return (0);
-} */
-
 static void free_doc(t_child *kid, t_here *doc)
 {
 	free_kid(kid);
@@ -39,8 +25,6 @@ int	is_valid_heredoc(t_child *kid, t_here *doc)
 	len = 0;
 	if (!ft_strcmp(kid->commands[0], "<<") || !kid->commands[1])
 		return (-1);
-/* 	if(!is_arrow(kid))
-		return (-1); */
 	while (kid->commands[i])
 	{
 		if(!ft_strcmp(kid->commands[i], "<<") && !ft_strcmp(kid->commands[i + 1], "<<"))

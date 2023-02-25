@@ -23,6 +23,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
+	sig_controler(0);
 	data = malloc(sizeof(t_data));
 	initialize_data(data);
 	get_prompt(data);

@@ -47,6 +47,7 @@ static void	child_process(t_data *data, t_child *kid, int output_fd)
 	char	*path;
 
 	path = NULL;
+	sig_controler(1);
 	dup_input_output(data, kid, output_fd);
 	if(!ft_strcmp(kid->commands[0], "export"))
 	{
@@ -81,6 +82,7 @@ static void	make_child(t_data *data)
 		get_commands(data, kid, data->args);
 		if (kid->commands == NULL)
 			return ;
+		sig_controler(2);
 		kid->pid = fork();
 		if (kid->pid == 0)
 			child_process(data, kid, kid->pipe_fd[1]);
@@ -99,7 +101,7 @@ void	redirect_children(t_data *data)
 		return ;
 	data->args_y = 0;
 	make_child(data);
-	sig_controler(2);
 	wait_for_children(data);
+	sig_controler(0);
 	return ;
 }

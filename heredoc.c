@@ -76,10 +76,8 @@ int	heredoc(t_data *data, t_child *kid)
 
 	doc = malloc(sizeof(t_here));
 	if(!doc)
-	{
-		//protection
 		return (0);
-	}
+	sig_controler(3);
 	init_doc_struct(data, doc);
 	len = is_valid_heredoc(kid, doc);
 	if (len == -1)
@@ -99,5 +97,9 @@ int	heredoc(t_data *data, t_child *kid)
 	write(pipes[1], buf, ft_strlen(buf));
 	close(pipes[1]);
 	free(buf);
+	if(doc->order)
+		free_double_array(doc->order);
+	free(doc);
+	sig_controler(0);
 	return (-1);
 }

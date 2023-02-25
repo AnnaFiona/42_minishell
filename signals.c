@@ -11,17 +11,19 @@ void	str_c(int sig)
 	return ;
 }
 
-void	kill_child(int sig)
+void	sig_doc(int sig)
 {
 	(void)sig;
-	exit (0);
+	close(0);
 	return ;
 }
 
 void	new_line(int sig)
 {
-	(void)sig;
-	write(1, "\n", 1);
+	if(sig == SIGINT)
+		write(1, "\n", 1);
+	if(sig == SIGQUIT)
+		write(1, "Error: Core Dumped", 18);
 	return ;
 }
 
@@ -32,14 +34,19 @@ void	sig_controler(int status)
 		signal(SIGINT, str_c);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	else if (status == 1) // for child prozess, that the signals a default
+	else if (status == 1)
 	{
-		signal(SIGINT, kill_child);
+		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 	}
-	if (status == 2)
+	else if (status == 2)
 	{
 		signal(SIGINT, new_line);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (status == 3)
+	{
+		signal(SIGINT, sig_doc);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	return ;
