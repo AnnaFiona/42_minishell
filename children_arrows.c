@@ -51,13 +51,13 @@ void	search_for_arrows(t_data *data, t_child *kid)
 	{
 		if(kid->in_quotes[y] == 'q')
 			y++;
-		else if (ft_strcmp(kid->commands[y], "<<"))
+		else if (!ft_strcmp(kid->commands[y], "<<"))
 			y = heredoc(data, kid);
-		else if (ft_strcmp(kid->commands[y], ">"))
+		else if (!ft_strcmp(kid->commands[y], ">"))
 			y = in_or_out(data, kid, y, 0);
-		else if (ft_strcmp(kid->commands[y], ">>"))
+		else if (!ft_strcmp(kid->commands[y], ">>"))
 			y = in_or_out(data, kid, y, 1);
-		else if (ft_strcmp(kid->commands[y], "<"))
+		else if (!ft_strcmp(kid->commands[y], "<"))
 			y = in_or_out(data, kid, y, 2);
 		y++;
 	}

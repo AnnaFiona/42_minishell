@@ -15,15 +15,40 @@ void	count_pipes(t_data *data)
 	return ;
 }
 
+char	*is_absolute_path(char *cmd)
+{
+	char *tmp;
+	char *tmp_trimmed;
+
+	if (access(cmd, X_OK) == 0)
+	{
+		tmp = ft_strdup(cmd);
+		return (tmp);
+	}
+	if(*cmd != '~' || ft_strlen(cmd) < 2)
+		return(cmd);
+	tmp_trimmed = ft_substr(cmd, 1, ft_strlen(cmd) - 1);
+	tmp = ft_strjoin("/usr", tmp_trimmed);
+	free(tmp_trimmed);
+	if (access(tmp, X_OK) == 0)
+		return (tmp);
+	free(tmp);
+	return (NULL);
+}
+
 char	*get_path(char **paths, char *command)
 {
 	char	*path_with_command;
 	char	*temp_path;
+	char	*cmd_absolute;
 	int		y;
 
 	y = 0;
 	while (paths[y])
 	{
+		cmd_absolute = is_absolute_path(command);
+		if (cmd_absolute && access(cmd_absolute, X_OK) == 0)
+			return (cmd_absolute);
 		temp_path = ft_strjoin(paths[y], "/");
 		path_with_command = ft_strjoin(temp_path, command);
 		free(temp_path);
