@@ -83,7 +83,7 @@ void	set_pipe_cmd(t_child *kid, t_here *doc, char *buf)
 	if (doc->order)
 		free_double_array(doc->order);
 	free(doc);
-	sig_controler(0);
+	sig_controler(SIG_DEFAULT);
 	return ;
 }
 
@@ -98,11 +98,11 @@ int	heredoc(t_data *data, t_child *kid)
 		return (0);
 	init_doc_struct(data, doc);
 	len = is_valid_heredoc(kid, doc);
-	sig_controler(3);
+	sig_controler(SIG_HEREDOC);
 	if (len == -1)
 	{
 		free(doc);
-		sig_controler(0);
+		sig_controler(SIG_DEFAULT);
 		return (0);
 	}
 	kill(0, SIGUSR1);

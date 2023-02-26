@@ -46,7 +46,7 @@ static int	join_error_handling(t_child *kid, t_here *doc, int line_count)
 		{
 			ft_printf("bash: warning: here-document at line");
 			ft_printf(" %i delimited by end-of-file ", line_count);
-			ft_printf("wanted `%s')\n", kid->commands[doc->len + 1]);
+			ft_printf("(wanted `%s')\n", kid->commands[doc->len + 1]);
 			kill(0, SIGUSR2);
 			return (0);
 		}

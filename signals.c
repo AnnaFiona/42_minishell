@@ -19,51 +19,45 @@ void	sig_doc(int sig)
 	return ;
 }
 
-void	new_line(int sig)
+void	heredoc_nl_switch(int sig)
 {
-	if(sig == SIGINT && global_heredoc == 0)
+	if (sig == SIGINT && global_heredoc == 0)
 		write(1, "\n", 1);
-	return ;
-}
-
-void do_nl(int sig)
-{
-	if(sig == SIGUSR1)
+	else if (sig == SIGUSR1)
 		global_heredoc = 2;
+	else if (sig == SIGUSR2)
+		global_heredoc = 0;
 	return ;
 }
 
-void no_nl(int sig)
+void	main_after_fork(void)
 {
-	if(sig == SIGUSR2)
-		global_heredoc = 0;
+	signal(SIGUSR1, heredoc_nl_switch);
+	signal(SIGUSR2, heredoc_nl_switch);
+	signal(SIGINT, heredoc_nl_switch);
+	signal(SIGQUIT, SIG_IGN);
 	return ;
 }
 
 void	sig_controler(int status)
 {
-	if (status == 0)
+	if (status == SIG_DEFAULT)
 	{
 		signal(SIGUSR1, SIG_IGN);
 		signal(SIGUSR2, SIG_IGN);
 		signal(SIGINT, str_c);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	else if (status == 1)
+	else if (status == SIG_KID)
 	{
 		signal(SIGUSR1, SIG_IGN);
 		signal(SIGUSR2, SIG_IGN);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 	}
-	else if (status == 2)
-	{
-		signal(SIGUSR1, do_nl);
-		signal(SIGUSR2, no_nl);
-		signal(SIGINT, new_line);
-		signal(SIGQUIT, SIG_IGN);
-	}
-	else if (status == 3)
+	else if (status == SIG_PARRENT)
+		main_after_fork();
+	else if (status == SIG_HEREDOC)
 	{
 		signal(SIGUSR1, SIG_IGN);
 		signal(SIGUSR2, SIG_IGN);

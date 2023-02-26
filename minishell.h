@@ -11,6 +11,12 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+# define SIG_DEFAULT 0
+# define SIG_KID 1
+# define SIG_PARRENT 2
+# define SIG_HEREDOC 3
+
+
 extern int global_heredoc;
 
 typedef struct s_env_list
