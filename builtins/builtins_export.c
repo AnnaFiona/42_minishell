@@ -1,5 +1,5 @@
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	env_list_to_matrix(t_data *data)
 {

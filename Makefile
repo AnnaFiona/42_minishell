@@ -1,9 +1,11 @@
-NAME = minishell
+NAME		= minishell
+PATH_B		= builtins/builtins
+BUILTINS	= $(PATH_B)_export_utils.c \
+			$(PATH_B)_export_sort.c \
+			$(PATH_B)_export.c \
+			$(PATH_B).c
 
-MY_SOURCES = builtins_export_utils.c \
-			builtins_export_sort.c \
-			builtins_export.c \
-			builtins.c \
+MY_SOURCES 	= $(BUILTINS) \
 			children_arrows_utils.c \
 			children_arrows.c \
 			children_utils.c \
