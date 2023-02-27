@@ -1,7 +1,22 @@
 
 #include "minishell.h"
 
-void free_doc(t_child *kid, t_here *doc)
+/* void	is_unexpectet_token(t_child *kid, t_here *doc)
+{
+	int i;
+
+	i = 0;
+	while(kid->commands[i])
+	if (!kid->commands[1])
+	{
+		ft_printf("bash: syntax error near unexpected token `newline'\n");
+		free_doc(kid, doc);
+	}
+	i++;
+	return ;
+} */
+
+void	free_doc(t_child *kid, t_here *doc)
 {
 	free_kid(kid);
 	if(doc->line)
@@ -22,8 +37,11 @@ int	is_valid_heredoc(t_child *kid, t_here *doc)
 	if (!kid->commands)
 		return (-1);
 	len = 0;
-	if (!ft_strcmp(kid->commands[0], "<<") || !kid->commands[1])
-		return (-1);
+	if (!kid->commands[1])
+	{
+		ft_printf("bash: syntax error near unexpected token `newline'\n");
+		free_doc(kid, doc);
+	}
 	while (kid->commands[i])
 	{
 		if(!ft_strcmp(kid->commands[i], "<<") && !ft_strcmp(kid->commands[i + 1], "<<"))

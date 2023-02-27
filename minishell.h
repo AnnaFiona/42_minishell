@@ -88,9 +88,11 @@ void	cut_token(t_child *kid, int to_cut);
 //children_arrows.c
 void	search_for_arrows(t_data *data, t_child *kid);
 
+//children_path.c
+char	*get_path(t_data *data, t_child *kid, char **paths, char *command);
+
 //children_utils.c
 void	count_pipes(t_data *data);
-char	*get_path(char **paths, char *command);
 void	get_commands(t_data *data, t_child *kid, char **args);
 void	wait_for_children(t_data *data);
 
