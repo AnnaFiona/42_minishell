@@ -72,6 +72,8 @@ static void	make_child(t_data *data)
 	t_child	*kid;
 
 	kid = malloc(sizeof(t_child));
+	if(!kid)
+		return ;
 	initialize_child(kid);
 	while (kid->count <= data->pipe_count)
 	{
