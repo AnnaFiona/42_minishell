@@ -11,7 +11,6 @@ void free_doc(t_child *kid, t_here *doc)
 	free_data(doc->data);
 	free(doc);
 	exit(0);
-	return ;
 }
 
 int	is_valid_heredoc(t_child *kid, t_here *doc)
