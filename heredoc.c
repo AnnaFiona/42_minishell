@@ -55,7 +55,7 @@ static void	free_kid_command(t_child *kid, t_here *doc)
 	return ;
 }
 
-static void	init_doc_struct(t_data *data, t_here *doc)
+static void	init_doc_struct(t_here *doc)
 {
 	doc->len = 0;
 	doc->range = 0;
@@ -64,7 +64,6 @@ static void	init_doc_struct(t_data *data, t_here *doc)
 	doc->arrows = 0;
 	doc->line = NULL;
 	doc->order = NULL;
-	doc->data = data;
 }
 
 void	set_pipe_cmd(t_child *kid, t_here *doc, char *buf)
@@ -87,7 +86,7 @@ void	set_pipe_cmd(t_child *kid, t_here *doc, char *buf)
 	return ;
 }
 
-int	heredoc(t_data *data, t_child *kid)
+int	heredoc(t_child *kid)
 {
 	t_here	*doc;
 	int		len;
@@ -96,7 +95,7 @@ int	heredoc(t_data *data, t_child *kid)
 	doc = malloc(sizeof(t_here));
 	if (!doc)
 		return (0);
-	init_doc_struct(data, doc);
+	init_doc_struct(doc);
 	len = is_valid_heredoc(kid, doc);
 	sig_controler(SIG_HEREDOC);
 	if (len == -1)
@@ -112,4 +111,18 @@ int	heredoc(t_data *data, t_child *kid)
 	buf = make_heredoc_line(kid, doc, buf);
 	set_pipe_cmd(kid, doc, buf);
 	return (-1);
+}
+
+void	search_for_heredoc(t_child *kid)
+{
+	int	y;
+
+	y = 0;
+	while(kid->commands[y])
+	{
+		if (ft_strcmp(kid->commands[y], "<<") == 0 && kid->in_quotes[y] != 'q')
+			y = heredoc(kid);
+		y++;
+	}
+	return ;
 }

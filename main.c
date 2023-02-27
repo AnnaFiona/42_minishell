@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-int global_heredoc;
+int global_in_fd_copy;
 
 static void	initialize_data(t_data *data)
 {
@@ -16,7 +16,8 @@ static void	initialize_data(t_data *data)
 	data->pipe_count = -1;
 	data->args_y = -1;
 	data->len_env = 0;
-	global_heredoc = 0;
+	data->protec = 0;
+	global_in_fd_copy = 0;
 	return ;
 }
 

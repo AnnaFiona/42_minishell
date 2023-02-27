@@ -6,6 +6,7 @@ static void	initialize_child(t_child *kid)
 	kid->in_quotes = NULL;
 	kid->pipe_fd = malloc(sizeof(int) * 2);
 	kid->outfile_fd = -1;
+	kid->guard_fork = 0;
 	kid->infile_fd = -1;
 	kid->input_fd = -1;
 	kid->count = 0;
@@ -83,7 +84,10 @@ static void	make_child(t_data *data)
 			pipe(kid->pipe_fd);
 		get_commands(data, kid, data->args);
 		if (kid->commands == NULL)
-			return ;
+			break ;
+		search_for_heredoc(kid);
+		if (kid->guard_fork == 1)
+			break ;
 		sig_controler(SIG_PARRENT);
 		kid->pid = fork();
 		if (kid->pid == 0)

@@ -13,6 +13,7 @@ static void	renew_data(t_data *data)
 		free(data->in_quotes);
 		data->in_quotes = NULL;
 	}
+	data->args_y = 0;
 	return ;
 }
 

@@ -1,21 +1,6 @@
 
 #include "minishell.h"
 
-/* void	is_unexpectet_token(t_child *kid, t_here *doc)
-{
-	int i;
-
-	i = 0;
-	while(kid->commands[i])
-	if (!kid->commands[1])
-	{
-		ft_printf("bash: syntax error near unexpected token `newline'\n");
-		free_doc(kid, doc);
-	}
-	i++;
-	return ;
-} */
-
 void	free_doc(t_child *kid, t_here *doc)
 {
 	free_kid(kid);
@@ -23,7 +8,6 @@ void	free_doc(t_child *kid, t_here *doc)
 		free(doc->line);
 	if(doc->order)
 		free_double_array(doc->order);
-	free_data(doc->data);
 	free(doc);
 	exit(0);
 }

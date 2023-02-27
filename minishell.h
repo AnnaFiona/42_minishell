@@ -17,7 +17,7 @@
 # define SIG_HEREDOC 3
 
 
-extern int global_heredoc;
+extern int global_in_fd_copy;
 
 typedef struct s_env_list
 {
@@ -37,8 +37,9 @@ typedef struct s_data
 	char		*line;
 	char		quote;
 	int			pipe_count;
-	int			args_y;
 	int			len_env;
+	int			args_y;
+	int			protec;
 }				t_data;
 
 typedef struct s_child
@@ -47,6 +48,7 @@ typedef struct s_child
 	char	*in_quotes;
 	int		*pipe_fd;
 	int		outfile_fd;
+	int		guard_fork;
 	int		infile_fd;
 	int		input_fd;
 	int		count;
@@ -143,7 +145,8 @@ void 	make_order(t_child *kid, t_here *doc);
 
 //heredoc.c
 char	*join_free(char *s1, char *s2);
-int		heredoc(t_data *data, t_child *kid);
+int		heredoc(/* t_data *data, */ t_child *kid);
+void	search_for_heredoc(/* t_data *data, */ t_child *kid);
 
 //signals.c
 void	ctrl_d_exit(t_data *data);

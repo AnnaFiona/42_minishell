@@ -14,19 +14,22 @@ void	str_c(int sig)
 void	sig_doc(int sig)
 {
 	(void)sig;
-	global_heredoc = 1;
-	close(0);
+	global_in_fd_copy = dup(STDIN_FILENO);
+	close (STDIN_FILENO);
+	ft_printf("1");
+	//dup2(in_fd, 0);
+	//close(0);
 	return ;
 }
 
 void	heredoc_nl_switch(int sig)
 {
-	if (sig == SIGINT && global_heredoc == 0)
+	if (sig == SIGINT) /* && global_heredoc == 0) */
 		write(1, "\n", 1);
-	else if (sig == SIGUSR1)
+/* 	else if (sig == SIGUSR1)
 		global_heredoc = 2;
 	else if (sig == SIGUSR2)
-		global_heredoc = 0;
+		global_heredoc = 0; */
 	return ;
 }
 

@@ -42,17 +42,20 @@ static int	join_error_handling(t_child *kid, t_here *doc, int line_count)
 	doc->line = readline("> ");
 	if (!doc->line)
 	{
-		if(global_heredoc == 0)
+		if(global_in_fd_copy == 0)
 		{
 			ft_printf("bash: warning: here-document at line");
 			ft_printf(" %i delimited by end-of-file ", line_count);
 			ft_printf("(wanted `%s')\n", kid->commands[doc->len + 1]);
 			kill(0, SIGUSR2);
+			kid->guard_fork = 1;
 			return (0);
 		}
 		write(1, "\n", 1);
-		kill(0, SIGUSR2);
-		free_doc(kid, doc);
+		dup2(global_in_fd_copy, 0);
+		global_in_fd_copy = 0;
+		kid->guard_fork = 1;
+		return(0);
 	}
 	return (1);
 }
