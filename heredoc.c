@@ -85,7 +85,7 @@ void	set_pipe_cmd(t_child *kid, t_here *doc, char *buf)
 	return ;
 }
 
-int	heredoc(t_child *kid)
+static int	heredoc(t_data *data, t_child *kid)
 {
 	t_here	*doc;
 	int		len;
@@ -95,7 +95,7 @@ int	heredoc(t_child *kid)
 	if (!doc)
 		return (0);
 	init_doc_struct(doc);
-	len = is_valid_heredoc(kid, doc);
+	len = is_valid_heredoc(data, kid, doc);
 	sig_controler(SIG_HEREDOC);
 	if (len == -1)
 	{
@@ -122,7 +122,7 @@ void	search_for_heredoc(t_data *data, t_child *kid)
 	{
 		if (ft_strcmp(kid->commands[y], "<<") == 0 && kid->in_quotes[y] != 'q')
 		{
-			check = heredoc(kid);
+			check = heredoc(data, kid);
 			if(check == -2)
 			{
 				kid->guard_fork = 1;
