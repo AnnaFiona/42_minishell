@@ -66,11 +66,13 @@ void	wait_for_children(t_data *data)
 	}
 	if (data->exit_status == 2)
 		data->exit_status = 130;
-	if (data->exit_status == 256)
+	else if (data->exit_status == 256)
 		data->exit_status = 127;
-	if (data->exit_status == 512)
+	else if (data->exit_status == 512)
 		data->exit_status = 2;
-	if (data->exit_status == 768)
+	else if (data->exit_status == 768)
 		data->exit_status = 1;
+	else if (data->exit_status == 139)		// for core dumped in ./a.out !!!!!! <------ READ ME!!!!!!!
+		ft_printf("Segmentation fault (core dumped)\n");
 	return ;
 }
