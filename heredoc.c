@@ -71,7 +71,6 @@ void	set_pipe_cmd(t_child *kid, t_here *doc, char *buf)
 	int	pipes[2];
 
 	free_kid_command(kid, doc);
-	kill(0, SIGUSR2);
 	if (kid->input_fd != -1)
 		close(kid->input_fd);
 	pipe(pipes);
@@ -102,9 +101,8 @@ int	heredoc(t_child *kid)
 	{
 		free(doc);
 		sig_controler(SIG_DEFAULT);
-		return (0);
+		return (-2);
 	}
-	kill(0, SIGUSR1);
 	doc->len = len;
 	buf = NULL;
 	make_order(kid, doc);
@@ -115,13 +113,22 @@ int	heredoc(t_child *kid)
 
 void	search_for_heredoc(t_child *kid)
 {
+	int	check;
 	int	y;
 
 	y = 0;
 	while(kid->commands[y])
 	{
 		if (ft_strcmp(kid->commands[y], "<<") == 0 && kid->in_quotes[y] != 'q')
-			y = heredoc(kid);
+		{
+			check = heredoc(kid);
+			if(check == -2)
+			{
+				kid->guard_fork = 1;
+				break ;
+			}
+			y += check;
+		}
 		y++;
 	}
 	return ;
