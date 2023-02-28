@@ -15,7 +15,7 @@ static void		syntax_error_func(t_data *data, t_child *kid, char *token)
 		ft_printf("minishell: syntax error near unexpected token '%s'\n", token);
 	}
 	free_kid(kid);
-	exit_function(data, NULL, 1);
+	exit_function(data, NULL, 3);
 	return ;
 }
 

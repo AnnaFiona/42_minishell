@@ -85,7 +85,7 @@ static void	make_child(t_data *data)
 		get_commands(data, kid, data->args);
 		if (kid->commands == NULL)
 			break ;
-		search_for_heredoc(kid);
+		search_for_heredoc(data, kid);
 		if (kid->guard_fork == 1)
 			break ;
 		sig_controler(SIG_PARRENT);

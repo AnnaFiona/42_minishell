@@ -10,9 +10,9 @@ static void	open_outfile(t_data *data, t_child *kid, char *file_name, int append
 		kid->outfile_fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0777);
 	if (kid->outfile_fd == -1)
 	{
-		ft_printf("could not open %s\n", file_name);
+		ft_printf("minishell: %s: No such file or directory\n", file_name);
 		free_kid(kid);
-		exit_function(data, NULL, 1);
+		exit_function(data, NULL, 3);
 	}
 	return ;
 }
@@ -26,7 +26,7 @@ static void	open_infile(t_data *data, t_child *kid, char *file_name)
 	{
 		ft_printf("could not open %s\n", file_name);
 		free_kid(kid);
-		exit_function(data, NULL, 1);
+		exit_function(data, NULL, 3);
 	}
 	return ;
 }

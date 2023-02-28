@@ -146,8 +146,8 @@ void 	make_order(t_child *kid, t_here *doc);
 
 //heredoc.c
 char	*join_free(char *s1, char *s2);
-int		heredoc(/* t_data *data, */ t_child *kid);
-void	search_for_heredoc(/* t_data *data, */ t_child *kid);
+int		heredoc(t_child *kid);
+void	search_for_heredoc(t_data *data, t_child *kid);
 
 //signals.c
 void	ctrl_d_exit(t_data *data);

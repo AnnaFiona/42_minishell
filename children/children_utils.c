@@ -68,5 +68,9 @@ void	wait_for_children(t_data *data)
 		data->exit_status = 130;
 	if (data->exit_status == 256)
 		data->exit_status = 127;
+	if (data->exit_status == 512)
+		data->exit_status = 2;
+	if (data->exit_status == 768)
+		data->exit_status = 1;
 	return ;
 }

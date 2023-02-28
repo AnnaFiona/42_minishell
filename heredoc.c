@@ -111,12 +111,13 @@ int	heredoc(t_child *kid)
 	return (-1);
 }
 
-void	search_for_heredoc(t_child *kid)
+void	search_for_heredoc(t_data *data, t_child *kid)
 {
 	int	check;
 	int	y;
 
 	y = 0;
+	data->exit_status = 130;
 	while(kid->commands[y])
 	{
 		if (ft_strcmp(kid->commands[y], "<<") == 0 && kid->in_quotes[y] != 'q')
@@ -125,11 +126,13 @@ void	search_for_heredoc(t_child *kid)
 			if(check == -2)
 			{
 				kid->guard_fork = 1;
-				break ;
+				return ;
 			}
 			y += check;
 		}
 		y++;
 	}
+	if (kid->guard_fork != 1)
+		data->exit_status = 0;
 	return ;
 }
