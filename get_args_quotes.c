@@ -34,13 +34,18 @@ static char	*variable_name(char *arg, int x)
 	char	*var_name;
 	int		len;
 
-	len = 0;
 	x++;
-	while (arg[x + len])
+	len = 0;
+	if (arg[x] == '?')
+		len = 2;
+	else
 	{
-		if (ft_isalpha(arg[x + len]) == 0)
-			break ;
-		len++;
+		while (arg[x + len])
+		{
+			if (ft_isalpha(arg[x + len]) == 0)
+				break ;
+			len++;
+		}
 	}
 	var_name = ft_substr(arg, x, len);
 	if (!var_name)
@@ -64,7 +69,10 @@ int	replace_variables(t_data *data, int y, int x)
 	char	*back;
 
 	var_name = variable_name(data->args[y], x);
-	variable = ft_getenv(data, var_name);
+	if (data->args[y][x + 1] == '?')
+		variable = ft_itoa(data->exit_status);
+	else
+		variable = ft_getenv(data, var_name);
 	front = ft_substr(data->args[y], 0, x);
 	back = ft_substr(data->args[y], x + ft_strlen(var_name) + 1, \
 			ft_strlen(data->args[y] + x));
@@ -75,7 +83,8 @@ int	replace_variables(t_data *data, int y, int x)
 	x = ft_strlen (front_and_var);
 	free(front_and_var);
 	free(variable);
-	free(var_name);
+	if (var_name != NULL)
+		free(var_name);
 	free(front);
 	free(back);
 	return (x);

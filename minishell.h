@@ -36,6 +36,7 @@ typedef struct s_data
 	char		*prompt;
 	char		*line;
 	char		quote;
+	int			exit_status;
 	int			pipe_count;
 	int			len_env;
 	int			args_y;

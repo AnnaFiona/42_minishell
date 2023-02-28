@@ -61,7 +61,12 @@ void	wait_for_children(t_data *data)
 	data->pipe_count++;
 	while (data->pipe_count > 0)
 	{
-		waitpid(-1, NULL, 0);
+		waitpid(-1, &data->exit_status, 0);
 		data->pipe_count--;
 	}
+	if (data->exit_status == 2)
+		data->exit_status = 130;
+	if (data->exit_status == 256)
+		data->exit_status = 127;
+	return ;
 }
