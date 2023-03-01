@@ -37,7 +37,7 @@ int		is_valid_var(char *var)
 		return (1);
 	while(var[i])
 	{
-		if(ft_isalpha(var[i]) == 0)
+		if(!ft_isalpha(var[i]))
 			return (1);
 		i++;
 	}
@@ -46,8 +46,8 @@ int		is_valid_var(char *var)
 
 void second_arg_null(t_data *data)
 {
-	if(is_dub_in_ori(data, data->args[1], NULL) || is_valid_var(data->args[1]))
-		return ;
+	if(is_dub_in_ori(data, data->args[1], NULL) && is_valid_var(data->args[1]))
+		return;
 	if(!(is_dublicate(data, data->args[1], NULL)))
 	{
 		add_list_end(data, data->env_list, ft_strdup(data->args[1]), NULL);
@@ -64,7 +64,7 @@ void	save_var(t_data *data)
 	if (ft_strchr(data->args[1], '=') != NULL)
 	{
 		matrix = ft_split(data->args[1], '=');
-		if(is_dub_in_ori(data, matrix[0], matrix[1]) || is_valid_var(matrix[0]))
+		if(is_dub_in_ori(data, matrix[0], matrix[1]) && is_valid_var(data->args[1]))
 		{
 			free_double_array(matrix);
 			return ;
