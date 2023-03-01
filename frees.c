@@ -18,6 +18,8 @@ void	free_double_array(char **arrarr)
 
 void	free_kid(t_child *kid)
 {
+	if (kid->pid != NULL)
+		free(kid->pid);
 	if (kid->commands != NULL)
 		free_double_array(kid->commands);
 	if (kid->in_quotes != NULL)

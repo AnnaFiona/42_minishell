@@ -4,13 +4,14 @@ static void	initialize_child(t_child *kid)
 {
 	kid->commands = NULL;
 	kid->in_quotes = NULL;
+	kid->pipe_fd = NULL;
 	kid->pipe_fd = malloc(sizeof(int) * 2);
 	kid->outfile_fd = -1;
 	kid->guard_fork = 0;
 	kid->infile_fd = -1;
 	kid->input_fd = -1;
 	kid->count = 0;
-	kid->pid = -1;
+	kid->pid = NULL;
 	return ;
 }
 
@@ -68,14 +69,11 @@ static void	child_process(t_data *data, t_child *kid, int output_fd)
 	execve(path, kid->commands, data->env);
 }
 
-static void	make_child(t_data *data)
+static void	make_child(t_data *data, t_child *kid)
 {
-	t_child	*kid;
-
-	kid = malloc(sizeof(t_child));
-	if(!kid)
+	kid->pid = malloc(sizeof(int) * (data->pipe_count + 1));
+	if(!kid->pid)
 		return ;
-	initialize_child(kid);
 	while (kid->count <= data->pipe_count)
 	{
 		if (kid->count == data->pipe_count)
@@ -89,25 +87,31 @@ static void	make_child(t_data *data)
 		if (kid->guard_fork == 1)
 			break ;
 		sig_controler(SIG_PARRENT);
-		kid->pid = fork();
-		if (kid->pid == 0)
+		kid->pid[kid->count] = fork();
+		if (kid->pid[kid->count] == 0)
 			child_process(data, kid, kid->pipe_fd[1]);
 		close_pipes_and_free(data, kid);
 		kid->count++;
 	}
 	if (kid->input_fd != -1)
 		close(kid->input_fd);
-	free_kid(kid);
 	return ;
 }
 
 void	redirect_children(t_data *data)
 {
+	t_child	*kid;
+
+	kid = malloc(sizeof(t_child));
+	if(!kid)
+		return ;
+	initialize_child(kid);
 	if (data->args == NULL)
 		return ;
 	data->args_y = 0;
-	make_child(data);
-	wait_for_children(data);
+	make_child(data, kid);
+	wait_for_children(data, kid);
+	free_kid(kid);
 	sig_controler(SIG_DEFAULT);
 	return ;
 }

@@ -56,13 +56,16 @@ void	get_commands(t_data *data, t_child *kid, char **args)
 	return ;
 }
 
-void	wait_for_children(t_data *data)
+void	wait_for_children(t_data *data, t_child *kid)
 {
+	int i;
+
+	i = 0;
 	data->pipe_count++;
-	while (data->pipe_count > 0)
+	while (i < data->pipe_count)
 	{
-		waitpid(-1, &data->exit_status, 0);
-		data->pipe_count--;
+		waitpid(kid->pid[i], &data->exit_status, 0);
+		i++;
 	}
 	if (data->exit_status == 2)
 		data->exit_status = 130;
