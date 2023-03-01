@@ -48,12 +48,12 @@ typedef struct s_child
 	char	**commands;
 	char	*in_quotes;
 	int		*pipe_fd;
+	int		*pid;
 	int		outfile_fd;
 	int		guard_fork;
 	int		infile_fd;
 	int		input_fd;
 	int		count;
-	int		pid;
 }			t_child;
 
 typedef struct s_here
@@ -97,7 +97,7 @@ char	*get_path(t_data *data, t_child *kid, char **paths, char *command);
 //children_utils.c
 void	count_pipes(t_data *data);
 void	get_commands(t_data *data, t_child *kid, char **args);
-void	wait_for_children(t_data *data);
+void	wait_for_children(t_data *data, t_child *kid);
 
 //children.c
 void	redirect_children(t_data *data);

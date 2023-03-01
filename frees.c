@@ -24,6 +24,8 @@ void	free_kid(t_child *kid)
 		free(kid->in_quotes);
 	if (kid->pipe_fd != NULL)
 		free(kid->pipe_fd);
+	if (kid->pid != NULL)
+		free (kid->pid);
 	if (kid->outfile_fd != -1)
 		close (kid->outfile_fd);
 	if (kid != NULL)
