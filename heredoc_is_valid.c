@@ -38,7 +38,7 @@ static char	*heredoc_is_token(char *cmd)
 	char	**token_str;
 	
 	y = 0;
-	token_str = ft_split("|| && & ; ;; ;& ;;& | |& ( ) ' <<< << < >> >", ' ');
+	token_str = ft_split("<< < >> >", ' ');
 	while(token_str[y])
 	{
 		if(!ft_strncmp(cmd, token_str[y], ft_strlen(token_str[y])))
