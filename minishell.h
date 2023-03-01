@@ -38,6 +38,7 @@ typedef struct s_data
 	char		quote;
 	int			exit_status;
 	int			pipe_count;
+	int			ccl_token;
 	int			len_env;
 	int			args_y;
 	int			protec;
@@ -90,6 +91,10 @@ void	cut_token(t_child *kid, int to_cut);
 
 //children_arrows.c
 void	search_for_arrows(t_data *data, t_child *kid);
+
+//children_ccl_malloc_pid.c
+void 	child_ccl(t_data *data, t_child *kid);
+void 	malloc_pid(t_data *data, t_child *kid);
 
 //children_path.c
 char	*get_path(t_data *data, t_child *kid, char **paths, char *command);

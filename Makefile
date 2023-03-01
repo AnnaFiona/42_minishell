@@ -7,6 +7,7 @@ BUILTINS	= $(PATH_B)_export_utils.c \
 			$(PATH_B).c
 CHILDREN	= $(PATH_C)_arrows_utils.c \
 			$(PATH_C)_arrows.c \
+			$(PATH_C)_ccl_malloc_pid.c \
 			$(PATH_C)_path.c \
 			$(PATH_C)_utils.c \
 			$(PATH_C).c

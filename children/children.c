@@ -50,6 +50,7 @@ static void	child_process(t_data *data, t_child *kid, int output_fd)
 
 	path = NULL;
 	sig_controler(SIG_KID);
+	child_ccl(data, kid);
 	dup_input_output(data, kid, output_fd);
 	if(!ft_strcmp(kid->commands[0], "export"))
 	{
@@ -71,9 +72,7 @@ static void	child_process(t_data *data, t_child *kid, int output_fd)
 
 static void	make_child(t_data *data, t_child *kid)
 {
-	kid->pid = malloc(sizeof(int) * (data->pipe_count + 1));
-	if(!kid->pid)
-		return ;
+	malloc_pid(data, kid);
 	while (kid->count <= data->pipe_count)
 	{
 		if (kid->count == data->pipe_count)
@@ -90,6 +89,7 @@ static void	make_child(t_data *data, t_child *kid)
 		kid->pid[kid->count] = fork();
 		if (kid->pid[kid->count] == 0)
 			child_process(data, kid, kid->pipe_fd[1]);
+		data->ccl_token = 0;
 		close_pipes_and_free(data, kid);
 		kid->count++;
 	}

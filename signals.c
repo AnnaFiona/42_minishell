@@ -26,6 +26,13 @@ void	nl_parrent(int sig)
 	return ;
 }
 
+void ft_ccl(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	close (STDIN_FILENO);
+}
+
 void	sig_controler(int status)
 {
 	if (status == SIG_DEFAULT)
@@ -46,6 +53,11 @@ void	sig_controler(int status)
 	else if (status == SIG_HEREDOC)
 	{
 		signal(SIGINT, sig_doc);
+		signal(SIGQUIT, SIG_IGN);
+	}
+	else if (status == 4)
+	{
+		signal(SIGINT, ft_ccl);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	return ;

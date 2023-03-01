@@ -15,6 +15,7 @@ static void	initialize_data(t_data *data)
 	data->quote = '\0';
 	data->exit_status = 0;
 	data->pipe_count = -1;
+	data->ccl_token = 0;
 	data->args_y = -1;
 	data->len_env = 0;
 	data->protec = 0;
