@@ -76,6 +76,6 @@ void	wait_for_children(t_data *data, t_child *kid)
 	else if (data->exit_status == 768)
 		data->exit_status = 1;
 	else if (data->exit_status == 139)		// for core dumped in ./a.out !!!!!! <------ READ ME!!!!!!!
-		ft_printf("Segmentation fault (core dumped)\n");
+		ft_printf("+++Segmentation fault (core dumped)\n");
 	return ;
 }

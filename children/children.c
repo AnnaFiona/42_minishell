@@ -41,6 +41,11 @@ static void	dup_input_output(t_data *data, t_child *kid, int output_fd)
 		dup2(kid->outfile_fd, STDOUT_FILENO);
 	else if (output_fd != -1)
 		dup2(output_fd, STDOUT_FILENO);
+	if (!kid->commands[0])
+	{
+		free_kid(kid);
+		exit_function(data, NULL, 0);
+	}
 	return ;
 }
 
@@ -49,9 +54,8 @@ static void	child_process(t_data *data, t_child *kid, int output_fd)
 	char	*path;
 
 	path = NULL;
-	ft_printf("%i", data->no_cats);
 	sig_controler(SIG_KID);
-	child_ccl(data, kid);
+	//child_ccl(data, kid);
 	dup_input_output(data, kid, output_fd);
 	if(!ft_strcmp(kid->commands[0], "export"))
 	{
@@ -90,7 +94,7 @@ static void	make_child(t_data *data, t_child *kid)
 		kid->pid[kid->count] = fork();
 		if (kid->pid[kid->count] == 0)
 			child_process(data, kid, kid->pipe_fd[1]);
-		data->ccl_token = 0;
+		//data->ccl_token = 0;
 		close_pipes_and_free(data, kid);
 		kid->count++;
 	}

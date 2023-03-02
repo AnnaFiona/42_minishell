@@ -86,6 +86,6 @@ void	malloc_pid(t_data *data, t_child *kid)
 	kid->pid = malloc(sizeof(int) * (data->pipe_count + 1));
 	if (!kid->pid)
 		return ;
-	is_ccl(data);
+	//is_ccl(data);
 	return ;
 }

@@ -60,6 +60,24 @@ char	*strdup_or_strjoin(char const *s_1, char const *s_2)
 	return (ft_strjoin(s_1, s_2));
 }
 
+static int	is_it_variable(t_data *data, int y, int x, char *tokens)
+{
+	int	i;
+
+	i = 0;
+	/* if (data->args[y][x] == '\0' && data->args[y + 1] != NULL)
+		ft_printf ("minishell: syntax error near unexpected token `newline'\n"); */
+	if (data->args[y][x] == '\0' || data->args[y][x] == ' ')
+		return (1);
+	while (tokens[i])
+	{
+		if (data->args[y][x] == tokens[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	replace_variables(t_data *data, int y, int x)
 {
 	char	*front_and_var;
@@ -68,6 +86,8 @@ int	replace_variables(t_data *data, int y, int x)
 	char	*front;
 	char	*back;
 
+	if (is_it_variable(data, y, x + 1, "'\"|") == 1)
+		return (1);
 	var_name = variable_name(data->args[y], x);
 	if (data->args[y][x + 1] == '?')
 		variable = ft_itoa(data->exit_status);

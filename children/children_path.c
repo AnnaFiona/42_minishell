@@ -23,7 +23,7 @@ static char	*join_usr(char *cmd)
 	char	*tmp;
 
 	tmp_trimmed = ft_substr(cmd, 1, ft_strlen(cmd) - 1);
-	tmp = ft_strjoin("/usr", tmp_trimmed);
+	tmp = ft_strjoin("/usr/", tmp_trimmed);
 	free(tmp_trimmed);
 	if (access(tmp, X_OK) != 0)
 		return(NULL);
