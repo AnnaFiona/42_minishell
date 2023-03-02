@@ -42,6 +42,7 @@ typedef struct s_data
 	int			len_env;
 	int			args_y;
 	int			protec;
+	int			no_cats;
 }				t_data;
 
 typedef struct s_child

@@ -49,6 +49,7 @@ static void	child_process(t_data *data, t_child *kid, int output_fd)
 	char	*path;
 
 	path = NULL;
+	ft_printf("%i", data->no_cats);
 	sig_controler(SIG_KID);
 	child_ccl(data, kid);
 	dup_input_output(data, kid, output_fd);
