@@ -18,6 +18,7 @@ MY_SOURCES 	= $(BUILTINS) \
 			env_list.c \
 			envp_to_path.c \
 			frees.c \
+			get_args_path.c \
 			get_args_quotes.c \
 			get_args_utils.c \
 			get_args.c \

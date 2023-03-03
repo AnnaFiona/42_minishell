@@ -129,6 +129,9 @@ void	free_kid(t_child *kid);
 void	free_data(t_data *data);
 void	exit_function(t_data *data, char *error_message, int error);
 
+//get_args_path.c
+void	replace_path(t_data *data);
+
 //get_args_quotes.c
 int		cut_quotes(t_data *data, int y, int x);
 char	*strdup_or_strjoin(char const *s_1, char const *s_2);

@@ -40,7 +40,8 @@ static void	dup_input_output(t_data *data, t_child *kid)
 
 	in = kid->input_fd;
 	out = kid->output_fd;
-	close(kid->pipe_fd[0]);
+	if (kid->pipe_fd[0] != -1)
+		close(kid->pipe_fd[0]);
 	if (kid->pipe_fd[1] != -1)
 	{
 		kid->output_fd = dup(kid->pipe_fd[1]);
