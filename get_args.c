@@ -23,7 +23,10 @@ static void	finish_input(t_data *data, char **args)
 				x++;
 			}
 			else if (args[y][x] == '$' && data->quote != '\'')
+			{
 				x = replace_variables(data, y, x);
+				print_double_array(data->args);
+			}
 			else
 				x++;
 		}

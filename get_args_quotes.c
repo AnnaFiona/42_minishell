@@ -78,6 +78,49 @@ static int	is_it_variable(t_data *data, int y, int x, char *tokens)
 	return (0);
 }
 
+static void    actually_cut_arg(t_data *data, int to_cut, char **temp_arg, char *temp_quote)
+{
+	int len;
+	int y;
+
+	y = 0;
+	len = 0;
+	while (data->args[len])
+	{
+		if (len != to_cut)
+		{
+			temp_arg[y] = ft_strdup(data->args[len]);
+			temp_quote[y] = data->in_quotes[len];
+			y++;
+		}
+		len++;
+	}
+	temp_arg[y] = NULL;
+	temp_quote[y] = '\0';
+	return ;
+}
+
+static void	cut_arg(t_data *data, int to_cut)
+{
+	char	**temp_arg;
+	char	*temp_quote;
+	int		len;
+
+	len = 0;
+	while(data->args[len])
+		len++;
+	temp_arg = malloc (sizeof(char *) * (len - 1));
+	temp_quote = malloc (sizeof(char) * (len - 1));
+	if (!temp_arg || !temp_quote)
+		return ;//protection
+	actually_cut_arg(data, to_cut, temp_arg, temp_quote);
+	free_double_array(data->args);
+	data->args = temp_arg;
+	free(data->in_quotes);
+	data->in_quotes = temp_quote;
+	return ;
+}
+
 int	replace_variables(t_data *data, int y, int x)
 {
 	char	*front_and_var;
@@ -86,7 +129,7 @@ int	replace_variables(t_data *data, int y, int x)
 	char	*front;
 	char	*back;
 
-	if (is_it_variable(data, y, x + 1, "'\"|") == 1)
+	if (is_it_variable(data, y, x + 1, "'\"|/") == 1)
 		return (1);
 	var_name = variable_name(data->args[y], x);
 	if (data->args[y][x + 1] == '?')
@@ -96,16 +139,25 @@ int	replace_variables(t_data *data, int y, int x)
 	front = ft_substr(data->args[y], 0, x);
 	back = ft_substr(data->args[y], x + ft_strlen(var_name) + 1, \
 			ft_strlen(data->args[y] + x));
-	
+	ft_printf("back: %s1\n", back);
 	free (data->args[y]);
 	front_and_var = strdup_or_strjoin(front, variable);
 	data->args[y] = strdup_or_strjoin(front_and_var, back);
 	x = ft_strlen (front_and_var);
+/* 	ft_printf("variable: %s1\n", variable);
+	ft_printf("front_and_var: %s1\n", front_and_var);
+	ft_printf("var_name: %s1\n", var_name);
+	ft_printf("front: %s1\n", front);
+	ft_printf("data->args[y][x + 1]: %c\n", data->args[y][x + 1]);
+	ft_printf("data->args[y]: %s1\n", data->args[y][x + 1]);
+	ft_printf("x: %d\n", x); */
 	free(front_and_var);
 	free(variable);
 	if (var_name != NULL)
 		free(var_name);
 	free(front);
 	free(back);
+	if (data->args[y][0] == '\0')
+		cut_arg(data, y);
 	return (x);
 }
