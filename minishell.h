@@ -50,9 +50,8 @@ typedef struct s_child
 	char	**commands;
 	char	*in_quotes;
 	int		*pipe_fd;
-	int		outfile_fd;
 	int		guard_fork;
-	int		infile_fd;
+	int		output_fd;
 	int		input_fd;
 	int		count;
 	int		*pid;

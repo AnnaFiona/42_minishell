@@ -6,9 +6,10 @@ static void	initialize_child(t_child *kid)
 	kid->in_quotes = NULL;
 	kid->pipe_fd = NULL;
 	kid->pipe_fd = malloc(sizeof(int) * 2);
-	kid->outfile_fd = -1;
+	kid->pipe_fd[0] = -1;
+	kid->pipe_fd[1] = -1;
 	kid->guard_fork = 0;
-	kid->infile_fd = -1;
+	kid->output_fd = -1;
 	kid->input_fd = -1;
 	kid->count = 0;
 	kid->pid = NULL;
@@ -25,22 +26,39 @@ static void	close_pipes_and_free(t_data *data, t_child *kid)
 		close(kid->input_fd);
 	if (kid->count != data->pipe_count)
 		kid->input_fd = dup(kid->pipe_fd[0]);
-	if (kid->count != 0)
+	if (kid->pipe_fd[0] != -1)
 		close(kid->pipe_fd[0]);
 	if (kid->count != data->pipe_count)
 		close(kid->pipe_fd[1]);
 	return ;
 }
 
-static void	dup_input_output(t_data *data, t_child *kid, int output_fd)
+static void	dup_input_output(t_data *data, t_child *kid)
 {
+	int		out;
+	int		in;
+
+	in = kid->input_fd;
+	out = kid->output_fd;
+	close(kid->pipe_fd[0]);
+	if (kid->pipe_fd[1] != -1)
+	{
+		kid->output_fd = dup(kid->pipe_fd[1]);
+		close(kid->pipe_fd[1]);
+	}
 	search_for_arrows(data, kid);
 	if (kid->input_fd != -1)
-		dup2(kid->input_fd, STDIN_FILENO);
-	if (kid->outfile_fd != -1)
-		dup2(kid->outfile_fd, STDOUT_FILENO);
-	else if (output_fd != -1)
-		dup2(output_fd, STDOUT_FILENO);
+	{
+		in = dup2(kid->input_fd, STDIN_FILENO);
+		close(kid->input_fd);
+		kid->input_fd = dup(in);
+	}
+	if (kid->output_fd != -1)
+	{
+		out = dup2(kid->output_fd, STDOUT_FILENO);
+		close(kid->output_fd);
+		kid->output_fd = dup(out);
+	}
 	if (!kid->commands[0])
 	{
 		free_kid(kid);
@@ -49,14 +67,14 @@ static void	dup_input_output(t_data *data, t_child *kid, int output_fd)
 	return ;
 }
 
-static void	child_process(t_data *data, t_child *kid, int output_fd)
+static void	child_process(t_data *data, t_child *kid)
 {
 	char	*path;
 
 	path = NULL;
 	sig_controler(SIG_KID);
 	//child_ccl(data, kid);
-	dup_input_output(data, kid, output_fd);
+	dup_input_output(data, kid);
 	if(!ft_strcmp(kid->commands[0], "export"))
 	{
 		if (kid->commands[1] == NULL)
@@ -93,7 +111,7 @@ static void	make_child(t_data *data, t_child *kid)
 		sig_controler(SIG_PARRENT);
 		kid->pid[kid->count] = fork();
 		if (kid->pid[kid->count] == 0)
-			child_process(data, kid, kid->pipe_fd[1]);
+			child_process(data, kid);
 		//data->ccl_token = 0;
 		close_pipes_and_free(data, kid);
 		kid->count++;

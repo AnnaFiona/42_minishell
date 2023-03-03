@@ -139,18 +139,10 @@ int	replace_variables(t_data *data, int y, int x)
 	front = ft_substr(data->args[y], 0, x);
 	back = ft_substr(data->args[y], x + ft_strlen(var_name) + 1, \
 			ft_strlen(data->args[y] + x));
-	ft_printf("back: %s1\n", back);
 	free (data->args[y]);
 	front_and_var = strdup_or_strjoin(front, variable);
 	data->args[y] = strdup_or_strjoin(front_and_var, back);
 	x = ft_strlen (front_and_var);
-/* 	ft_printf("variable: %s1\n", variable);
-	ft_printf("front_and_var: %s1\n", front_and_var);
-	ft_printf("var_name: %s1\n", var_name);
-	ft_printf("front: %s1\n", front);
-	ft_printf("data->args[y][x + 1]: %c\n", data->args[y][x + 1]);
-	ft_printf("data->args[y]: %s1\n", data->args[y][x + 1]);
-	ft_printf("x: %d\n", x); */
 	free(front_and_var);
 	free(variable);
 	if (var_name != NULL)
