@@ -36,11 +36,11 @@ void	strcmp_sort(char **matrix, int len)
 
 void	print_export_list(t_env_list *top)
 {
-	while(top != NULL)
+	while (top != NULL)
 	{
 		ft_printf("declare -x ");
 		ft_printf("%s", top->var);
-		if(top->value)
+		if (top->value)
 			ft_printf("=\"%s\"", top->value);
 		ft_printf("\n");
 		top = top->next;
@@ -50,8 +50,8 @@ void	print_export_list(t_env_list *top)
 
 void	sort_env(t_data *data, char **env)
 {
-	t_env_list *tmp;
-	char **matrix;
+	t_env_list	*tmp;
+	char		**matrix;
 
 	tmp = NULL;
 	matrix = save_envp(env);
