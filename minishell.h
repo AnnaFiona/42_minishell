@@ -100,9 +100,9 @@ void	cut_token(t_child *kid, int to_cut);
 //children_arrows.c
 void	search_for_arrows(t_data *data, t_child *kid);
 
-//children_ccl_malloc_pid.c
-void 	child_ccl(t_data *data, t_child *kid);
+//children_prozess.c
 void 	malloc_pid(t_data *data, t_child *kid);
+void	child_process(t_data *data, t_child *kid);
 
 //children_path.c
 char	*get_path(t_data *data, t_child *kid, char **paths, char *command);
@@ -164,9 +164,7 @@ void 	make_order(t_child *kid, t_here *doc);
 char	*join_free(char *s1, char *s2);
 void	set_pipe_cmd(t_child *kid, t_index_doc *my_doc);
 void	free_kid_command(t_child *kid, t_index_doc *my_doc);
-//void	search_for_heredoc(t_data *data, t_child *kid);
 void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc);
-
 
 //signals.c
 void	ctrl_d_exit(t_data *data);

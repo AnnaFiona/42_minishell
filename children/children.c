@@ -34,87 +34,33 @@ static void	close_pipes_and_free(t_data *data, t_child *kid)
 	return ;
 }
 
-static void	dup_input_output(t_data *data, t_child *kid)
+static void	pipe_controller(t_data *data, t_child *kid, t_index_doc *my_doc)
 {
-	int		out;
-	int		in;
-
-	in = kid->input_fd;
-	out = kid->output_fd;
-	if (kid->pipe_fd[0] != -1)
-		close(kid->pipe_fd[0]);
-	if (kid->pipe_fd[1] != -1)
+	if (kid->count == data->pipe_count)
+		kid->pipe_fd[1] = -1;
+	else
+		pipe(kid->pipe_fd);
+	get_commands(data, kid, data->args);
+	if (kid->commands == NULL)
+		return ;
+	if (my_doc[kid->count].cut_len > -1)
 	{
-		kid->output_fd = dup(kid->pipe_fd[1]);
-		close(kid->pipe_fd[1]);
-	}
-	search_for_arrows(data, kid);
-	if (kid->input_fd != -1)
-	{
-		in = dup2(kid->input_fd, STDIN_FILENO);
-		close(kid->input_fd);
-		kid->input_fd = dup(in);
-	}
-	if (kid->output_fd != -1)
-	{
-		out = dup2(kid->output_fd, STDOUT_FILENO);
-		close(kid->output_fd);
-		kid->output_fd = dup(out);
-	}
-	if (!kid->commands[0])
-	{
-		free_kid(kid);
-		exit_function(data, NULL, 0);
+		free_kid_command(kid, &my_doc[kid->count]);
+		set_pipe_cmd(kid, &my_doc[kid->count]);
 	}
 	return ;
 }
 
-static void	child_process(t_data *data, t_child *kid)
-{
-	char	*path;
-
-	path = NULL;
-	sig_controler(SIG_KID);
-	dup_input_output(data, kid);
-	if(!ft_strcmp(kid->commands[0], "export"))
-	{
-		if (kid->commands[1] == NULL)
-			sort_env(data, data->env);
-		free_kid(kid);
-		exit_function(data, NULL, 1);
-	}
-	path = get_path(data, kid, data->path, kid->commands[0]);
-	if (path == NULL)
-	{
-		write (2, kid->commands[0], ft_strlen(kid->commands[0]));
-		write (2, ": command not found\n", 20);
-		free_kid(kid);
-		exit_function(data, NULL, 1);
-	}
-	execve(path, kid->commands, data->env);
-}
-
 static void	make_child(t_data *data, t_child *kid)
 {
-	t_index_doc *my_doc;
+	t_index_doc	*my_doc;
 
 	my_doc = malloc(sizeof(t_index_doc) * (data->pipe_count + 1));
 	malloc_pid(data, kid);
 	get_heredoc_line(data, kid, my_doc);
 	while (kid->count <= data->pipe_count)
 	{
-		if (kid->count == data->pipe_count)
-			kid->pipe_fd[1] = -1;
-		else
-			pipe(kid->pipe_fd);
-		get_commands(data, kid, data->args);
-		if (kid->commands == NULL)
-			break ;
-		if(my_doc[kid->count].cut_len > -1)
-		{
-			free_kid_command(kid, &my_doc[kid->count]);
-			set_pipe_cmd(kid, &my_doc[kid->count]);
-		}
+		pipe_controller(data, kid, my_doc);
 		if (kid->guard_fork == 1)
 			break ;
 		sig_controler(SIG_PARRENT);
@@ -138,7 +84,7 @@ void	redirect_children(t_data *data)
 	t_child	*kid;
 
 	kid = malloc(sizeof(t_child));
-	if(!kid)
+	if (!kid)
 		return ;
 	initialize_child(kid);
 	if (data->args == NULL)
