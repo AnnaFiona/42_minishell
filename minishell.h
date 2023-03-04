@@ -15,6 +15,8 @@
 # define SIG_KID 1
 # define SIG_PARRENT 2
 # define SIG_HEREDOC 3
+# define NO_CHILDS 0
+# define MAKE_CHILDS 1
 
 extern int g_in_fd_copy;
 

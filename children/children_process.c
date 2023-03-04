@@ -61,10 +61,14 @@ static void	dup_input_output(t_data *data, t_child *kid)
 
 void is_pwd(t_data *data, t_child *kid)
 {
+	if(!ft_strcmp(kid->commands[0], "cd"))
+	{
+		free_kid(kid);
+		exit_function(data, NULL, 1);
+	}
 	if (data->in_bin == 0 || ft_strcmp(kid->commands[0], "pwd"))
 		return ;
 	ft_printf("/bin\n");
-	data->in_bin = 0;
 	free_kid(kid);
 	exit_function(data, NULL, 1);
 }

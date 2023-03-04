@@ -58,9 +58,9 @@ int	is_builtin_last(t_data *data)
 	if (!ft_strcmp(data->args[last], "exit"))
 		return (1);
 	else if (!ft_strcmp(data->args[last], "cd"))
-		ft_cd(NULL);
+		data->in_bin = ft_cd(NULL);
 	else if (!ft_strcmp(data->args[last - 1], "cd"))
-		ft_cd(data->args[last]);
+		data->in_bin =ft_cd(data->args[last]);
 	else if (!ft_strcmp(data->args[last], "unset"))
 		return (1);
 	return (0);
@@ -69,12 +69,12 @@ int	is_builtin_last(t_data *data)
 int	builtins(t_data *data)
 {
 	if (data->args == NULL)
-		return (0);
+		return (NO_CHILDS);
 	count_pipes(data);
 	if (is_builtin_last(data) == 1)
-		return (0);
+		return (NO_CHILDS);
 	if (data->pipe_count > 0)
-		return (1);
+		return (MAKE_CHILDS);
 	else if (!ft_strcmp(data->args[0], "exit"))
 		exit_function(data, "exit\n", 0);
 	else if (!ft_strcmp(data->args[0], "cd"))
@@ -84,6 +84,6 @@ int	builtins(t_data *data)
 	else if (!ft_strcmp(data->args[0], "unset"))
 		ft_unset(data);
 	else
-		return (1);
-	return (0);
+		return (MAKE_CHILDS);
+	return (NO_CHILDS);
 }
