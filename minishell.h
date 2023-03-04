@@ -16,7 +16,7 @@
 # define SIG_PARRENT 2
 # define SIG_HEREDOC 3
 
-extern int global_in_fd_copy;
+extern int g_in_fd_copy;
 
 typedef struct s_env_list
 {

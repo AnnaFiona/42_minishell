@@ -14,7 +14,7 @@ void	str_c(int sig)
 void	sig_doc(int sig)
 {
 	(void)sig;
-	global_in_fd_copy = dup(STDIN_FILENO);
+	g_in_fd_copy = dup(STDIN_FILENO);
 	close (STDIN_FILENO);
 	return ;
 }
@@ -24,13 +24,6 @@ void	nl_parrent(int sig)
 	if (sig == SIGINT)
 		write(1, "\n", 1);
 	return ;
-}
-
-void ft_ccl(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	close (STDIN_FILENO);
 }
 
 void	sig_controler(int status)
@@ -53,11 +46,6 @@ void	sig_controler(int status)
 	else if (status == SIG_HEREDOC)
 	{
 		signal(SIGINT, sig_doc);
-		signal(SIGQUIT, SIG_IGN);
-	}
-	else if (status == 4)
-	{
-		signal(SIGINT, ft_ccl);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	return ;

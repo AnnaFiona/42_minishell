@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-int global_in_fd_copy;
+int			g_in_fd_copy;
 
 static void	initialize_data(t_data *data)
 {
@@ -15,21 +15,19 @@ static void	initialize_data(t_data *data)
 	data->quote = '\0';
 	data->exit_status = 0;
 	data->pipe_count = -1;
-	//data->ccl_token = 0;
 	data->args_y = -1;
 	data->len_env = 0;
-	//data->no_cats = 0;
 	data->protec = 0;
-	global_in_fd_copy = 0;
+	g_in_fd_copy = 0;
 	return ;
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data *data;
+	t_data	*data;
 
-	(void) argc;
-	(void) argv;
+	(void)argc;
+	(void)argv;
 	sig_controler(SIG_DEFAULT);
 	data = malloc(sizeof(t_data));
 	initialize_data(data);
@@ -55,18 +53,18 @@ void	print_double_array(char **arrarr)
 	}
 }
 
-char *ft_getenv(t_data *data, char *var)
+char	*ft_getenv(t_data *data, char *var)
 {
-	t_env_list *tmp;
+	t_env_list	*tmp;
 
-	if(!var)
+	if (!var)
 		return (NULL);
 	tmp = data->env_list;
-	while(tmp->next != NULL)
+	while (tmp->next != NULL)
 	{
-		if(!ft_strcmp(var, tmp->var))
-			return(ft_strdup(tmp->value));
+		if (!ft_strcmp(var, tmp->var))
+			return (ft_strdup(tmp->value));
 		tmp = tmp->next;
 	}
-	return(NULL);
+	return (NULL);
 }
