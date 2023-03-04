@@ -36,6 +36,16 @@ MY_OBJECTS = $(MY_SOURCES:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra
 
+DEF_COLOR = \033[0;39m
+GRAY = \033[0;90m
+RED = \033[0;91m
+GREEN = \033[0;92m
+YELLOW = \033[0;93m
+BLUE = \033[0;94m
+MAGENTA = \033[0;95m
+CYAN = \033[0;96m
+WHITE = \033[0;97m
+
 .PHONY: clean fclean all
 
 all: $(NAME)
@@ -43,7 +53,7 @@ all: $(NAME)
 $(NAME): $(MY_OBJECTS)
 	@$(MAKE) bonus -C libft
 	@cc $(CFLAGS) $(MY_OBJECTS) libft/libft.a -lreadline -o $(NAME)
-	@echo making mandatory .o files
+	@echo "$(GREEN)// Minishell created //$(DEF_COLOR)"
 
 clean:
 	@$(MAKE) -C libft fclean
