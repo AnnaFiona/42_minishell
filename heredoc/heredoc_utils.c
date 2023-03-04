@@ -1,40 +1,28 @@
 
 #include "../minishell.h"
 
-static int	count_fill_order(t_child *kid, t_here *doc, char fill)
+static char	*join_free(char *s1, char *s2)
 {
-	int	i;
-	int x;
+	char	*str;
 
-	i = 0;
-	x = 0;
-	while (kid->commands[i] && i < doc->range)
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
 	{
-		if (!ft_strcmp(kid->commands[i], "<<") && kid->commands[i + 1])
-		{
-			i++;
-			if (fill == 'y')
-				doc->order[x] = ft_strdup(kid->commands[i]);
-			x++;
-		}
-		i++;
+		str = ft_strdup(s2);
+		free(s2);
+		return (str);
 	}
-	doc->arrows = x;
-	if (fill == 'y')
-		doc->order[x] = NULL;
-	return (x);
-}
-
-void	make_order(t_child *kid, t_here *doc)
-{
-	int	i;
-
-	i = count_fill_order(kid, doc, 'n');
-	doc->order = malloc(sizeof(char *) * (i + 1));
-	if (!doc->order)
-		return ;
-	count_fill_order(kid, doc, 'y');
-	return ;
+	if (!s2)
+	{
+		str = ft_strdup(s1);
+		free(s1);
+		return (str);
+	}
+	str = ft_strjoin(s1, s2);
+	free(s1);
+	free(s2);
+	return (str);
 }
 
 static int	join_error_handling(t_child *kid, t_here *doc, int line_count)
@@ -42,7 +30,7 @@ static int	join_error_handling(t_child *kid, t_here *doc, int line_count)
 	doc->line = readline("> ");
 	if (!doc->line)
 	{
-		if(global_in_fd_copy == 0)
+		if (global_in_fd_copy == 0)
 		{
 			ft_printf("bash: warning: here-document at line");
 			ft_printf(" %i delimited by end-of-file ", line_count);
@@ -56,7 +44,7 @@ static int	join_error_handling(t_child *kid, t_here *doc, int line_count)
 		global_in_fd_copy = 0;
 		kid->guard_fork = 1;
 		sig_controler(SIG_DEFAULT);
-		return(0);
+		return (0);
 	}
 	return (1);
 }
@@ -79,14 +67,14 @@ static int	start_stop(t_here *doc)
 
 static void	is_order(t_here *doc)
 {
-	if(!ft_strcmp(doc->line, doc->order[doc->index]))
+	if (!ft_strcmp(doc->line, doc->order[doc->index]))
 	{
 		doc->token = 1;
 		doc->index++;
 		free(doc->line);
 		doc->line = NULL;
 	}
-	else if(doc->token == 0 && doc->arrows > 1)
+	else if (doc->token == 0 && doc->arrows > 1)
 	{
 		free(doc->line);
 		doc->line = NULL;
@@ -98,13 +86,13 @@ char	*make_heredoc_line(t_child *kid, t_here *doc)
 	int		len;
 	int		line_count;
 	int		doc_exit_line;
+	char	*buf;
 	char	*line_nl;
-	char 	*buf;
 
 	len = 0;
-	buf = NULL;
 	line_count = 0;
 	doc_exit_line = 0;
+	buf = NULL;
 	line_nl = NULL;
 	while (start_stop(doc) != 0)
 	{

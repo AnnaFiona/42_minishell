@@ -12,8 +12,8 @@ CHILDREN	= $(PATH_C)_arrows_utils.c \
 			$(PATH_C)_path.c \
 			$(PATH_C)_utils.c \
 			$(PATH_C).c
-
-HEREDOC		= $(PATH_H)_is_valid.c \
+HEREDOC		= $(PATH_H)_free_kid_cmd.c \
+			$(PATH_H)_is_valid.c \
 			$(PATH_H)_utils.c \
 			$(PATH_H).c
 

@@ -1,16 +1,6 @@
 
 #include "../minishell.h"
 
-void	free_doc(t_child *kid, t_here *doc)
-{
-	free_kid(kid);
-	if (doc->line)
-		free(doc->line);
-	if (doc->order)
-		free_double_array(doc->order);
-	free(doc);
-}
-
 static void	heredoc_syntax_error(t_data *data, t_child *kid, char *token)
 {
 	if (token == NULL)
@@ -36,12 +26,12 @@ static char	*heredoc_is_token(char *cmd)
 	int		y;
 	char	*error_token;
 	char	**token_str;
-	
+
 	y = 0;
 	token_str = ft_split("|| && & ; ;; ;& ;;& | |& ( ) ' <<< << < >> >", ' ');
-	while(token_str[y])
+	while (token_str[y])
 	{
-		if(!ft_strncmp(cmd, token_str[y], ft_strlen(token_str[y])))
+		if (!ft_strncmp(cmd, token_str[y], ft_strlen(token_str[y])))
 		{
 			error_token = ft_strdup(token_str[y]);
 			free_double_array(token_str);
@@ -55,7 +45,7 @@ static char	*heredoc_is_token(char *cmd)
 
 static int	herdoc_token(t_data *data, t_child *kid, char **cmd, int i)
 {
-	char *error_token;
+	char	*error_token;
 
 	error_token = NULL;
 	if (cmd[i] == NULL)

@@ -150,18 +150,18 @@ int		search_for_break(t_data *data, char *line, char *breakers, int x);
 //get_args.c
 void	get_args(t_data *data, char *line);
 
+//heredoc_free_kid_cmd.c
+int		count_fill_order(t_child *kid, t_here *doc, char fill);
+void	set_pipe_cmd(t_child *kid, t_index_doc *my_doc);
+void	free_kid_command(t_child *kid, t_index_doc *my_doc);
+
 //heredoc_is_valid.c
-void 	free_doc(t_child *kid, t_here *doc);
 int		is_valid_heredoc(t_data *data, t_child *kid, t_here *doc);
 
 //heredoc_utils.c
 char 	*make_heredoc_line(t_child *kid, t_here *doc);
-void 	make_order(t_child *kid, t_here *doc);
 
 //heredoc.c
-char	*join_free(char *s1, char *s2);
-void	set_pipe_cmd(t_child *kid, t_index_doc *my_doc);
-void	free_kid_command(t_child *kid, t_index_doc *my_doc);
 void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc);
 
 //signals.c
