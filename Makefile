@@ -2,7 +2,8 @@ NAME		= minishell
 PATH_B		= builtins/builtins
 PATH_C		= children/children
 PATH_H		= heredoc/heredoc
-BUILTINS	= $(PATH_B)_export_utils.c \
+BUILTINS	= $(PATH_B)_cd.c \
+			$(PATH_B)_export_utils.c \
 			$(PATH_B)_export_sort.c \
 			$(PATH_B)_export.c \
 			$(PATH_B).c

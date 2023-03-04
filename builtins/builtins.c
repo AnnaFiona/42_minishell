@@ -1,17 +1,6 @@
 
 #include "../minishell.h"
 
-int	ft_cd(char *path)
-{
-	if (!path)
-		chdir(getenv("HOME"));
-	else if (chdir(path))
-		ft_printf("minishell: cd: %s: No such file or directory\n", path);
-	if (!ft_strcmp(path, "/bin") || !ft_strcmp(path, "/bin/"))
-		return (1);
-	return (0);
-}
-
 void	rm_node(t_env_list *top)
 {
 	t_env_list	*tmp;
@@ -58,9 +47,9 @@ int	is_builtin_last(t_data *data)
 	if (!ft_strcmp(data->args[last], "exit"))
 		return (1);
 	else if (!ft_strcmp(data->args[last], "cd"))
-		data->in_bin = ft_cd(NULL);
+		ft_cd(data, NULL);
 	else if (!ft_strcmp(data->args[last - 1], "cd"))
-		data->in_bin =ft_cd(data->args[last]);
+		ft_cd(data, data->args[last]);
 	else if (!ft_strcmp(data->args[last], "unset"))
 		return (1);
 	return (0);
@@ -78,7 +67,7 @@ int	builtins(t_data *data)
 	else if (!ft_strcmp(data->args[0], "exit"))
 		exit_function(data, "exit\n", 0);
 	else if (!ft_strcmp(data->args[0], "cd"))
-		data->in_bin = ft_cd(data->args[1]);
+		ft_cd(data, data->args[1]);
 	else if (!ft_strcmp(data->args[0], "export"))
 		ft_export(data);
 	else if (!ft_strcmp(data->args[0], "unset"))

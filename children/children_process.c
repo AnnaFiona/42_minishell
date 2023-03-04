@@ -59,18 +59,25 @@ static void	dup_input_output(t_data *data, t_child *kid)
 	return ;
 }
 
-void is_pwd(t_data *data, t_child *kid)
+void change_pwd_mode(t_data *data, t_child *kid)
 {
+	char **tmp;
+
 	if(!ft_strcmp(kid->commands[0], "cd"))
 	{
 		free_kid(kid);
 		exit_function(data, NULL, 1);
 	}
-	if (data->in_bin == 0 || ft_strcmp(kid->commands[0], "pwd"))
-		return ;
-	ft_printf("/bin\n");
-	free_kid(kid);
-	exit_function(data, NULL, 1);
+	if(!ft_strcmp(kid->commands[0], "pwd") && !kid->commands[1])
+	{
+		tmp = malloc(sizeof(char *) * 3);
+		tmp[0] = ft_strdup(kid->commands[0]);
+		tmp[1] = ft_strdup("-L");
+		tmp[2] = NULL;
+		free_double_array(kid->commands);
+		kid->commands = tmp;
+	}
+	return ;
 }
 
 void	child_process(t_data *data, t_child *kid)
@@ -78,7 +85,7 @@ void	child_process(t_data *data, t_child *kid)
 	char	*path;
 
 	path = NULL;
-	is_pwd(data, kid);
+	change_pwd_mode(data, kid);
 	sig_controler(SIG_KID);
 	dup_input_output(data, kid);
 	if (!ft_strcmp(kid->commands[0], "export"))
@@ -96,5 +103,6 @@ void	child_process(t_data *data, t_child *kid)
 		free_kid(kid);
 		exit_function(data, NULL, 1);
 	}
+	print_double_array(kid->commands);
 	execve(path, kid->commands, data->env);
 }

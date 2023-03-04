@@ -43,8 +43,6 @@ typedef struct s_data
 	int			len_env;
 	int			args_y;
 	int			protec;
-	int			no_cats;
-	int 		in_bin;
 }				t_data;
 
 typedef struct s_child
@@ -78,6 +76,9 @@ typedef struct s_index_doc
 	char	*doc_line;
 	int		cut_len;
 }			t_index_doc;
+
+//builtins_cd.c
+int		ft_cd(t_data *data, char *path);
 
 //builtins_export_sort.c
 void	env_list_to_matrix(t_data *data);
