@@ -6,7 +6,7 @@
 /*   By: nprljic <nprljic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 13:01:04 by aplank            #+#    #+#             */
-/*   Updated: 2023/02/21 15:50:47 by nprljic          ###   ########.fr       */
+/*   Updated: 2023/03/04 17:06:48 by nprljic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ char	*ft_strdup(const char *s)
 	char	*str;
 	int		x;
 
-	if(s == NULL)
-		return(NULL);
+	if (s == NULL)
+		return (NULL);
 	x = 0;
 	str = malloc(ft_strlen(s) + 1 * sizeof(char));
 	if (!str)

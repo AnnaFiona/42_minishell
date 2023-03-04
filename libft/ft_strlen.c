@@ -6,7 +6,7 @@
 /*   By: nprljic <nprljic@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 09:47:07 by aplank            #+#    #+#             */
-/*   Updated: 2023/02/21 15:49:47 by nprljic          ###   ########.fr       */
+/*   Updated: 2023/03/04 17:07:17 by nprljic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *s)
 	size_t	x;
 
 	x = 0;
-	if(s == NULL)
+	if (s == NULL)
 		return (0);
 	while (*s)
 	{
