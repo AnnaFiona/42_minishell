@@ -19,13 +19,8 @@ void	malloc_pid(t_data *data, t_child *kid)
 	return ;
 }
 
-static void	dup_input_output(t_data *data, t_child *kid)
+static void	dup_input(t_child *kid)
 {
-	int		out;
-	int		in;
-
-	in = kid->input_fd;
-	out = kid->output_fd;
 	if (kid->pipe_fd[0] != -1)
 		close(kid->pipe_fd[0]);
 	if (kid->pipe_fd[1] != -1)
@@ -33,6 +28,17 @@ static void	dup_input_output(t_data *data, t_child *kid)
 		kid->output_fd = dup(kid->pipe_fd[1]);
 		close(kid->pipe_fd[1]);
 	}
+	return ;
+}
+
+static void	dup_input_output(t_data *data, t_child *kid)
+{
+	int	out;
+	int	in;
+
+	in = kid->input_fd;
+	out = kid->output_fd;
+	dup_input(kid);
 	search_for_arrows(data, kid);
 	if (kid->input_fd != -1)
 	{
@@ -61,7 +67,7 @@ void	child_process(t_data *data, t_child *kid)
 	path = NULL;
 	sig_controler(SIG_KID);
 	dup_input_output(data, kid);
-	if(!ft_strcmp(kid->commands[0], "export"))
+	if (!ft_strcmp(kid->commands[0], "export"))
 	{
 		if (kid->commands[1] == NULL)
 			sort_env(data, data->env);
@@ -71,8 +77,8 @@ void	child_process(t_data *data, t_child *kid)
 	path = get_path(data, kid, data->path, kid->commands[0]);
 	if (path == NULL)
 	{
-		write (2, kid->commands[0], ft_strlen(kid->commands[0]));
-		write (2, ": command not found\n", 20);
+		write(2, kid->commands[0], ft_strlen(kid->commands[0]));
+		write(2, ": command not found\n", 20);
 		free_kid(kid);
 		exit_function(data, NULL, 1);
 	}

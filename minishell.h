@@ -16,7 +16,6 @@
 # define SIG_PARRENT 2
 # define SIG_HEREDOC 3
 
-
 extern int global_in_fd_copy;
 
 typedef struct s_env_list
@@ -76,7 +75,6 @@ typedef struct s_index_doc
 	char	*doc_line;
 	int		cut_len;
 }			t_index_doc;
-
 
 //builtins_export_sort.c
 void	env_list_to_matrix(t_data *data);
