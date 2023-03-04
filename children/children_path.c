@@ -1,10 +1,10 @@
 #include "../minishell.h"
-#include <sys/types.h>
 #include <dirent.h>
+#include <sys/types.h>
 
 static void	is_dir(t_data *data, t_child *kid, char *cmd)
 {
-	DIR		*fd;
+	DIR	*fd;
 
 	fd = opendir(cmd);
 	if (fd)
@@ -26,7 +26,7 @@ static char	*join_usr(char *cmd)
 	tmp = ft_strjoin("/usr/", tmp_trimmed);
 	free(tmp_trimmed);
 	if (access(tmp, X_OK) != 0)
-		return(NULL);
+		return (NULL);
 	return (tmp);
 }
 
@@ -67,7 +67,7 @@ char	*get_path(t_data *data, t_child *kid, char **paths, char *command)
 		free(temp_path);
 		if (access(path_with_command, X_OK) == 0)
 			return (path_with_command);
-		free (path_with_command);
+		free(path_with_command);
 		y++;
 	}
 	return (NULL);
