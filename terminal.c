@@ -22,7 +22,7 @@ static char	*rl_with_history(char *line, char *prompt)
 	if (line)
 	{
 		free(line);
-		line = (char *)NULL;
+		line = NULL;
 	}
 	line = readline(prompt);
 	if (line && *line)
@@ -34,10 +34,11 @@ void	terminal_loop(t_data *data)
 {
 	while (1)
 	{
-		if (!(data->line = rl_with_history(data->line, data->prompt)))
+		data->line = rl_with_history(data->line, data->prompt);
+		if (data->line == NULL)
 			ctrl_d_exit(data);
 		get_args(data, data->line);
-		if(builtins(data) == 1)
+		if (builtins(data) == 1)
 			redirect_children(data);
 		renew_data(data);
 	}
