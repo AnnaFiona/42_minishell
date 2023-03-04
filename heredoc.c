@@ -29,7 +29,6 @@ void	set_pipe_cmd(t_child *kid, t_index_doc *my_doc)
 {
 	int	pipes[2];
 
-	//free_kid_command(kid, doc);
 	if (kid->input_fd != -1)
 		close(kid->input_fd);
 	pipe(pipes);
@@ -39,10 +38,6 @@ void	set_pipe_cmd(t_child *kid, t_index_doc *my_doc)
 	if(my_doc->doc_line)
 		free(my_doc->doc_line);
 	my_doc->doc_line = NULL;
-	//if (doc->order)
-		//free_double_array(doc->order);
-	//free(doc);
-	//sig_controler(SIG_DEFAULT);
 	return ;
 }
 
