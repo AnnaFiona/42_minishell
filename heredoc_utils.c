@@ -93,14 +93,16 @@ static void	is_order(t_here *doc)
 	}
 }
 
-char	*make_heredoc_line(t_child *kid, t_here *doc, char *buf)
+char	*make_heredoc_line(t_child *kid, t_here *doc)
 {
 	int		len;
 	int		line_count;
 	int		doc_exit_line;
 	char	*line_nl;
+	char 	*buf;
 
 	len = 0;
+	buf = NULL;
 	line_count = 0;
 	doc_exit_line = 0;
 	line_nl = NULL;

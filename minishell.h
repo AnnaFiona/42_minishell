@@ -48,6 +48,8 @@ typedef struct s_data
 typedef struct s_child
 {
 	char	**commands;
+	char	**doc_matrix;
+	int		*doc_len;
 	char	*in_quotes;
 	int		*pipe_fd;
 	int		outfile_fd;
@@ -69,6 +71,12 @@ typedef struct s_here
 	char	**order;
 	struct 	s_data *data;
 }			t_here;
+
+typedef struct s_index_doc
+{
+	char	*doc_line;
+	int		cut_len;
+}			t_index_doc;
 
 
 //builtins_export_sort.c
@@ -147,12 +155,16 @@ void 	free_doc(t_child *kid, t_here *doc);
 int		is_valid_heredoc(t_data *data, t_child *kid, t_here *doc);
 
 //heredoc_utils.c
-char 	*make_heredoc_line(t_child *kid, t_here *doc, char *buf);
+char 	*make_heredoc_line(t_child *kid, t_here *doc);
 void 	make_order(t_child *kid, t_here *doc);
 
 //heredoc.c
 char	*join_free(char *s1, char *s2);
-void	search_for_heredoc(t_data *data, t_child *kid);
+void	set_pipe_cmd(t_child *kid, t_index_doc *my_doc);
+void	free_kid_command(t_child *kid, t_index_doc *my_doc);
+//void	search_for_heredoc(t_data *data, t_child *kid);
+void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc);
+
 
 //signals.c
 void	ctrl_d_exit(t_data *data);

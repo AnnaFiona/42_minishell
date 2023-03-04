@@ -55,7 +55,6 @@ void	is_ccl(t_data *data)
 		return ;
 	if(is_string_in_matrix(data->args, "<<"))
 	{
-		ft_printf("+");
 		data->no_cats = 1;
 		return ;
 	}

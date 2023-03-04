@@ -2,6 +2,7 @@
 
 static void	initialize_child(t_child *kid)
 {
+	kid->doc_matrix = NULL;
 	kid->commands = NULL;
 	kid->in_quotes = NULL;
 	kid->pipe_fd = NULL;
@@ -77,7 +78,11 @@ static void	child_process(t_data *data, t_child *kid, int output_fd)
 
 static void	make_child(t_data *data, t_child *kid)
 {
+	t_index_doc *my_doc;
+
+	my_doc = malloc(sizeof(t_index_doc) * (data->pipe_count + 1));
 	malloc_pid(data, kid);
+	get_heredoc_line(data, kid, my_doc);
 	while (kid->count <= data->pipe_count)
 	{
 		if (kid->count == data->pipe_count)
@@ -87,19 +92,28 @@ static void	make_child(t_data *data, t_child *kid)
 		get_commands(data, kid, data->args);
 		if (kid->commands == NULL)
 			break ;
-		search_for_heredoc(data, kid);
+		if(my_doc[kid->count].cut_len > -1)
+		{
+			free_kid_command(kid, &my_doc[kid->count]);
+			set_pipe_cmd(kid, &my_doc[kid->count]);
+		}
+		//search_for_heredoc(data, kid);
 		if (kid->guard_fork == 1)
 			break ;
 		sig_controler(SIG_PARRENT);
 		kid->pid[kid->count] = fork();
 		if (kid->pid[kid->count] == 0)
+		{
+			free(my_doc);
 			child_process(data, kid, kid->pipe_fd[1]);
+		}
 		//data->ccl_token = 0;
 		close_pipes_and_free(data, kid);
 		kid->count++;
 	}
 	if (kid->input_fd != -1)
 		close(kid->input_fd);
+	free(my_doc);
 	return ;
 }
 
