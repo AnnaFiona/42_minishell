@@ -1,7 +1,6 @@
 #include "../minishell.h"
 
 // señorita your cat cat ls :)
-
 void	malloc_pid(t_data *data, t_child *kid)
 {
 	int	i;
@@ -60,11 +59,22 @@ static void	dup_input_output(t_data *data, t_child *kid)
 	return ;
 }
 
+void is_pwd(t_data *data, t_child *kid)
+{
+	if (data->in_bin == 0 || ft_strcmp(kid->commands[0], "pwd"))
+		return ;
+	ft_printf("/bin\n");
+	data->in_bin = 0;
+	free_kid(kid);
+	exit_function(data, NULL, 1);
+}
+
 void	child_process(t_data *data, t_child *kid)
 {
 	char	*path;
 
 	path = NULL;
+	is_pwd(data, kid);
 	sig_controler(SIG_KID);
 	dup_input_output(data, kid);
 	if (!ft_strcmp(kid->commands[0], "export"))
