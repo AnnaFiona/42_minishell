@@ -52,9 +52,8 @@ typedef struct s_child
 	int		*doc_len;
 	char	*in_quotes;
 	int		*pipe_fd;
-	int		outfile_fd;
 	int		guard_fork;
-	int		infile_fd;
+	int		output_fd;
 	int		input_fd;
 	int		count;
 	int		*pid;
@@ -137,6 +136,9 @@ void	free_double_array(char **arrarr);
 void	free_kid(t_child *kid);
 void	free_data(t_data *data);
 void	exit_function(t_data *data, char *error_message, int error);
+
+//get_args_path.c
+void	replace_path(t_data *data);
 
 //get_args_quotes.c
 int		cut_quotes(t_data *data, int y, int x);

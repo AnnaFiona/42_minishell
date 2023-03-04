@@ -2,13 +2,13 @@
 
 static void	open_outfile(t_data *data, t_child *kid, char *file_name, int append)
 {
-	if (kid->outfile_fd != -1)
-		close(kid->outfile_fd);
+	if (kid->output_fd != -1)
+		close(kid->output_fd);
 	if (append == 0)
-		kid->outfile_fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		kid->output_fd = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	else if (append == 1)
-		kid->outfile_fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0777);
-	if (kid->outfile_fd == -1)
+		kid->output_fd = open(file_name, O_WRONLY | O_CREAT | O_APPEND, 0777);
+	if (kid->output_fd == -1)
 	{
 		ft_printf("minishell: %s: No such file or directory\n", file_name);
 		free_kid(kid);

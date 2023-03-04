@@ -110,5 +110,6 @@ void	get_args(t_data *data, char *line)
 	free(line);
 	data->line = NULL;
 	finish_input(data, data->args);
+	replace_path(data);
 	return ;
 }
