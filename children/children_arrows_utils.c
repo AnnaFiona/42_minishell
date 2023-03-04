@@ -1,18 +1,22 @@
 #include "../minishell.h"
 
-static void		syntax_error_func(t_data *data, t_child *kid, char *token)
+static void	syntax_error_func(t_data *data, t_child *kid, char *token)
 {
 	if (token == NULL)
 	{
 		if (data->pipe_count == 0 || data->pipe_count == kid->count)
-			ft_printf("minishell: syntax error near unexpected token 'newline'\n");
+		{
+			ft_printf("minishell: syntax error near");
+			ft_printf(" unexpected token 'newline'\n");
+		}
 		else
 			ft_printf("minishell: syntax error near unexpected token '|'\n");
 	}
 	else
 	{
-		print_double_array(kid->commands);	
-		ft_printf("minishell: syntax error near unexpected token '%s'\n", token);
+		print_double_array(kid->commands);
+		ft_printf("minishell: syntax error near unexpected token '%s'\n",
+			token);
 	}
 	free_kid(kid);
 	exit_function(data, NULL, 3);
@@ -30,10 +34,11 @@ void	is_it_a_token(t_data *data, t_child *kid, char **commands, int y)
 	return ;
 }
 
-static void    actually_cut_token(t_child *kid, int to_cut, char **temp_com, char *temp_quote)
+static void	actually_cut_token(t_child *kid, int to_cut, char **temp_com,
+		char *temp_quote)
 {
-	int len;
-	int y;
+	int	len;
+	int	y;
 
 	y = 0;
 	len = 0;
@@ -59,12 +64,12 @@ void	cut_token(t_child *kid, int to_cut)
 	int		len;
 
 	len = 0;
-	while(kid->commands[len])
+	while (kid->commands[len])
 		len++;
-	temp_com = malloc (sizeof(char *) * (len - 1));
-	temp_quote = malloc (sizeof(char) * (len - 1));
+	temp_com = malloc(sizeof(char *) * (len - 1));
+	temp_quote = malloc(sizeof(char) * (len - 1));
 	if (!temp_com || !temp_quote)
-		return ;//protection
+		return ;
 	actually_cut_token(kid, to_cut, temp_com, temp_quote);
 	free_double_array(kid->commands);
 	kid->commands = temp_com;

@@ -1,6 +1,7 @@
 NAME		= minishell
 PATH_B		= builtins/builtins
 PATH_C		= children/children
+PATH_H		= heredoc/heredoc
 BUILTINS	= $(PATH_B)_export_utils.c \
 			$(PATH_B)_export_sort.c \
 			$(PATH_B)_export.c \
@@ -12,6 +13,10 @@ CHILDREN	= $(PATH_C)_arrows_utils.c \
 			$(PATH_C)_utils.c \
 			$(PATH_C).c
 
+HEREDOC		= $(PATH_H)_is_valid.c \
+			$(PATH_H)_utils.c \
+			$(PATH_H).c
+
 MY_SOURCES 	= $(BUILTINS) \
 			$(CHILDREN) \
 			env_list_utils.c \
@@ -22,9 +27,7 @@ MY_SOURCES 	= $(BUILTINS) \
 			get_args_quotes.c \
 			get_args_utils.c \
 			get_args.c \
-			heredoc_is_valid.c \
-			heredoc_utils.c \
-			heredoc.c \
+			$(HEREDOC) \
 			main.c \
 			signals.c \
 			terminal.c
