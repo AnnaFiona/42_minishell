@@ -17,7 +17,7 @@ static void	is_dir(t_data *data, t_child *kid, char *cmd)
 	return ;
 }
 
-static char	*join_usr(char *cmd)
+/* static char	*join_usr(char *cmd)
 {
 	char	*tmp_trimmed;
 	char	*tmp;
@@ -28,32 +28,46 @@ static char	*join_usr(char *cmd)
 	if (access(tmp, X_OK) != 0)
 		return (NULL);
 	return (tmp);
-}
+} */
 
 static char	*is_absolute_path(t_data *data, t_child *kid, char *cmd)
 {
 	char	*tmp;
 
 	tmp = NULL;
-	if (*cmd == '~')
+	/* if (*cmd == '~')
 	{
 		tmp = join_usr(cmd);
 		if (tmp == NULL)
 			return (NULL);
 		is_dir(data, kid, tmp);
 		return (tmp);
-	}
+	} */
 	if (access(cmd, X_OK) != 0)
 		return (NULL);
 	is_dir(data, kid, cmd);
 	return (cmd);
 }
 
+int	is_dubble_char(char *path, char c)
+{
+	int	i;
+
+	i = 0;
+	while (path[i])
+	{
+		if (path[i] == c && path[i + 1] == c)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 char	*get_path(t_data *data, t_child *kid, char **paths, char *command)
 {
 	char	*path_with_command;
-	char	*temp_path;
 	char	*cmd_absolute;
+	char	*temp_path;
 	int		y;
 
 	y = 0;
@@ -66,7 +80,10 @@ char	*get_path(t_data *data, t_child *kid, char **paths, char *command)
 		path_with_command = ft_strjoin(temp_path, command);
 		free(temp_path);
 		if (access(path_with_command, X_OK) == 0)
-			return (path_with_command);
+		{
+			if(is_dubble_char(path_with_command, '/') == 1)
+				return (path_with_command);
+		}
 		free(path_with_command);
 		y++;
 	}

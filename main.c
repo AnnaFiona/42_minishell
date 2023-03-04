@@ -18,6 +18,7 @@ static void	initialize_data(t_data *data)
 	data->args_y = -1;
 	data->len_env = 0;
 	data->protec = 0;
+	data->in_bin = 0;
 	g_in_fd_copy = 0;
 	return ;
 }
