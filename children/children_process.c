@@ -103,6 +103,5 @@ void	child_process(t_data *data, t_child *kid)
 		free_kid(kid);
 		exit_function(data, NULL, 1);
 	}
-	print_double_array(kid->commands);
 	execve(path, kid->commands, data->env);
 }
