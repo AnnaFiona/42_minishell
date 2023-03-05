@@ -3,8 +3,21 @@
 
 static int	remove_end_malloc(char *str, char c)
 {
-	int		len;
+	int	count;
+	int	len;
 
+	len = 0;
+	count = 0;
+	while (str[len])
+	{
+		if (str[len] == '/')
+			count++;
+		if (count > 1)
+			break ;
+		len++;
+	}
+	if (count < 2)
+		return (-1);
 	len = ft_strlen(str);
 	while (len > 0)
 	{
@@ -18,13 +31,23 @@ static int	remove_end_malloc(char *str, char c)
 static char	*remove_end(char *str, char c)
 {
 	int		i;
-	char	*tmp;
 	int		len;
+	char	*tmp;
 
-	if (!str || ft_strlen(str) == 0)
+	if (!str)
 		return (NULL);
+	if (!ft_strcmp(str, "/"))
+		return (str);
 	i = 0;
 	len = remove_end_malloc(str, c);
+	if (len == -1)
+	{
+		free(str);
+		str = malloc(sizeof(char) * 2);
+		str[0] = '/';
+		str[1] = '\0';
+		return (str);
+	}
 	tmp = malloc(sizeof(char) * (len + 1));
 	while (i < len)
 	{
@@ -41,30 +64,42 @@ static void	save_pwd(t_data *data, char *pwd, char *path)
 	char	*new_path;
 	char	*tmp;
 
-	if(!path)
+	if (!path)
 		return ;
 	if (!ft_strcmp(path, ".."))
 	{
 		new_path = ft_getenv(data, "PWD");
-		if(!new_path || !ft_strcmp(new_path, "/"))
+		if (!ft_strcmp(new_path, "/"))
 		{
 			free(new_path);
 			return ;
 		}
 		tmp = remove_end(new_path, '/');
+		if (!tmp)
+			return ;
 		is_dublicate(data, pwd, tmp);
 		free(tmp);
 	}
 	else
+	{
+		if (is_last_char(path, '/') == 0)
+		{
+			tmp = rm_last_char(path);
+			is_dublicate(data, pwd, tmp);
+			free(tmp);
+			env_list_to_matrix(data);
+			return ;
+		}
 		is_dublicate(data, pwd, path);
+	}
 	env_list_to_matrix(data);
 	return ;
 }
 
 static void	ft_cd_home(t_data *data)
 {
-	char *path;
-	char *old_path;
+	char	*path;
+	char	*old_path;
 
 	path = NULL;
 	old_path = NULL;
@@ -86,10 +121,20 @@ static void	ft_cd_home(t_data *data)
 	free(path);
 	return ;
 }
+static void	save_and_free(t_data *data, char *old_pwd, char *path)
+{
+	save_pwd(data, "OLDPWD", old_pwd);
+	save_pwd(data, "PWD", path);
+	if (old_pwd)
+		free(old_pwd);
+	if (path)
+		free(path);
+	return ;
+}
 
 int	ft_cd(t_data *data, char *argv)
 {
-	char 	*path;
+	char	*path;
 	char	*old_pwd;
 
 	if (!argv)
@@ -106,11 +151,8 @@ int	ft_cd(t_data *data, char *argv)
 		return (0);
 	}
 	old_pwd = ft_getenv(data, "PWD");
-	save_pwd(data, "OLDPWD", old_pwd);
-	save_pwd(data, "PWD", path);
-	if(old_pwd)
-		free(old_pwd);
-	if(path)
-		free(path);
+	if (!(path[0] == '/') && ft_strcmp(path, ".."))
+		path = save_relative_path(old_pwd, path);
+	save_and_free(data, old_pwd, path);
 	return (0);
 }

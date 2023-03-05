@@ -77,6 +77,11 @@ typedef struct s_index_doc
 	int		cut_len;
 }			t_index_doc;
 
+//builtins_cd_utils.c
+int 	is_last_char(char *str, char c);
+char	*rm_last_char(char *str);
+char	*save_relative_path(char *old_path, char *path);
+
 //builtins_cd.c
 int		ft_cd(t_data *data, char *path);
 
