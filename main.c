@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	sig_controler(SIG_DEFAULT);
 	data = malloc(sizeof(t_data));
 	initialize_data(data);
+	data->env_ori = envp;
 	get_prompt(data);
 	envp_to_path(data, envp);
 	matrix_to_list(data, data->env, &data->env_list);

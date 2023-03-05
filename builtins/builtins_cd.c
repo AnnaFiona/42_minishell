@@ -105,22 +105,20 @@ static void	ft_cd_home(t_data *data)
 	old_path = NULL;
 	path = ft_getenv(data, "HOME");
 	if (!path)
-	{
 		ft_printf("minishell: cd: HOME not set\n");
-		return ;
-	}
-	if (chdir(path))
-	{
+	else if (chdir(path))
 		ft_printf("minishell: cd: %s: No such file or directory\n", path);
-		return ;
+	else
+	{
+		old_path = ft_getenv(data, "PWD");
+		save_pwd(data, "OLDPWD", old_path);
+		save_pwd(data, "PWD", path);
+		free(old_path);
+		free(path);
 	}
-	old_path = ft_getenv(data, "PWD");
-	save_pwd(data, "OLDPWD", old_path);
-	save_pwd(data, "PWD", path);
-	free(old_path);
-	free(path);
 	return ;
 }
+
 static void	save_and_free(t_data *data, char *old_pwd, char *path)
 {
 	save_pwd(data, "OLDPWD", old_pwd);

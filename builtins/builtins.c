@@ -25,6 +25,8 @@ void	ft_unset(t_data *data)
 	{
 		if (!ft_strcmp(tmp->next->var, data->args[1]))
 		{
+			if (data->args[1][0] >= 'A' && data->args[1][0] <= 'Z')
+				data->len_env--;
 			rm_node(tmp);
 			env_list_to_matrix(data);
 			return ;

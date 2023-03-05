@@ -33,13 +33,13 @@ typedef struct s_data
 	char		**args;
 	char		**path;
 	char		**env;
+	char		**env_ori;
 	char		*in_quotes;
 	char		*prompt;
 	char		*line;
 	char		quote;
 	int			exit_status;
 	int			pipe_count;
-	int			ccl_token;
 	int			len_env;
 	int			args_y;
 	int			protec;
