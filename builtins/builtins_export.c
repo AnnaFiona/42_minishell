@@ -28,60 +28,6 @@ void	env_list_to_matrix(t_data *data)
 	return ;
 }
 
-int ft_len_to_char(char *str, char c)
-{
-	int i;
-
-	i = 0;
-	while(str[i])
-	{
-		i++;
-		if(str[i] == c)
-			break;
-	}
-	return (i);
-}
-
-int is_already_there(t_data *data, char *var)
-{
-	int i;
-	int len;
-
-	i = 0;
-	while(data->env[i])
-	{
-		len = ft_len_to_char(data->env[i], '=');
-		if(!ft_strncmp(var, data->env[i], len))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int is_in_ori_env(t_data *data, char *var)
-{
-	int i;
-	int len;
-	int	ok;
-
-	i = 0;
-	ok = -1;
-	if (var[i] < 'A' && var[i] > 'Z')
-		return (1);
-	while(data->env_ori[i])
-	{
-		len = ft_len_to_char(data->env_ori[i], '=');
-		if(!ft_strncmp(var, data->env_ori[i], len))
-		{
-			if(is_already_there(data, var) == 1)
-				data->len_env++;
-			return (0);
-		}
-		i++;
-	}
-	return (1);
-}
-
 int	is_valid_var(t_data *data, char *var)
 {
 	int	i;
@@ -89,8 +35,6 @@ int	is_valid_var(t_data *data, char *var)
 	i = 0;
 	if(is_in_ori_env(data, var) == 1)
 		return(1);
-	/* if (var[i] >= 'A' && var[i] <= 'Z')
-		return (1); */
 	while (var[i])
 	{
 		if (ft_isalpha(var[i]) == 0)

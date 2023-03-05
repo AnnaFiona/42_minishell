@@ -97,6 +97,9 @@ int		is_dub_in_ori(t_data *data, char *var, char *value);
 //builtins_export.c
 void	ft_export(t_data *data);
 
+//builtins_ori_enc_test.c
+int		is_in_ori_env(t_data *data, char *var);
+
 //builtins.c
 int		builtins(t_data *data);
 
