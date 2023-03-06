@@ -29,7 +29,7 @@ static int	heredoc(t_data *data, t_child *kid, t_index_doc *my_doc)
 	t_here	*doc;
 	int		len;
 
-	doc = malloc(sizeof(t_here));//!!!!!!!!!!!!!!!!!! protected?
+	doc = malloc(sizeof(t_here));
 	if (!doc)
 		malloc_exit(data, kid);
 	init_doc_struct(doc);
@@ -99,5 +99,7 @@ void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc)
 	}
 	kid->commands = NULL;
 	data->args_y = 0;
+	if (kid->guard_fork == 1)
+		data->exit_status = 2;
 	return ;
 }

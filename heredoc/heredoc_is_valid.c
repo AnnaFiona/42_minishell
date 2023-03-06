@@ -8,10 +8,10 @@ static void	heredoc_syntax_error(t_data *data, t_child *kid, char *token)
 		if (data->pipe_count == 0 || data->pipe_count == kid->count)
 		{
 			ft_printf("minishell: syntax error ");
-			ft_printf("near unexpected token 'newline'\n");
+			ft_printf("near unexpected token `newline'\n");
 		}
 		else
-			ft_printf("minishell: syntax error near unexpected token '|'\n");
+			ft_printf("minishell: syntax error near unexpected token `|'\n");
 	}
 	else
 	{
