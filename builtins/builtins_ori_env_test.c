@@ -39,8 +39,10 @@ int	is_in_ori_env(t_data *data, char *var)
 
 	i = 0;
 	ok = -1;
-	if (var[i] < 'A' && var[i] > 'Z')
-		return (1);
+	if (var[i] < 'A' || var[i] > 'Z')
+	{
+		return (0);
+	}
 	while (data->env_ori[i])
 	{
 		len = ft_len_to_char(data->env_ori[i], '=');
