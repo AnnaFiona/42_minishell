@@ -10,39 +10,20 @@ static void	is_dir(t_data *data, t_child *kid, char *cmd)
 	if (fd)
 	{
 		closedir(fd);
-		ft_printf("minishell: %s: Is a directory\n", cmd);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": Is a directory\n", 2);
 		free_kid(kid);
-		exit_function(data, NULL, 0);
+		exit_function(data, NULL, 4);
 	}
 	return ;
 }
-
-/* static char	*join_usr(char *cmd)
-{
-	char	*tmp_trimmed;
-	char	*tmp;
-
-	tmp_trimmed = ft_substr(cmd, 1, ft_strlen(cmd) - 1);
-	tmp = ft_strjoin("/usr/", tmp_trimmed);
-	free(tmp_trimmed);
-	if (access(tmp, X_OK) != 0)
-		return (NULL);
-	return (tmp);
-} */
 
 static char	*is_absolute_path(t_data *data, t_child *kid, char *cmd)
 {
 	char	*tmp;
 
 	tmp = NULL;
-	/* if (*cmd == '~')
-	{
-		tmp = join_usr(cmd);
-		if (tmp == NULL)
-			return (NULL);
-		is_dir(data, kid, tmp);
-		return (tmp);
-	} */
 	if (access(cmd, X_OK) != 0)
 		return (NULL);
 	is_dir(data, kid, cmd);

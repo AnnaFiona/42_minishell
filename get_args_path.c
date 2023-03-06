@@ -35,21 +35,18 @@ static int	replace_home_path(t_data *data, int y)
 	return (len);
 }
 
-void	replace_path(t_data *data)
+int	replace_path(t_data *data, int y)
 {
-	int	y;
+	int len;
 
-	y = 0;
-	while (data->args[y])
+	len = 0;
+	if (data->args[y][0] == '~' && data->args[y][1] != '"' \
+		&& data->args[y][1] != '\'')
 	{
-		if (data->args[y][0] == '~' && data->in_quotes[y] != 'q')
-		{
-			if (data->args[y][1] == '/')
-				replace_home_path(data, y);
-			else
-				replace_with_dash(data, y);
-		}
-		y++;
+		if (data->args[y][1] == '/')
+			len = replace_home_path(data, y);
+		else
+			len = replace_with_dash(data, y);
 	}
-	return ;
+	return (len);
 }

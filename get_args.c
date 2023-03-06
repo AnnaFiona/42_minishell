@@ -9,7 +9,7 @@ static void	finish_input(t_data *data, char **args)
 	data->quote = '\0';
 	while(args[y])
 	{
-		x = 0;
+		x = replace_path(data, y);
 		while (args[y][x])
 		{
 			if (args[y][x] == '\'' || args[y][x] == '"')
@@ -110,6 +110,5 @@ void	get_args(t_data *data, char *line)
 	free(line);
 	data->line = NULL;
 	finish_input(data, data->args);
-	replace_path(data);
 	return ;
 }
