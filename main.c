@@ -30,6 +30,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	sig_controler(SIG_DEFAULT);
 	data = malloc(sizeof(t_data));
+	if (!data)
+		malloc_exit(NULL, NULL);
 	initialize_data(data);
 	data->env_ori = envp;
 	get_prompt(data);

@@ -4,10 +4,7 @@ void	malloc_pid(t_data *data, t_child *kid)
 {
 	kid->pid = malloc(sizeof(int) * (data->pipe_count + 1));
 	if (!kid->pid)
-	{
-		free_kid(kid);
-		exit_function(data, "malloc failed\n", 12);
-	}
+		malloc_exit(data, kid);
 	return ;
 }
 
@@ -62,6 +59,8 @@ void change_pwd_mode(t_data *data, t_child *kid)
 	if(!ft_strcmp(kid->commands[0], "pwd") && !kid->commands[1])
 	{
 		tmp = malloc(sizeof(char *) * 3);
+		if (!tmp)
+			malloc_exit(data, kid);
 		tmp[0] = ft_strdup(kid->commands[0]);
 		tmp[1] = ft_strdup("-L");
 		tmp[2] = NULL;

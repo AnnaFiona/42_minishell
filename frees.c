@@ -16,21 +16,6 @@ void	free_double_array(char **arrarr)
 	free(arrarr);
 }
 
-/* void	free_my_doc(t_data *data, t_index_doc *my_doc)
-{
-	int i;
-	
-	i = 0;
-	while(i <= data->pipe_count)
-	{
-		if(my_doc[i].doc->line != NULL)
-			free(my_doc[i].doc->line);
-		i++;
-	}
-	free(my_doc);
-	return ;
-} */
-
 void	free_kid(t_child *kid)
 {
 	if (kid->pid != NULL)
@@ -83,4 +68,14 @@ void	ctrl_d_exit(t_data *data)
 	write(1, "exit\n", 5);
 	free_data(data);
 	exit(0);
+}
+
+void	malloc_exit(t_data *data, t_child *kid)
+{
+	write(2, "malloc failed\n", 14);
+	if (data != NULL)
+		free_data(data);
+	if (kid != NULL)
+		free_kid(kid);
+	exit(12);
 }

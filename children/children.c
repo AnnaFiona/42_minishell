@@ -7,6 +7,8 @@ static void	initialize_child(t_child *kid)
 	kid->in_quotes = NULL;
 	kid->pipe_fd = NULL;
 	kid->pipe_fd = malloc(sizeof(int) * 2);
+	if (!kid->pipe_fd)
+		malloc_exit(NULL, kid);
 	kid->pipe_fd[0] = -1;
 	kid->pipe_fd[1] = -1;
 	kid->guard_fork = 0;
@@ -56,6 +58,8 @@ static void	make_child(t_data *data, t_child *kid)
 	t_index_doc	*my_doc;
 
 	my_doc = malloc(sizeof(t_index_doc) * (data->pipe_count + 1));
+	if (!my_doc)
+		malloc_exit(data, kid);
 	malloc_pid(data, kid);
 	get_heredoc_line(data, kid, my_doc);
 	while (kid->count <= data->pipe_count)
@@ -85,7 +89,7 @@ void	redirect_children(t_data *data)
 
 	kid = malloc(sizeof(t_child));
 	if (!kid)
-		return ;
+		malloc_exit(data, NULL);
 	initialize_child(kid);
 	if (data->args == NULL)
 		return ;

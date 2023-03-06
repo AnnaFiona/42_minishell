@@ -70,6 +70,8 @@ void	free_kid_command(t_child *kid, t_index_doc *my_doc)
 
 	len = size_2d(kid->commands);
 	tmp = (char **)malloc((len - my_doc->cut_len + 1) * sizeof(char *));
+	if (!tmp)
+		malloc_exit(NULL, kid);
 	if (!kid->commands)
 		return ;
 	make_kid_cmd(kid, tmp, len);

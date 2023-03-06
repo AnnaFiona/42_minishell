@@ -39,8 +39,8 @@ static void	get_in_quotes(t_data *data)
 	while (data->args[y])
 		y++;
 	data->in_quotes = malloc(sizeof(char) * (y + 1));
-	if (data->in_quotes == NULL)
-		return ;//protection
+	if (!data->in_quotes)
+		malloc_exit(data, NULL);
 	y = 0;
 	while (data->args[y])
 	{
@@ -62,6 +62,8 @@ static void	put_list_in_double_array(t_data *data, t_list **head)
 	y = 0;
 	temp = (*head);
 	data->args = malloc(sizeof(char *) * (ft_lstsize(*head) + 1));
+	if (!data->args)
+		malloc_exit(data, NULL);
 	while (temp != NULL)
 	{
 		data->args[y] = temp->content;

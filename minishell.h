@@ -146,6 +146,7 @@ void	free_double_array(char **arrarr);
 void	free_kid(t_child *kid);
 void	free_data(t_data *data);
 void	exit_function(t_data *data, char *error_message, int error);
+void	malloc_exit(t_data *data, t_child *kid);
 
 //get_args_path.c
 int		replace_path(t_data *data, int y);

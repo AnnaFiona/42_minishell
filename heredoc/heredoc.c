@@ -19,7 +19,7 @@ static void	make_order(t_child *kid, t_here *doc)
 	i = count_fill_order(kid, doc, 'n');
 	doc->order = malloc(sizeof(char *) * (i + 1));
 	if (!doc->order)
-		return ;
+		malloc_exit(NULL, kid);
 	count_fill_order(kid, doc, 'y');
 	return ;
 }
@@ -29,9 +29,9 @@ static int	heredoc(t_data *data, t_child *kid, t_index_doc *my_doc)
 	t_here	*doc;
 	int		len;
 
-	doc = malloc(sizeof(t_here));
+	doc = malloc(sizeof(t_here));//!!!!!!!!!!!!!!!!!! protected?
 	if (!doc)
-		return (0);
+		malloc_exit(data, kid);
 	init_doc_struct(doc);
 	len = is_valid_heredoc(data, kid, doc);
 	sig_controler(SIG_HEREDOC);

@@ -56,6 +56,8 @@ void	get_commands(t_data *data, t_child *kid, char **args)
 	kid->commands = malloc(sizeof(char *) * (x + 1));
 	kid->in_quotes = malloc(sizeof(char) * (x + 1));
 	if (!kid->commands || !kid->in_quotes)
+		malloc_exit(data, kid);
+	if (!kid->commands || !kid->in_quotes)
 		exit_function(data, "Error: malloc failed", 12);
 	copy_commands(data, kid, args);
 	if (args[data->args_y] != NULL && args[data->args_y][0] == '|')

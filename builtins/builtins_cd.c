@@ -44,11 +44,15 @@ static char	*remove_end(char *str, char c)
 	{
 		free(str);
 		str = malloc(sizeof(char) * 2);
+		if (!str)
+			exit (12);
 		str[0] = '/';
 		str[1] = '\0';
 		return (str);
 	}
 	tmp = malloc(sizeof(char) * (len + 1));
+	if (!tmp)
+		malloc_exit(NULL, NULL);
 	while (i < len)
 	{
 		tmp[i] = str[i];

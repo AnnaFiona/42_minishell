@@ -1,23 +1,6 @@
 
 #include "../minishell.h"
 
-/* int	check_pipes(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	if (!data->args)
-		return ;
-	while (data->args[i + 1])
-		i++;
-	if (data->args[i][0] == '|')
-	{
-		ft_printf("minishell: syntax error near unexpected token `|'\n");
-		return (NO_CHILDS);
-	}
-	return (MAKE_CHILDS);
-} */
-
 void	rm_node(t_env_list *top)
 {
 	t_env_list	*tmp;

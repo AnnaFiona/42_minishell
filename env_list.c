@@ -6,8 +6,8 @@ void	create_env_list(t_data *data, t_env_list **top, char *var, char *value)
 	if (*top)
 		return ;
 	*top = (t_env_list *)malloc(sizeof(t_env_list));
-	if (!top)
-		exit_function(data, "Error: Malloc in env_list.c Line: 8", 1);
+	if (!*top)
+		malloc_exit(data, NULL);
 	(*top)->var = var;
 	(*top)->value = value;
 	(*top)->next = NULL;
@@ -23,7 +23,7 @@ void	add_list_end(t_data *data, t_env_list *top, char *var, char *value)
 		tmp = tmp->next;
 	tmp->next = (t_env_list *)malloc(sizeof(t_env_list));
 	if (!tmp->next)
-		exit_function(data, "Error: Malloc in env_list.c Line: 25", 1);
+		malloc_exit(data, NULL);
 	tmp->next->var = var;
 	tmp->next->value = value;
 	tmp->next->next = NULL;

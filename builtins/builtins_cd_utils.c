@@ -27,6 +27,8 @@ char	*rm_last_char(char *str)
 		return (NULL);
 	len = ft_strlen(str);
 	new = malloc(sizeof(char) * len);
+	if (!new)
+		malloc_exit(NULL, NULL);
 	i = 0;
 	len--;
 	while (i < len)
