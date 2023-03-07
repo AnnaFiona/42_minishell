@@ -41,6 +41,7 @@ int	is_valid_var(t_data *data, char *var)
 	{
 		if (ft_isalpha(var[i]) == 0)
 		{
+			data->exit_status = 1;
 			ft_printf("minishell: export: `%s': not a valid identifier\n",
 				data->args[1]);
 			return (1);
