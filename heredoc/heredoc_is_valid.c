@@ -17,9 +17,9 @@ static void	heredoc_syntax_error(t_data *data, t_child *kid, char *token)
 	{
 		ft_printf("minishell: syntax error near ");
 		ft_printf("unexpected token '%s'\n", token);
-		if(token)
-			free(token);
 	}
+	if(token)
+		free(token);
 	return ;
 }
 
@@ -30,7 +30,7 @@ static char	*heredoc_is_token(char *cmd)
 	char	**token_str;
 
 	y = 0;
-	token_str = ft_split("|| && & ; ;; ;& ;;& | |& ( ) ' <<< << < >> >", ' ');
+	token_str = ft_split("<< < >> >", ' ');
 	error_token = NULL;
 	while (token_str[y])
 	{
