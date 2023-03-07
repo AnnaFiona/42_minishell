@@ -39,6 +39,12 @@ void	ft_unset(t_data *data)
 
 	if (!data->args[1] || str_is_alpha(data, data->args[1]))
 		return ;
+	if(data->args[1][0] == '\0')
+	{
+		ft_printf("bash: unset: `': not a valid identifier\n");
+		data->exit_status = 1;
+		return ;
+	}
 	tmp = data->env_list;
 	while (tmp->next != NULL)
 	{
