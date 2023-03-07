@@ -52,11 +52,11 @@ typedef struct s_child
 	int		*doc_len;
 	char	*in_quotes;
 	int		*pipe_fd;
+	int		*pid;
 	int		guard_fork;
 	int		output_fd;
 	int		input_fd;
 	int		count;
-	int		*pid;
 }			t_child;
 
 typedef struct s_here
@@ -118,7 +118,7 @@ void	child_process(t_data *data, t_child *kid);
 char	*get_path(t_data *data, t_child *kid, char **paths, char *command);
 
 //children_utils.c
-void	count_pipes(t_data *data);
+int		count_pipes(t_data *data);
 void	get_commands(t_data *data, t_child *kid, char **args);
 void	wait_for_children(t_data *data, t_child *kid);
 
@@ -146,9 +146,10 @@ void	free_double_array(char **arrarr);
 void	free_kid(t_child *kid);
 void	free_data(t_data *data);
 void	exit_function(t_data *data, char *error_message, int error);
+void	malloc_exit(t_data *data, t_child *kid);
 
 //get_args_path.c
-void	replace_path(t_data *data);
+int		replace_path(t_data *data, int y);
 
 //get_args_quotes.c
 int		cut_quotes(t_data *data, int y, int x);

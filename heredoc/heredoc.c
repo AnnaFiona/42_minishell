@@ -19,7 +19,7 @@ static void	make_order(t_child *kid, t_here *doc)
 	i = count_fill_order(kid, doc, 'n');
 	doc->order = malloc(sizeof(char *) * (i + 1));
 	if (!doc->order)
-		return ;
+		malloc_exit(NULL, kid);
 	count_fill_order(kid, doc, 'y');
 	return ;
 }
@@ -31,7 +31,7 @@ static int	heredoc(t_data *data, t_child *kid, t_index_doc *my_doc)
 
 	doc = malloc(sizeof(t_here));
 	if (!doc)
-		return (0);
+		malloc_exit(data, kid);
 	init_doc_struct(doc);
 	len = is_valid_heredoc(data, kid, doc);
 	sig_controler(SIG_HEREDOC);
@@ -99,5 +99,7 @@ void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc)
 	}
 	kid->commands = NULL;
 	data->args_y = 0;
+	if (kid->guard_fork == 1)
+		data->exit_status = 2;
 	return ;
 }

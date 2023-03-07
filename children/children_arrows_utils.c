@@ -67,7 +67,11 @@ void	cut_token(t_child *kid, int to_cut)
 	while (kid->commands[len])
 		len++;
 	temp_com = malloc(sizeof(char *) * (len - 1));
+	if (!temp_com)
+		malloc_exit(NULL, kid);
 	temp_quote = malloc(sizeof(char) * (len - 1));
+	if (!temp_quote)
+		malloc_exit(NULL, kid);
 	if (!temp_com || !temp_quote)
 		return ;
 	actually_cut_token(kid, to_cut, temp_com, temp_quote);

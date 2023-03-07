@@ -9,7 +9,7 @@ static void	finish_input(t_data *data, char **args)
 	data->quote = '\0';
 	while(args[y])
 	{
-		x = 0;
+		x = replace_path(data, y);
 		while (args[y][x])
 		{
 			if (args[y][x] == '\'' || args[y][x] == '"')
@@ -39,8 +39,8 @@ static void	get_in_quotes(t_data *data)
 	while (data->args[y])
 		y++;
 	data->in_quotes = malloc(sizeof(char) * (y + 1));
-	if (data->in_quotes == NULL)
-		return ;//protection
+	if (!data->in_quotes)
+		malloc_exit(data, NULL);
 	y = 0;
 	while (data->args[y])
 	{
@@ -62,6 +62,8 @@ static void	put_list_in_double_array(t_data *data, t_list **head)
 	y = 0;
 	temp = (*head);
 	data->args = malloc(sizeof(char *) * (ft_lstsize(*head) + 1));
+	if (!data->args)
+		malloc_exit(data, NULL);
 	while (temp != NULL)
 	{
 		data->args[y] = temp->content;
@@ -110,6 +112,5 @@ void	get_args(t_data *data, char *line)
 	free(line);
 	data->line = NULL;
 	finish_input(data, data->args);
-	replace_path(data);
 	return ;
 }

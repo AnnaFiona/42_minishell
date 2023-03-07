@@ -61,7 +61,8 @@ int	builtins(t_data *data)
 {
 	if (data->args == NULL)
 		return (NO_CHILDS);
-	count_pipes(data);
+	if (count_pipes(data) == NO_CHILDS)
+		return (NO_CHILDS);
 	if (is_builtin_last(data) == 1)
 		return (NO_CHILDS);
 	if (data->pipe_count > 0)

@@ -11,6 +11,8 @@ void	env_list_to_matrix(t_data *data)
 	tmp = data->env_list;
 	free_double_array(data->env);
 	data->env = malloc(sizeof(char *) * (size_of_list(tmp) + 1));
+	if (!data->env)
+		malloc_exit(data, NULL);
 	while (tmp != NULL)
 	{
 		if (tmp->value == NULL)

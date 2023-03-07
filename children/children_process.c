@@ -1,20 +1,10 @@
 #include "../minishell.h"
 
-// señorita your cat cat ls :)
 void	malloc_pid(t_data *data, t_child *kid)
 {
-	int	i;
-
-	i = 0;
-	if (!data->args)
-		return ;
-	while (data->args[i + 1])
-		i++;
-	if (data->args[i][0] == '|')
-		data->pipe_count--;
 	kid->pid = malloc(sizeof(int) * (data->pipe_count + 1));
 	if (!kid->pid)
-		return ;
+		malloc_exit(data, kid);
 	return ;
 }
 
@@ -35,8 +25,6 @@ static void	dup_input_output(t_data *data, t_child *kid)
 	int	out;
 	int	in;
 
-	in = kid->input_fd;
-	out = kid->output_fd;
 	dup_input(kid);
 	search_for_arrows(data, kid);
 	if (kid->input_fd != -1)
@@ -71,6 +59,8 @@ void change_pwd_mode(t_data *data, t_child *kid)
 	if(!ft_strcmp(kid->commands[0], "pwd") && !kid->commands[1])
 	{
 		tmp = malloc(sizeof(char *) * 3);
+		if (!tmp)
+			malloc_exit(data, kid);
 		tmp[0] = ft_strdup(kid->commands[0]);
 		tmp[1] = ft_strdup("-L");
 		tmp[2] = NULL;

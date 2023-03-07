@@ -65,8 +65,6 @@ static int	is_it_variable(t_data *data, int y, int x, char *tokens)
 	int	i;
 
 	i = 0;
-	/* if (data->args[y][x] == '\0' && data->args[y + 1] != NULL)
-		ft_printf ("minishell: syntax error near unexpected token `newline'\n"); */
 	if (data->args[y][x] == '\0' || data->args[y][x] == ' ')
 		return (1);
 	while (tokens[i])
@@ -112,7 +110,7 @@ static void	cut_arg(t_data *data, int to_cut)
 	temp_arg = malloc (sizeof(char *) * (len - 1));
 	temp_quote = malloc (sizeof(char) * (len - 1));
 	if (!temp_arg || !temp_quote)
-		return ;//protection
+		malloc_exit(data, NULL);
 	actually_cut_arg(data, to_cut, temp_arg, temp_quote);
 	free_double_array(data->args);
 	data->args = temp_arg;
