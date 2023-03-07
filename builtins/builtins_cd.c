@@ -146,12 +146,12 @@ int	ft_cd(t_data *data, char *argv)
 	}
 	path = NULL;
 	old_pwd = NULL;
-	path = ft_strdup(argv);
 	if (chdir(argv))
 	{
 		ft_printf("minishell: cd: %s: No such file or directory\n", argv);
 		return (0);
 	}
+	path = ft_strdup(argv);
 	old_pwd = ft_getenv(data, "PWD");
 	if (!(path[0] == '/') && ft_strcmp(path, ".."))
 		path = save_relative_path(old_pwd, path);
