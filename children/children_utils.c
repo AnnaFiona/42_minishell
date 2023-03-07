@@ -10,7 +10,7 @@ int	count_pipes(t_data *data)
 	{
 		if (data->args[y][0] == '|' && data->in_quotes[y] != 'q')
 			data->pipe_count++;
-		if(data->args[y][0] == '|' && data->args[y + 1][0] == '|')
+		if(data->args[y][0] == '|' && data->args[y + 1] && data->args[y + 1][0] == '|')
 		{
 			ft_printf("minishell: syntax error near unexpected token `|'\n");
 			data->exit_status = 2;
