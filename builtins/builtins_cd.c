@@ -109,9 +109,15 @@ static void	ft_cd_home(t_data *data)
 	old_path = NULL;
 	path = ft_getenv(data, "HOME");
 	if (!path)
+	{
+		data->exit_status = 1;
 		ft_printf("minishell: cd: HOME not set\n");
+	}
 	else if (chdir(path))
+	{
+		data->exit_status = 1;
 		ft_printf("minishell: cd: %s: No such file or directory\n", path);
+	}
 	else
 	{
 		old_path = ft_getenv(data, "PWD");
@@ -139,6 +145,7 @@ int	ft_cd(t_data *data, char *argv)
 	char	*path;
 	char	*old_pwd;
 
+	data->exit_status = 0;
 	if (!argv)
 	{
 		ft_cd_home(data);
@@ -149,6 +156,7 @@ int	ft_cd(t_data *data, char *argv)
 	if (chdir(argv))
 	{
 		ft_printf("minishell: cd: %s: No such file or directory\n", argv);
+		data->exit_status = 1;
 		return (0);
 	}
 	path = ft_strdup(argv);
