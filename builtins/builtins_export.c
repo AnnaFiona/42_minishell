@@ -90,8 +90,14 @@ void	save_var(t_data *data)
 void	ft_export(t_data *data)
 {
 	if (data->args[1] == NULL)
+	{
+		data->exit_status = 0;
 		sort_env(data, data->env);
+	}
 	else if (data->args[1])
+	{
+		data->exit_status = 0;
 		save_var(data);
+	}
 	return ;
 }
