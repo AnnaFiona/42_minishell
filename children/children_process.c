@@ -88,8 +88,17 @@ void	child_process(t_data *data, t_child *kid)
 	path = get_path(data, kid, data->path, kid->commands[0]);
 	if (path == NULL)
 	{
-		write(2, kid->commands[0], ft_strlen(kid->commands[0]));
-		write(2, ": command not found\n", 20);
+		if (kid->commands[0][0] == '/')
+		{
+			write(2, "minishell: ", 11);
+			write(2, kid->commands[0], ft_strlen(kid->commands[0]));
+			write(2, ": No such file or directory\n", 28);
+		}
+		else
+		{
+			write(2, kid->commands[0], ft_strlen(kid->commands[0]));
+			write(2, ": command not found\n", 20);
+		}
 		free_kid(kid);
 		exit_function(data, NULL, 1);
 	}
