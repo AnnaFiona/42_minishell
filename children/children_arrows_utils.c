@@ -7,19 +7,18 @@ static void	syntax_error_func(t_data *data, t_child *kid, char *token)
 		if (data->pipe_count == 0 || data->pipe_count == kid->count)
 		{
 			ft_printf("minishell: syntax error near");
-			ft_printf(" unexpected token 'newline'\n");
+			ft_printf(" unexpected token `newline'\n");
 		}
 		else
-			ft_printf("minishell: syntax error near unexpected token '|'\n");
+			ft_printf("minishell: syntax error near unexpected token `|'\n");
 	}
 	else
 	{
-		print_double_array(kid->commands);
-		ft_printf("minishell: syntax error near unexpected token '%s'\n",
+		ft_printf("minishell: syntax error near unexpected token `%s'\n",
 			token);
 	}
 	free_kid(kid);
-	exit_function(data, NULL, 3);
+	exit_function(data, NULL, 2);
 	return ;
 }
 

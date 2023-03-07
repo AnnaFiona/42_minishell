@@ -14,7 +14,7 @@ static void	open_outfile(t_data *data, t_child *kid, char *file_name,
 		ft_printf("minishell: %s: ", file_name);
 		perror("");
 		free_kid(kid);
-		exit_function(data, NULL, 4);
+		exit_function(data, NULL, 3);
 	}
 	return ;
 }
