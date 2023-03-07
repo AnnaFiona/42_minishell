@@ -51,6 +51,8 @@ void change_pwd_mode(t_data *data, t_child *kid)
 {
 	char **tmp;
 
+	if(!kid->commands)
+		return ;
 	if(!ft_strcmp(kid->commands[0], "cd"))
 	{
 		free_kid(kid);

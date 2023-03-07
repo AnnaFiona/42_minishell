@@ -146,7 +146,7 @@ int	ft_cd(t_data *data, char *argv)
 	char	*old_pwd;
 
 	data->exit_status = 0;
-	if (!argv)
+	if (!argv || argv[0] == '\0')
 	{
 		ft_cd_home(data);
 		return (0);

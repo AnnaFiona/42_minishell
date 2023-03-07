@@ -100,6 +100,13 @@ void	ft_export(t_data *data)
 	else if (data->args[1])
 	{
 		data->exit_status = 0;
+		if(data->args[1][0] == '\0')
+		{
+			data->exit_status = 1;
+			ft_printf("minishell: export: `%s': not a valid identifier\n",
+				data->args[1]);
+			return ;
+		}
 		save_var(data);
 	}
 	return ;

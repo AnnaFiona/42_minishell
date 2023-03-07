@@ -89,10 +89,17 @@ void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc)
 		my_doc[i].doc_line = NULL;
 		my_doc[i].cut_len = -1;
 		get_commands(data, kid, data->args);
-		search_for_heredoc(data, kid, &my_doc[i]);
-		free_double_array(kid->commands);
-		free(kid->in_quotes);
-		kid->commands = NULL;
+		if(kid->commands)
+		{
+			search_for_heredoc(data, kid, &my_doc[i]);
+			free_double_array(kid->commands);
+			kid->commands = NULL;
+		}
+		if(kid->in_quotes)
+		{
+			free(kid->in_quotes);
+			kid->in_quotes = NULL;
+		}
 		if (kid->guard_fork == 1)
 			break ;
 		i++;
