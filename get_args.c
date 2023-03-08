@@ -27,6 +27,8 @@ static void	finish_input(t_data *data)
 			else
 				x++;
 		}
+		if (data->args[y] == NULL)
+			break ;
 		y++;
 	}
 }
@@ -111,6 +113,9 @@ void	get_args(t_data *data, char *line)
 	get_in_quotes(data);
 	free(line);
 	data->line = NULL;
+	search_syntax_errors(data);
+	if (data->args == NULL)
+		return ;
 	finish_input(data);
 	if (data->args[0] == NULL)
 		data->args = NULL;
