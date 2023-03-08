@@ -98,7 +98,7 @@ static void    actually_cut_arg(t_data *data, int to_cut, char **temp_arg, char 
 	return ;
 }
 
-static void	cut_arg(t_data *data, int to_cut)
+void	cut_arg(t_data *data, int to_cut)
 {
 	char	**temp_arg;
 	char	*temp_quote;
@@ -148,6 +148,9 @@ int	replace_variables(t_data *data, int y, int x)
 	free(front);
 	free(back);
 	if (data->args[y][0] == '\0')
+	{
 		cut_arg(data, y);
+		return (0);
+	}
 	return (x);
 }

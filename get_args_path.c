@@ -40,6 +40,8 @@ int	replace_path(t_data *data, int y)
 	int len;
 
 	len = 0;
+	if (!data->args[y])
+		return (0);
 	if (data->args[y][0] == '~' && data->args[y][1] != '"' \
 		&& data->args[y][1] != '\'')
 	{
