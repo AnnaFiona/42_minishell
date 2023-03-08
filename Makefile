@@ -30,6 +30,7 @@ MY_SOURCES 	= $(BUILTINS) \
 			frees.c \
 			get_args_path.c \
 			get_args_quotes.c \
+			get_args_syntax_errors.c \
 			get_args_utils.c \
 			get_args.c \
 			$(HEREDOC) \

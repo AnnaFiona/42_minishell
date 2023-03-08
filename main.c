@@ -6,6 +6,7 @@ int			g_in_fd_copy;
 static void	initialize_data(t_data *data)
 {
 	data->env_list = NULL;
+	data->tokens = ft_split("< > << >> |", ' ');
 	data->args = NULL;
 	data->path = NULL;
 	data->env = NULL;

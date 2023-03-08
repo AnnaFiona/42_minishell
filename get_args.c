@@ -1,20 +1,20 @@
 #include "minishell.h"
 
-static void	finish_input(t_data *data, char **args)
+static void	finish_input(t_data *data)
 {
 	int	y;
 	int	x;
 
 	y = 0;
 	data->quote = '\0';
-	while(args[y])
+	while(data->args[y])
 	{
 		x = replace_path(data, y);
-		while (args[y][x])
+		while (data->args[y] && data->args[y][x])
 		{
-			if (args[y][x] == '\'' || args[y][x] == '"')
+			if (data->args[y][x] == '\'' || data->args[y][x] == '"')
 			{
-				if (data->quote == '\0' || data->quote == args[y][x])
+				if (data->quote == '\0' || data->quote == data->args[y][x])
 				{
 					if (cut_quotes(data, y, x) == -1)
 						x++;
@@ -22,11 +22,13 @@ static void	finish_input(t_data *data, char **args)
 				}
 				x++;
 			}
-			else if (args[y][x] == '$' && data->quote != '\'')
+			else if (data->args[y][x] == '$' && data->quote != '\'')
 				x = replace_variables(data, y, x);
 			else
 				x++;
 		}
+		if (data->args[y] == NULL)
+			break ;
 		y++;
 	}
 }
@@ -111,7 +113,10 @@ void	get_args(t_data *data, char *line)
 	get_in_quotes(data);
 	free(line);
 	data->line = NULL;
-	finish_input(data, data->args);
+	search_syntax_errors(data);
+	if (data->args == NULL)
+		return ;
+	finish_input(data);
 	if (data->args[0] == NULL)
 		data->args = NULL;
 	return ;

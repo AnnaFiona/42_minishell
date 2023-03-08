@@ -32,6 +32,7 @@ typedef struct s_env_list
 typedef struct s_data
 {
 	t_env_list	*env_list;
+	char		**tokens;
 	char		**args;
 	char		**path;
 	char		**env;
@@ -163,7 +164,11 @@ int		replace_path(t_data *data, int y);
 //get_args_quotes.c
 int		cut_quotes(t_data *data, int y, int x);
 char	*strdup_or_strjoin(char const *s_1, char const *s_2);
+void	cut_arg(t_data *data, int to_cut);
 int		replace_variables(t_data *data, int y, int x);
+
+//get_args_syntax_errors.c
+void    search_syntax_errors(t_data *data);
 
 //get_args_utils.c
 int		find_second_quote(char *line, char quote, int x);
