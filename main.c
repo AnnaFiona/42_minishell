@@ -12,6 +12,7 @@ static void	initialize_data(t_data *data)
 	data->in_quotes = NULL;
 	data->prompt = NULL;
 	data->line = NULL;
+	data->saved_pwd = NULL;
 	data->quote = '\0';
 	data->exit_status = 0;
 	data->pipe_count = -1;
@@ -63,10 +64,14 @@ char	*ft_getenv(t_data *data, char *var)
 	if (!var)
 		return (NULL);
 	tmp = data->env_list;
-	while (tmp->next != NULL)
+	while (tmp != NULL)
 	{
 		if (!ft_strcmp(var, tmp->var))
+		{
+			if(!tmp->value)
+				return (NULL);
 			return (ft_strdup(tmp->value));
+		}
 		tmp = tmp->next;
 	}
 	return (NULL);

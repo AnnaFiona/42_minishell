@@ -1,6 +1,4 @@
 #include "../minishell.h"
-#include <dirent.h>
-#include <sys/types.h>
 
 static void	is_dir(t_data *data, t_child *kid, char *cmd)
 {

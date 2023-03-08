@@ -34,6 +34,8 @@ void	free_kid(t_child *kid)
 
 void	free_data(t_data *data)
 {
+	if (data->saved_pwd != NULL)
+		free(data->saved_pwd);
 	if (data->args != NULL)
 		free_double_array(data->args);
 	if (data->path != NULL)

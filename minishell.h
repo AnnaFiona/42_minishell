@@ -10,6 +10,8 @@
 # include <stdio.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <dirent.h>
+# include <sys/types.h>
 
 # define SIG_DEFAULT 0
 # define SIG_KID 1
@@ -37,6 +39,7 @@ typedef struct s_data
 	char		*in_quotes;
 	char		*prompt;
 	char		*line;
+	char		*saved_pwd;
 	char		quote;
 	int			exit_status;
 	int			pipe_count;
@@ -99,6 +102,12 @@ void	ft_export(t_data *data);
 
 //builtins_ori_enc_test.c
 int		is_in_ori_env(t_data *data, char *var);
+
+//builtins_save_pwd.c
+void	ft_save_pwd(t_data *data, char *value);
+
+//builtins_unset.c
+void	ft_unset(t_data *data);
 
 //builtins.c
 int		builtins(t_data *data);

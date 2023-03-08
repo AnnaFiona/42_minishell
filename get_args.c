@@ -112,5 +112,7 @@ void	get_args(t_data *data, char *line)
 	free(line);
 	data->line = NULL;
 	finish_input(data, data->args);
+	if (data->args[0] == NULL)
+		data->args = NULL;
 	return ;
 }

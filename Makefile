@@ -8,6 +8,8 @@ BUILTINS	= $(PATH_B)_cd_utils.c \
 			$(PATH_B)_export_sort.c \
 			$(PATH_B)_export.c \
 			$(PATH_B)_ori_env_test.c \
+			$(PATH_B)_save_pwd.c \
+			$(PATH_B)_unset.c \
 			$(PATH_B).c
 CHILDREN	= $(PATH_C)_arrows_utils.c \
 			$(PATH_C)_arrows.c \
