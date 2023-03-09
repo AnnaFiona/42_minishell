@@ -43,6 +43,8 @@ static void	pipe_controller(t_data *data, t_child *kid, t_index_doc *my_doc)
 	else
 		pipe(kid->pipe_fd);
 	get_commands(data, kid, data->args);
+	if (kid->commands == NULL)
+		return ;
 	if(kid->commands[0][0] == '\0')
 	{
 		free(kid->commands[0]);
@@ -50,8 +52,6 @@ static void	pipe_controller(t_data *data, t_child *kid, t_index_doc *my_doc)
 		kid->commands[0][0] = ' ';
 		kid->commands[0][1] = '\0';	
 	}
-	if (kid->commands == NULL)
-		return ;
 	if (my_doc[kid->count].cut_len > -1)
 	{
 		free_kid_command(kid, &my_doc[kid->count]);
@@ -72,7 +72,7 @@ static void	make_child(t_data *data, t_child *kid)
 	while (kid->count <= data->pipe_count)
 	{
 		pipe_controller(data, kid, my_doc);
-		if (kid->guard_fork == 1 || !kid->commands)
+		if (kid->guard_fork == 1)
 			break ;
 		sig_controler(SIG_PARRENT);
 		kid->pid[kid->count] = fork();

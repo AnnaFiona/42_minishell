@@ -1,38 +1,5 @@
 #include "../minishell.h"
 
-static void	syntax_error_func(t_data *data, t_child *kid, char *token)
-{
-	if (token == NULL)
-	{
-		if (data->pipe_count == 0 || data->pipe_count == kid->count)
-		{
-			ft_printf("minishell: syntax error near");
-			ft_printf(" unexpected token `newline'\n");
-		}
-		else
-			ft_printf("minishell: syntax error near unexpected token `|'\n");
-	}
-	else
-	{
-		ft_printf("minishell: syntax error near unexpected token `%s'\n",
-			token);
-	}
-	free_kid(kid);
-	exit_function(data, NULL, 2);
-	return ;
-}
-
-void	is_it_a_token(t_data *data, t_child *kid, char **commands, int y)
-{
-	if (commands[y] == NULL)
-		syntax_error_func(data, kid, commands[y]);
-	if (commands[y][0] == '<' && kid->in_quotes[y] != 'q')
-		syntax_error_func(data, kid, commands[y]);
-	if (commands[y][0] == '>' && kid->in_quotes[y] != 'q')
-		syntax_error_func(data, kid, commands[y]);
-	return ;
-}
-
 static void	actually_cut_token(t_child *kid, int to_cut, char **temp_com,
 		char *temp_quote)
 {

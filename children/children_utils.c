@@ -6,25 +6,13 @@ int	count_pipes(t_data *data)
 
 	y = 0;
 	data->pipe_count = 0;
-	while (data->args[y])
+	while(data->args[y])
 	{
-		if (data->args[y][0] == '|' && data->in_quotes[y] != 'q')
+		if (ft_strcmp(data->args[y], "|") == 0)
 			data->pipe_count++;
-		if(data->args[y][0] == '|' && data->args[y + 1] && data->args[y + 1][0] == '|')
-		{
-			ft_printf("minishell: syntax error near unexpected token `|'\n");
-			data->exit_status = 2;
-			return (NO_CHILDS);
-		}
 		y++;
 	}
-	if (data->args[y - 1][0] == '|')
-	{
-		ft_printf("minishell: syntax error near unexpected token `|'\n");
-		data->exit_status = 2;
-		return (NO_CHILDS);
-	}
-	return (MAKE_CHILDS);
+	return (0);
 }
 
 static void	copy_commands(t_data *data, t_child *kid, char **args)
@@ -58,7 +46,10 @@ void	get_commands(t_data *data, t_child *kid, char **args)
 	}
 	data->args_y -= x;
 	if (x == 0)
+	{
+		data->args_y++;
 		return ;
+	}
 	kid->commands = malloc(sizeof(char *) * (x + 1));
 	kid->in_quotes = malloc(sizeof(char) * (x + 1));
 	if (!kid->commands || !kid->in_quotes)

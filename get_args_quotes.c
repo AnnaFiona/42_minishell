@@ -107,8 +107,8 @@ void	cut_arg(t_data *data, int to_cut)
 	len = 0;
 	while(data->args[len])
 		len++;
-	temp_arg = malloc (sizeof(char *) * (len - 1));
-	temp_quote = malloc (sizeof(char) * (len - 1));
+	temp_arg = malloc (sizeof(char *) * (len));
+	temp_quote = malloc (sizeof(char) * (len));
 	if (!temp_arg || !temp_quote)
 		malloc_exit(data, NULL);
 	actually_cut_arg(data, to_cut, temp_arg, temp_quote);
