@@ -38,6 +38,8 @@ void	free_data(t_data *data)
 		free_double_array(data->tokens_heredoc);
 	if (data->tokens != NULL)
 		free_double_array(data->tokens);
+	if (data->saved_pwd != NULL)
+		free(data->saved_pwd);
 	if (data->args != NULL)
 		free_double_array(data->args);
 	if (data->path != NULL)

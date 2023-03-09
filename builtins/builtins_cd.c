@@ -63,6 +63,45 @@ static char	*remove_end(char *str, char c)
 	return (tmp);
 }
 
+static char	*is_path_unset(t_data *data)
+{
+	char *path;
+
+	if(data->saved_pwd)
+	{
+		path = ft_strdup(data->saved_pwd);
+		return (path);
+	}
+	return (NULL);
+}
+
+static void	ft_is_dir(char *new_path)
+{
+	DIR	*fd;
+
+    if(!new_path)
+	{
+        return ;
+	}
+	fd = opendir(new_path);
+	if (!fd)
+	{
+        free(new_path);
+        new_path = NULL;
+        return ;
+	}
+	closedir(fd);
+    return ;
+}
+
+static void secure_pwd(t_data *data, char *path)
+{
+	if(data->saved_pwd)
+		free(data->saved_pwd);
+	data->saved_pwd = ft_strdup(path);
+	return ;
+}
+
 static void	save_pwd(t_data *data, char *pwd, char *path)
 {
 	char	*new_path;
@@ -73,14 +112,20 @@ static void	save_pwd(t_data *data, char *pwd, char *path)
 	if (!ft_strcmp(path, ".."))
 	{
 		new_path = ft_getenv(data, "PWD");
+		ft_is_dir(new_path);
+		if(!new_path)
+			new_path = is_path_unset(data);
 		if (!ft_strcmp(new_path, "/"))
 		{
+			secure_pwd(data, "/");
 			free(new_path);
 			return ;
 		}
 		tmp = remove_end(new_path, '/');
 		if (!tmp)
 			return ;
+		secure_pwd(data, tmp);
+		ft_printf("saved_pwd = %s\n", data->saved_pwd);
 		is_dublicate(data, pwd, tmp);
 		free(tmp);
 	}
@@ -89,6 +134,7 @@ static void	save_pwd(t_data *data, char *pwd, char *path)
 		if (is_last_char(path, '/') == 0)
 		{
 			tmp = rm_last_char(path);
+			secure_pwd(data, path);
 			is_dublicate(data, pwd, tmp);
 			free(tmp);
 			env_list_to_matrix(data);
@@ -120,6 +166,7 @@ static void	ft_cd_home(t_data *data)
 	}
 	else
 	{
+		secure_pwd(data, path);
 		old_path = ft_getenv(data, "PWD");
 		save_pwd(data, "OLDPWD", old_path);
 		save_pwd(data, "PWD", path);
