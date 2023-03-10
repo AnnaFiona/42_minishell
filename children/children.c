@@ -60,6 +60,20 @@ static void	pipe_controller(t_data *data, t_child *kid, t_index_doc *my_doc)
 	return ;
 }
 
+static void free_line(t_data *data, t_index_doc *my_doc)
+{
+	int i;
+
+	i = 0;
+	while (i <= data->pipe_count)
+	{
+		if (my_doc[i].doc_line)
+			free(my_doc[i].doc_line);
+		i++;
+	}
+	return ;
+}
+
 static void	make_child(t_data *data, t_child *kid)
 {
 	t_index_doc	*my_doc;
@@ -78,6 +92,7 @@ static void	make_child(t_data *data, t_child *kid)
 		kid->pid[kid->count] = fork();
 		if (kid->pid[kid->count] == 0)
 		{
+			free_line(data, my_doc);
 			free(my_doc);
 			child_process(data, kid);
 		}
