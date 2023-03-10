@@ -116,6 +116,7 @@ void	get_args(t_data *data, char *line)
 	search_syntax_errors(data);
 	if (data->args == NULL)
 		return ;
+	count_pipes(data);
 	finish_input(data);
 	if (data->args[0] == NULL)
 		data->args = NULL;

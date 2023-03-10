@@ -8,7 +8,7 @@ void	malloc_pid(t_data *data, t_child *kid)
 	return ;
 }
 
-static void	dup_input(t_child *kid)
+static void	clone_pipe_out(t_child *kid)
 {
 	if (kid->pipe_fd[0] != -1)
 		close(kid->pipe_fd[0]);
@@ -25,8 +25,9 @@ static void	dup_input_output(t_data *data, t_child *kid)
 	int	out;
 	int	in;
 
-	dup_input(kid);
-	search_for_arrows(data, kid);
+	clone_pipe_out(kid);
+	if (kid->commands != NULL)
+		search_for_arrows(data, kid);
 	if (kid->input_fd != -1)
 	{
 		in = dup2(kid->input_fd, STDIN_FILENO);
@@ -38,11 +39,6 @@ static void	dup_input_output(t_data *data, t_child *kid)
 		out = dup2(kid->output_fd, STDOUT_FILENO);
 		close(kid->output_fd);
 		kid->output_fd = dup(out);
-	}
-	if (!kid->commands[0])
-	{
-		free_kid(kid);
-		exit_function(data, NULL, 0);
 	}
 	return ;
 }
@@ -80,6 +76,11 @@ void	child_process(t_data *data, t_child *kid)
 	change_pwd_mode(data, kid);
 	sig_controler(SIG_KID);
 	dup_input_output(data, kid);
+	if (kid->commands == NULL || kid->commands[0] == NULL)
+	{
+		free_kid(kid);
+		exit_function(data, NULL, 0);
+	}
 	if (!ft_strcmp(kid->commands[0], "export"))
 	{
 		if (kid->commands[1] == NULL)

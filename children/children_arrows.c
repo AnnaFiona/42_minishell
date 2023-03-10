@@ -36,7 +36,6 @@ static void	open_infile(t_data *data, t_child *kid, char *file_name)
 
 static int	in_or_out(t_data *data, t_child *kid, int y, int redirect)
 {
-	is_it_a_token(data, kid, kid->commands, y + 1);
 	if (redirect == 0 || redirect == 1)
 		open_outfile(data, kid, kid->commands[y + 1], redirect);
 	else if (redirect == 2)

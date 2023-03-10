@@ -32,6 +32,7 @@ typedef struct s_env_list
 typedef struct s_data
 {
 	t_env_list	*env_list;
+	char		**tokens_heredoc;
 	char		**tokens;
 	char		**args;
 	char		**path;
