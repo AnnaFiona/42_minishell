@@ -52,7 +52,7 @@ void	ft_unset(t_data *data)
 		{
 			if (data->args[1][0] >= 'A' && data->args[1][0] <= 'Z')
 				data->len_env--;
-			ft_save_pwd(data, tmp->next->value);
+			save_path_in_data(data, tmp->next->value);
 			rm_node(tmp);
 			env_list_to_matrix(data);
 			return ;

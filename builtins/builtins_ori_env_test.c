@@ -56,3 +56,14 @@ int	is_in_ori_env(t_data *data, char *var)
 	}
 	return (1);
 }
+
+char	*export_pwd_null(t_data *data, char *var)
+{
+	char *value;
+
+	value = NULL;
+	if(ft_strcmp(var, "PWD"))
+		return (value);
+	value = ft_strdup(data->saved_pwd);
+	return (value);
+}

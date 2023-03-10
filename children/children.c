@@ -45,13 +45,6 @@ static void	pipe_controller(t_data *data, t_child *kid, t_index_doc *my_doc)
 	get_commands(data, kid, data->args);
 	if (kid->commands == NULL)
 		return ;
-	if(kid->commands[0][0] == '\0')
-	{
-		free(kid->commands[0]);
-		kid->commands[0] = malloc(sizeof(char) * 2);
-		kid->commands[0][0] = ' ';
-		kid->commands[0][1] = '\0';	
-	}
 	if (my_doc[kid->count].cut_len > -1)
 	{
 		free_kid_command(kid, &my_doc[kid->count]);

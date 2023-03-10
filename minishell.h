@@ -102,11 +102,12 @@ int		is_dub_in_ori(t_data *data, char *var, char *value);
 //builtins_export.c
 void	ft_export(t_data *data);
 
-//builtins_ori_enc_test.c
+//builtins_ori_env_test.c
+char	*export_pwd_null(t_data *data, char *var);
 int		is_in_ori_env(t_data *data, char *var);
 
 //builtins_save_pwd.c
-void	ft_save_pwd(t_data *data, char *value);
+void	save_path_in_data(t_data *data, char *value);
 
 //builtins_unset.c
 void	ft_unset(t_data *data);
@@ -115,7 +116,6 @@ void	ft_unset(t_data *data);
 int		builtins(t_data *data);
 
 //children_arrows_utils.c
-void	is_it_a_token(t_data *data, t_child *kid, char **commands, int y);
 void	cut_token(t_child *kid, int to_cut);
 
 //children_arrows.c
