@@ -23,6 +23,8 @@ void	nl_parrent(int sig)
 {
 	if (sig == SIGINT)
 		write(1, "\n", 1);
+	else if (sig == SIGQUIT)
+		write(1, "Quit (core dumped)\n", 19);
 	return ;
 }
 
@@ -41,7 +43,7 @@ void	sig_controler(int status)
 	else if (status == SIG_PARRENT)
 	{
 		signal(SIGINT, nl_parrent);
-		signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, nl_parrent);
 	}
 	else if (status == SIG_HEREDOC)
 	{
