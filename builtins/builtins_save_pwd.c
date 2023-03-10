@@ -20,7 +20,7 @@
     return ;
 } */
 
-void	ft_save_pwd(t_data *data, char *value)
+void	save_path_in_data(t_data *data, char *value)
 {
 	if (!ft_strcmp(data->args[1], "PWD"))
 	{
@@ -28,7 +28,6 @@ void	ft_save_pwd(t_data *data, char *value)
 			return ;
 		data->saved_pwd = ft_strdup(value);
         //ft_is_dir(data);
-		ft_printf("%s\n", data->saved_pwd);
 	}
 	return ;
 }

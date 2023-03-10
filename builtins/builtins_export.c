@@ -53,12 +53,16 @@ int	is_valid_var(t_data *data, char *var)
 
 void	second_arg_null(t_data *data)
 {
+	char *value;
+
+	value = NULL;
 	if (is_dub_in_ori(data, data->args[1], NULL) || is_valid_var(data,
 			data->args[1]))
 		return ;
 	if (!(is_dublicate(data, data->args[1], NULL)))
 	{
-		add_list_end(data, data->env_list, ft_strdup(data->args[1]), NULL);
+		value = export_pwd_null(data, data->args[1]);
+		add_list_end(data, data->env_list, ft_strdup(data->args[1]), value);
 		env_list_to_matrix(data);
 	}
 	return ;
