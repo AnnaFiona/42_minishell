@@ -52,7 +52,7 @@ void change_pwd_mode(t_data *data, t_child *kid)
 	if(!ft_strcmp(kid->commands[0], "cd"))
 	{
 		free_kid(kid);
-		exit_function(data, NULL, 1);
+		exit_function(data, NULL, 3);
 	}
 	if(!ft_strcmp(kid->commands[0], "pwd") && !kid->commands[1])
 	{
@@ -86,7 +86,7 @@ void	child_process(t_data *data, t_child *kid)
 		if (kid->commands[1] == NULL)
 			sort_env(data, data->env);
 		free_kid(kid);
-		exit_function(data, NULL, 1);
+		exit_function(data, NULL, 0);
 	}
 	path = get_path(data, kid, data->path, kid->commands[0]);
 	if (path == NULL)
@@ -103,7 +103,7 @@ void	child_process(t_data *data, t_child *kid)
 			write(2, ": command not found\n", 20);
 		}
 		free_kid(kid);
-		exit_function(data, NULL, 1);
+		exit_function(data, NULL, 3);
 	}
 	execve(path, kid->commands, data->env);
 }

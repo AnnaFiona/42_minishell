@@ -125,7 +125,6 @@ static void	save_pwd(t_data *data, char *pwd, char *path)
 		if (!tmp)
 			return ;
 		secure_pwd(data, tmp);
-		ft_printf("saved_pwd = %s\n", data->saved_pwd);
 		is_dublicate(data, pwd, tmp);
 		free(tmp);
 	}

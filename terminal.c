@@ -51,7 +51,8 @@ void	get_prompt(t_data *data)
 
 	temp_user = getenv("USER");
 	if (!temp_user)
-		exit_function(data, "Error:\n	No user found\n", 1);
-	data->prompt = ft_strjoin(temp_user, ": ");
+		data->prompt = ft_strdup("\033[0;31mredacted: \033[0m");
+	else
+		data->prompt = ft_strjoin(temp_user, ": ");
 	return ;
 }

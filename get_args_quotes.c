@@ -42,7 +42,7 @@ static char	*variable_name(char *arg, int x)
 	{
 		while (arg[x + len])
 		{
-			if (ft_isalpha(arg[x + len]) == 0)
+			if (ft_isalnum(arg[x + len]) == 0)
 				break ;
 			len++;
 		}
@@ -128,7 +128,7 @@ int	replace_variables(t_data *data, int y, int x)
 	char	*back;
 
 	if (is_it_variable(data, y, x + 1, "'\"|/") == 1)
-		return (1);
+		return (x + 1);
 	var_name = variable_name(data->args[y], x);
 	if (data->args[y][x + 1] == '?')
 		variable = ft_itoa(data->exit_status);
