@@ -113,6 +113,7 @@ void	save_path_in_data(t_data *data, char *value);
 void	ft_unset(t_data *data);
 
 //builtins.c
+void	ft_print_env(t_data *data);
 int		builtins(t_data *data);
 
 //children_arrows_utils.c

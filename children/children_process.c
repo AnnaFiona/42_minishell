@@ -88,6 +88,12 @@ void	child_process(t_data *data, t_child *kid)
 		free_kid(kid);
 		exit_function(data, NULL, 0);
 	}
+	else if (!ft_strcmp(kid->commands[0], "env"))
+	{
+		ft_print_env(data);
+		free_kid(kid);
+		exit_function(data, NULL, 0);
+	}
 	path = get_path(data, kid, data->path, kid->commands[0]);
 	if (path == NULL)
 	{

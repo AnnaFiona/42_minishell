@@ -22,12 +22,24 @@ int	is_builtin_last(t_data *data)
 	return (0);
 }
 
+void	ft_print_env(t_data *data)
+{
+	t_env_list	*temp;
+
+	temp = data->env_list;
+	while(temp != NULL)
+	{
+		if (temp->value != NULL)
+			ft_printf("%s=%s\n", temp->var, temp->value);
+		temp = temp->next;
+	}
+	return ;
+}
+
 int	builtins(t_data *data)
 {
 	if (data->args == NULL)
 		return (NO_CHILDS);
-	/* if (count_pipes(data) == NO_CHILDS)
-		return (NO_CHILDS); */
 	if (is_builtin_last(data) == 1)
 		return (NO_CHILDS);
 	if (data->pipe_count > 0)
@@ -40,6 +52,8 @@ int	builtins(t_data *data)
 		ft_export(data);
 	else if (!ft_strcmp(data->args[0], "unset"))
 		ft_unset(data);
+	/* else if (!ft_strcmp(data->args[0], "env"))
+		ft_print_env(data); */
 	else
 		return (MAKE_CHILDS);
 	return (NO_CHILDS);
