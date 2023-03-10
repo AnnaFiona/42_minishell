@@ -50,6 +50,8 @@ char	*get_path(t_data *data, t_child *kid, char **paths, char *command)
 	int		y;
 
 	y = 0;
+	if(command[0] == '\0')
+		return (NULL);
 	cmd_absolute = is_absolute_path(data, kid, command);
 	if (cmd_absolute)
 		return (cmd_absolute);
