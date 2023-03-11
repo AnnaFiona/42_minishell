@@ -191,6 +191,8 @@ int	ft_cd(t_data *data, char *argv)
 	char	*path;
 	char	*old_pwd;
 
+	if(data->pipe_count > 0)
+		return ;
 	data->exit_status = 0;
 	if (!argv || argv[0] == '\0')
 	{

@@ -66,6 +66,22 @@ static void free_line(t_data *data, t_index_doc *my_doc)
 	return ;
 }
 
+static void should_fork(t_data *data, t_child *kid, t_index_doc	*my_doc)
+{
+	if(builtins_in_kid(data, kid) == MAKE_CHILDS)
+	{
+		sig_controler(SIG_PARRENT);
+		kid->pid[kid->count] = fork();
+		if (kid->pid[kid->count] == 0)
+		{
+			free_line(data, my_doc);
+			free(my_doc);
+			child_process(data, kid);
+		}
+	}
+	return ;
+}
+
 static void	make_child(t_data *data, t_child *kid)
 {
 	t_index_doc	*my_doc;
@@ -81,16 +97,7 @@ static void	make_child(t_data *data, t_child *kid)
 		if (data->guard_fork == 1)
 			break ;
 		if(builtins_in_kid(data, kid) == MAKE_CHILDS)
-		{
-			sig_controler(SIG_PARRENT);
-			kid->pid[kid->count] = fork();
-			if (kid->pid[kid->count] == 0)
-			{
-				free_line(data, my_doc);
-				free(my_doc);
-				child_process(data, kid);
-			}
-		}
+			should_fork(data, kid, my_doc);
 		close_pipes_and_free(data, kid);
 		kid->count++;
 	}
