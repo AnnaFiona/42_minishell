@@ -136,12 +136,12 @@ static void	save_pwd(t_data *data, char *pwd, char *path)
 			secure_pwd(data, path);
 			is_dublicate(data, pwd, tmp);
 			free(tmp);
-			env_list_to_matrix(data);
+			env_list_to_matrix(data, 'x');
 			return ;
 		}
 		is_dublicate(data, pwd, path);
 	}
-	env_list_to_matrix(data);
+	env_list_to_matrix(data, 'x');
 	return ;
 }
 

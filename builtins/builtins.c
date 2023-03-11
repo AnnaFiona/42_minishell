@@ -24,14 +24,14 @@ int	is_builtin_last(t_data *data)
 
 void	ft_print_env(t_data *data)
 {
-	t_env_list	*temp;
+	int y;
 
-	temp = data->env_list;
-	while(temp != NULL)
+	y = 0;
+	while(data->env[y] != NULL)
 	{
-		if (temp->value != NULL)
-			ft_printf("%s=%s\n", temp->var, temp->value);
-		temp = temp->next;
+		if (ft_strchr(data->env[y], '=')  != 0)
+			ft_printf("%s\n", data->env[y]);
+		y++;
 	}
 	return ;
 }
