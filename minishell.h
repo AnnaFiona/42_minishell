@@ -160,21 +160,26 @@ void	free_data(t_data *data);
 void	exit_function(t_data *data, char *error_message, int error);
 void	malloc_exit(t_data *data, t_child *kid);
 
+//get_args_cut_args.c
+void	cut_arg(t_data *data, int to_cut);
+
 //get_args_path.c
 int		replace_path(t_data *data, int y);
 
 //get_args_quotes.c
 int		cut_quotes(t_data *data, int y, int x);
 char	*strdup_or_strjoin(char const *s_1, char const *s_2);
-void	cut_arg(t_data *data, int to_cut);
-int		replace_variables(t_data *data, int y, int x);
 
 //get_args_syntax_errors.c
-void    search_syntax_errors(t_data *data);
+int	check_pipes(t_data *data);
+void    search_syntax_errors(t_data *data, int y);
 
 //get_args_utils.c
 int		find_second_quote(char *line, char quote, int x);
 int		search_for_break(t_data *data, char *line, char *breakers, int x);
+
+//get_args_variables.c
+int		replace_variables(t_data *data, int y, int x);
 
 //get_args.c
 void	get_args(t_data *data, char *line);

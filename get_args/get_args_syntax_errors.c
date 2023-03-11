@@ -1,21 +1,35 @@
 #include "../minishell.h"
 
-static int    check_for_token(t_data *data, char *next_arg)
+static void	print_syntax_error(int error, char *next_arg)
 {
-	int x;
+	if (error == 1)
+		ft_printf("minishell: syntax error near unexpected token `newline'\n");
+	else if (error == 2)
+	{
+		ft_printf("minishell: syntax error near ");
+		ft_printf("unexpected token `%s'\n", next_arg);
+	}
+	else if (error == 3)
+		ft_printf("minishell: syntax error near unexpected token `|'\n");
+	return ;
+}
+
+static int	check_for_token(t_data *data, char *next_arg)
+{
+	int	x;
 
 	x = 0;
 	if (next_arg == NULL)
 	{
-		ft_printf("+minishell: syntax error near unexpected token `newline'\n");
+		print_syntax_error(1, NULL);
 		data->exit_status = 2;
 		return (1);
 	}
-	while(data->tokens_heredoc[x])
+	while (data->tokens_pipe[x])
 	{
-		if (ft_strcmp(next_arg, data->tokens_heredoc[x]) == 0)
+		if (ft_strcmp(next_arg, data->tokens_pipe[x]) == 0)
 		{
-			ft_printf("+minishell: syntax error near unexpected token `%s'\n", next_arg);
+			print_syntax_error(2, next_arg);
 			data->exit_status = 2;
 			return (1);
 		}
@@ -24,24 +38,26 @@ static int    check_for_token(t_data *data, char *next_arg)
 	return (0);
 }
 
-static int check_pipes(t_data *data)
+int	check_pipes(t_data *data)
 {
-	int y;
+	int	y;
 
 	y = 0;
-	while(data->args[y])
+	while (data->args[y])
 	{
 		if (ft_strcmp(data->args[y], "|") == 0)
 		{
 			if (y == 0 || ft_strcmp(data->args[y + 1], "|") == 0)
 			{
-				ft_printf("-minishell: syntax error near unexpected token `|'\n");
+				print_syntax_error(3, NULL);
+				free_double_array(data->args);
 				data->exit_status = 2;
 				return (1);
 			}
 			else if (data->args[y + 1] == NULL)
 			{
-				ft_printf("-minishell: syntax error near unexpected token `newline'\n");
+				print_syntax_error(1, NULL);
+				free_double_array(data->args);
 				data->exit_status = 2;
 				return (1);
 			}
@@ -51,33 +67,31 @@ static int check_pipes(t_data *data)
 	return (0);
 }
 
-void    search_syntax_errors(t_data *data)
+void	search_syntax_errors(t_data *data, int y)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = 0;
-	while(data->args[y])
+	while (data->args[y])
 	{
 		x = 0;
-		while(data->tokens[x])
+		while (data->tokens[x])
 		{
 			if (ft_strcmp(data->args[y], data->tokens[x]) == 0)
+			{
 				if (check_for_token(data, data->args[y + 1]) == 1)
 				{
 					free_double_array(data->args);
 					data->args = NULL;
 					return ;
 				}
+			}
 			x++;
 		}
 		y++;
 	}
 	if (check_pipes(data) == 1)
-	{
-		free_double_array(data->args);
 		data->args = NULL;
-		return ;
-	}
 	return ;
 }

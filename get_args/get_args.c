@@ -7,7 +7,7 @@ static void	finish_input(t_data *data)
 
 	y = 0;
 	data->quote = '\0';
-	while(data->args[y])
+	while (data->args[y])
 	{
 		x = replace_path(data, y);
 		while (data->args[y] && data->args[y][x])

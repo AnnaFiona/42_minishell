@@ -18,10 +18,12 @@ CHILDREN	= $(PATH_C)_arrows_utils.c \
 			$(PATH_C)_path.c \
 			$(PATH_C)_utils.c \
 			$(PATH_C).c
-GET_ARGS	= $(PATH_G)_path.c \
+GET_ARGS	= $(PATH_G)_cut_arg.c \
+			$(PATH_G)_path.c \
 			$(PATH_G)_quotes.c \
 			$(PATH_G)_syntax_errors.c \
 			$(PATH_G)_utils.c \
+			$(PATH_G)_variables.c \
 			$(PATH_G).c
 HEREDOC		= $(PATH_H)_free_kid_cmd.c \
 			$(PATH_H)_is_valid.c \
