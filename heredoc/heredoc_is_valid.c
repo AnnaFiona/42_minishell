@@ -1,37 +1,28 @@
 
 #include "../minishell.h"
 
-static char	*heredoc_is_token(t_data *data, char *cmd)
+static int heredoc_is_token(t_data *data, char *cmd)
 {
 	int		y;
-	char	*error_token;
 
 	y = 0;
-	error_token = NULL;
 	while (data->tokens[y])
 	{
 		if (!ft_strncmp(cmd, data->tokens[y], ft_strlen(data->tokens[y])))
-		{
-			error_token = ft_strdup(data->tokens[y]);
-			return (error_token);
-		}
+			return (1);
 		y++;
 	}
-	return (NULL);
+	return (0);
 }
 
 static int	herdoc_token(t_data *data, t_child *kid, char **cmd, int i)
 {
-	char	*error_token;
-
-	error_token = NULL;
 	if (cmd[i] == NULL)
 	{
 		data->guard_fork = 1;
 		return (-1);
 	}
-	error_token = heredoc_is_token(data, cmd[i]);
-	if (error_token && kid->in_quotes[i] != 'q')
+	if (heredoc_is_token(data, cmd[i]) && kid->in_quotes[i] != 'q')
 	{
 		data->guard_fork = 1;
 		return (-1);
