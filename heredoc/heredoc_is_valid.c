@@ -1,48 +1,22 @@
 
 #include "../minishell.h"
 
-static void	heredoc_syntax_error(t_data *data, t_child *kid, char *token)
-{
-	if (token == NULL)
-	{
-		if (data->pipe_count == 0 || data->pipe_count == kid->count)
-		{
-			ft_printf("minishell: syntax error ");
-			ft_printf("near unexpected token `newline'\n");
-		}
-		else
-			ft_printf("minishell: syntax error near unexpected token `|'\n");
-	}
-	else
-	{
-		ft_printf("minishell: syntax error near ");
-		ft_printf("unexpected token '%s'\n", token);
-	}
-	if(token)
-		free(token);
-	return ;
-}
-
-static char	*heredoc_is_token(char *cmd)
+static char	*heredoc_is_token(t_data *data, char *cmd)
 {
 	int		y;
 	char	*error_token;
-	char	**token_str;
 
 	y = 0;
-	token_str = ft_split("<< < >> >", ' ');
 	error_token = NULL;
-	while (token_str[y])
+	while (data->tokens[y])
 	{
-		if (!ft_strncmp(cmd, token_str[y], ft_strlen(token_str[y])))
+		if (!ft_strncmp(cmd, data->tokens[y], ft_strlen(data->tokens[y])))
 		{
-			error_token = ft_strdup(token_str[y]);
-			free_double_array(token_str);
+			error_token = ft_strdup(data->tokens[y]);
 			return (error_token);
 		}
 		y++;
 	}
-	free_double_array(token_str);
 	return (NULL);
 }
 
@@ -53,15 +27,13 @@ static int	herdoc_token(t_data *data, t_child *kid, char **cmd, int i)
 	error_token = NULL;
 	if (cmd[i] == NULL)
 	{
-		kid->guard_fork = 1;
-		heredoc_syntax_error(data, kid, cmd[i]);
+		data->guard_fork = 1;
 		return (-1);
 	}
-	error_token = heredoc_is_token(cmd[i]);
+	error_token = heredoc_is_token(data, cmd[i]);
 	if (error_token && kid->in_quotes[i] != 'q')
 	{
-		kid->guard_fork = 1;
-		heredoc_syntax_error(data, kid, error_token);
+		data->guard_fork = 1;
 		return (-1);
 	}
 	return (0);

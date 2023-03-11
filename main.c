@@ -6,8 +6,8 @@ int			g_in_fd_copy;
 static void	initialize_data(t_data *data)
 {
 	data->env_list = NULL;
-	data->tokens = ft_split("< > >>", ' ');
-	data->tokens_heredoc = ft_split("< > >> << |", ' ');
+	data->tokens = ft_split("< > >> <<", ' ');
+	data->tokens_pipe = ft_split("< > >> << |", ' ');
 	data->args = NULL;
 	data->path = NULL;
 	data->env = NULL;
@@ -18,6 +18,7 @@ static void	initialize_data(t_data *data)
 	data->quote = '\0';
 	data->exit_status = 0;
 	data->pipe_count = -1;
+	data->guard_fork = 0;
 	data->args_y = -1;
 	data->len_env = 0;
 	data->protec = 0;

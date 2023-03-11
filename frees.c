@@ -35,7 +35,7 @@ void	free_kid(t_child *kid)
 void	free_data(t_data *data)
 {
 	if (data->tokens != NULL)
-		free_double_array(data->tokens_heredoc);
+		free_double_array(data->tokens_pipe);
 	if (data->tokens != NULL)
 		free_double_array(data->tokens);
 	if (data->saved_pwd != NULL)

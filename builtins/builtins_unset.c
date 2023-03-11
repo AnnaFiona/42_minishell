@@ -54,7 +54,7 @@ void	ft_unset(t_data *data)
 				data->len_env--;
 			save_path_in_data(data, tmp->next->value);
 			rm_node(tmp);
-			env_list_to_matrix(data);
+			env_list_to_matrix(data, 'x');
 			return ;
 		}
 		tmp = tmp->next;

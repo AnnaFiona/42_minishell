@@ -32,7 +32,7 @@ typedef struct s_env_list
 typedef struct s_data
 {
 	t_env_list	*env_list;
-	char		**tokens_heredoc;
+	char		**tokens_pipe;
 	char		**tokens;
 	char		**args;
 	char		**path;
@@ -45,6 +45,7 @@ typedef struct s_data
 	char		quote;
 	int			exit_status;
 	int			pipe_count;
+	int			guard_fork;
 	int			len_env;
 	int			args_y;
 	int			protec;
@@ -58,7 +59,6 @@ typedef struct s_child
 	char	*in_quotes;
 	int		*pipe_fd;
 	int		*pid;
-	int		guard_fork;
 	int		output_fd;
 	int		input_fd;
 	int		count;
@@ -91,7 +91,7 @@ char	*save_relative_path(char *old_path, char *path);
 int		ft_cd(t_data *data, char *path);
 
 //builtins_export_sort.c
-void	env_list_to_matrix(t_data *data);
+void	env_list_to_matrix(t_data *data, char equalsign);
 void	sort_env(t_data *data, char **env);
 
 //builtins_export_utils.c
@@ -161,21 +161,26 @@ void	free_data(t_data *data);
 void	exit_function(t_data *data, char *error_message, int error);
 void	malloc_exit(t_data *data, t_child *kid);
 
+//get_args_cut_args.c
+void	cut_arg(t_data *data, int to_cut);
+
 //get_args_path.c
 int		replace_path(t_data *data, int y);
 
 //get_args_quotes.c
 int		cut_quotes(t_data *data, int y, int x);
 char	*strdup_or_strjoin(char const *s_1, char const *s_2);
-void	cut_arg(t_data *data, int to_cut);
-int		replace_variables(t_data *data, int y, int x);
 
 //get_args_syntax_errors.c
+int		check_pipes(t_data *data);
 void    search_syntax_errors(t_data *data);
 
 //get_args_utils.c
 int		find_second_quote(char *line, char quote, int x);
 int		search_for_break(t_data *data, char *line, char *breakers, int x);
+
+//get_args_variables.c
+int		replace_variables(t_data *data, int y, int x);
 
 //get_args.c
 void	get_args(t_data *data, char *line);
@@ -189,7 +194,7 @@ void	free_kid_command(t_child *kid, t_index_doc *my_doc);
 int		is_valid_heredoc(t_data *data, t_child *kid, t_here *doc);
 
 //heredoc_utils.c
-char 	*make_heredoc_line(t_child *kid, t_here *doc);
+char 	*make_heredoc_line(t_data *data, t_child *kid, t_here *doc);
 
 //heredoc.c
 void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc);

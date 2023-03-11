@@ -1,7 +1,7 @@
 
 #include "../minishell.h"
 
-void	env_list_to_matrix(t_data *data)
+void	env_list_to_matrix(t_data *data, char equalsign)
 {
 	int			y;
 	char		*line;
@@ -16,7 +16,12 @@ void	env_list_to_matrix(t_data *data)
 	while (tmp != NULL)
 	{
 		if (tmp->value == NULL)
-			data->env[y] = ft_strdup(tmp->var);
+		{
+			if (equalsign == '=')
+				data->env[y] = ft_strjoin(tmp->var, "=");
+			else
+				data->env[y] = ft_strdup(tmp->var);
+		}
 		else
 		{
 			line = ft_strjoin(tmp->var, "=");
@@ -63,7 +68,7 @@ void	second_arg_null(t_data *data)
 	{
 		value = export_pwd_null(data, data->args[1]);
 		add_list_end(data, data->env_list, ft_strdup(data->args[1]), value);
-		env_list_to_matrix(data);
+		env_list_to_matrix(data, 'x');
 	}
 	return ;
 }
@@ -86,7 +91,7 @@ void	save_var(t_data *data)
 			add_list_end(data, data->env_list, ft_strdup(matrix[0]),
 				ft_strdup(matrix[1]));
 		}
-		env_list_to_matrix(data);
+		env_list_to_matrix(data, '=');
 		free_double_array(matrix);
 		return ;
 	}
