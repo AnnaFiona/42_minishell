@@ -11,7 +11,6 @@ static void	initialize_child(t_child *kid)
 		malloc_exit(NULL, kid);
 	kid->pipe_fd[0] = -1;
 	kid->pipe_fd[1] = -1;
-	kid->guard_fork = 0;
 	kid->output_fd = -1;
 	kid->input_fd = -1;
 	kid->count = 0;
@@ -79,7 +78,7 @@ static void	make_child(t_data *data, t_child *kid)
 	while (kid->count <= data->pipe_count)
 	{
 		pipe_controller(data, kid, my_doc);
-		if (kid->guard_fork == 1)
+		if (data->guard_fork == 1)
 			break ;
 		sig_controler(SIG_PARRENT);
 		kid->pid[kid->count] = fork();

@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-static void	print_syntax_error(int error, char *next_arg)
+static void	print_syntax_error(t_data *data, int error, char *next_arg)
 {
 	if (error == 1)
 		ft_printf("minishell: syntax error near unexpected token `newline'\n");
@@ -11,6 +11,7 @@ static void	print_syntax_error(int error, char *next_arg)
 	}
 	else if (error == 3)
 		ft_printf("minishell: syntax error near unexpected token `|'\n");
+	data->guard_fork = 1;
 	return ;
 }
 
@@ -21,16 +22,14 @@ static int	check_for_token(t_data *data, char *next_arg)
 	x = 0;
 	if (next_arg == NULL)
 	{
-		print_syntax_error(1, NULL);
-		data->exit_status = 2;
+		print_syntax_error(data, 1, NULL);
 		return (1);
 	}
 	while (data->tokens_pipe[x])
 	{
 		if (ft_strcmp(next_arg, data->tokens_pipe[x]) == 0)
 		{
-			print_syntax_error(2, next_arg);
-			data->exit_status = 2;
+			print_syntax_error(data, 2, next_arg);
 			return (1);
 		}
 		x++;
@@ -49,16 +48,12 @@ int	check_pipes(t_data *data)
 		{
 			if (y == 0 || ft_strcmp(data->args[y + 1], "|") == 0)
 			{
-				print_syntax_error(3, NULL);
-				free_double_array(data->args);
-				data->exit_status = 2;
+				print_syntax_error(data, 3, NULL);
 				return (1);
 			}
 			else if (data->args[y + 1] == NULL)
 			{
-				print_syntax_error(1, NULL);
-				free_double_array(data->args);
-				data->exit_status = 2;
+				print_syntax_error(data, 1, NULL);
 				return (1);
 			}
 		}
@@ -67,7 +62,7 @@ int	check_pipes(t_data *data)
 	return (0);
 }
 
-void	search_syntax_errors(t_data *data, int y)
+void	search_syntax_errors(t_data *data)
 {
 	int	y;
 	int	x;
@@ -82,8 +77,7 @@ void	search_syntax_errors(t_data *data, int y)
 			{
 				if (check_for_token(data, data->args[y + 1]) == 1)
 				{
-					free_double_array(data->args);
-					data->args = NULL;
+					data->guard_fork = 1;
 					return ;
 				}
 			}
@@ -91,7 +85,6 @@ void	search_syntax_errors(t_data *data, int y)
 		}
 		y++;
 	}
-	if (check_pipes(data) == 1)
-		data->args = NULL;
+	check_pipes(data);
 	return ;
 }

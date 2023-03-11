@@ -32,7 +32,7 @@ typedef struct s_env_list
 typedef struct s_data
 {
 	t_env_list	*env_list;
-	char		**tokens_heredoc;
+	char		**tokens_pipe;
 	char		**tokens;
 	char		**args;
 	char		**path;
@@ -45,6 +45,7 @@ typedef struct s_data
 	char		quote;
 	int			exit_status;
 	int			pipe_count;
+	int			guard_fork;
 	int			len_env;
 	int			args_y;
 	int			protec;
@@ -58,7 +59,6 @@ typedef struct s_child
 	char	*in_quotes;
 	int		*pipe_fd;
 	int		*pid;
-	int		guard_fork;
 	int		output_fd;
 	int		input_fd;
 	int		count;
@@ -171,8 +171,8 @@ int		cut_quotes(t_data *data, int y, int x);
 char	*strdup_or_strjoin(char const *s_1, char const *s_2);
 
 //get_args_syntax_errors.c
-int	check_pipes(t_data *data);
-void    search_syntax_errors(t_data *data, int y);
+int		check_pipes(t_data *data);
+void    search_syntax_errors(t_data *data);
 
 //get_args_utils.c
 int		find_second_quote(char *line, char quote, int x);
@@ -193,7 +193,7 @@ void	free_kid_command(t_child *kid, t_index_doc *my_doc);
 int		is_valid_heredoc(t_data *data, t_child *kid, t_here *doc);
 
 //heredoc_utils.c
-char 	*make_heredoc_line(t_child *kid, t_here *doc);
+char 	*make_heredoc_line(t_data *data, t_child *kid, t_here *doc);
 
 //heredoc.c
 void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc);

@@ -67,7 +67,7 @@ void	wait_for_children(t_data *data, t_child *kid)
 	int	i;
 
 	i = 0;
-	if (kid->guard_fork == 1)
+	if (data->guard_fork == 1)
 		return ;
 	while (i <= data->pipe_count)
 	{
