@@ -100,7 +100,7 @@ int		is_dublicate(t_data *data, char *var, char *value);
 int		is_dub_in_ori(t_data *data, char *var, char *value);
 
 //builtins_export.c
-void	ft_export(t_data *data);
+void	ft_export(t_data *data, t_child *kid);
 
 //builtins_ori_env_test.c
 char	*export_pwd_null(t_data *data, char *var);
@@ -115,6 +115,7 @@ void	ft_unset(t_data *data);
 //builtins.c
 void	ft_print_env(t_data *data);
 int		builtins(t_data *data);
+int		builtins_in_kid(t_data *data, t_child *kid);
 
 //children_arrows_utils.c
 void	cut_token(t_child *kid, int to_cut);

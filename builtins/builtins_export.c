@@ -94,17 +94,17 @@ void	save_var(t_data *data)
 	return ;
 }
 
-void	ft_export(t_data *data)
+void	ft_export(t_data *data, t_child *kid)
 {
-	if (data->args[1] == NULL)
+	if (kid->commands[1] == NULL)
 	{
 		data->exit_status = 0;
 		sort_env(data, data->env);
 	}
-	else if (data->args[1])
+	else if (!ft_strcmp(data->args[0], "export") && data->args[1] && data->pipe_count == 0)
 	{
 		data->exit_status = 0;
-		if(data->args[1][0] == '\0')
+		if(kid->commands[1][0] == '\0')
 		{
 			data->exit_status = 1;
 			ft_printf("minishell: export: `%s': not a valid identifier\n",

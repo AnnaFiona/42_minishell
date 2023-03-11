@@ -14,11 +14,17 @@ static void	rm_node(t_env_list *top)
 	return ;
 }
 
-static int	str_is_alpha(t_data *data, char *var)
+static int	is_valid_unset(t_data *data, char *var)
 {
 	int	i;
 
 	i = 0;
+	if (data->args[1][0] == '\0')
+	{
+		ft_printf("bash: unset: `': not a valid identifier\n");
+		data->exit_status = 1;
+		return (1);
+	}
 	while (var[i])
 	{
 		if (ft_isalpha(var[i]) == 0)
@@ -37,14 +43,8 @@ void	ft_unset(t_data *data)
 {
 	t_env_list	*tmp;
 
-	if (!data->args[1] || str_is_alpha(data, data->args[1]))
+	if (!data->args[1] || is_valid_unset(data, data->args[1]) || data->pipe_count > 0)
 		return ;
-	if (data->args[1][0] == '\0')
-	{
-		ft_printf("bash: unset: `': not a valid identifier\n");
-		data->exit_status = 1;
-		return ;
-	}
 	tmp = data->env_list;
 	while (tmp->next != NULL)
 	{

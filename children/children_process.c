@@ -2,9 +2,17 @@
 
 void	malloc_pid(t_data *data, t_child *kid)
 {
+	int i;
+
+	i = 0;
 	kid->pid = malloc(sizeof(int) * (data->pipe_count + 1));
 	if (!kid->pid)
 		malloc_exit(data, kid);
+	while(i <= data->pipe_count)
+	{
+		kid->pid[i] = -1;
+		i++;
+	}
 	return ;
 }
 

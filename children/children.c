@@ -81,13 +81,16 @@ static void	make_child(t_data *data, t_child *kid)
 		pipe_controller(data, kid, my_doc);
 		if (kid->guard_fork == 1)
 			break ;
-		sig_controler(SIG_PARRENT);
-		kid->pid[kid->count] = fork();
-		if (kid->pid[kid->count] == 0)
+		if(builtins_in_kid(data, kid) == MAKE_CHILDS)
 		{
-			free_line(data, my_doc);
-			free(my_doc);
-			child_process(data, kid);
+			sig_controler(SIG_PARRENT);
+			kid->pid[kid->count] = fork();
+			if (kid->pid[kid->count] == 0)
+			{
+				free_line(data, my_doc);
+				free(my_doc);
+				child_process(data, kid);
+			}
 		}
 		close_pipes_and_free(data, kid);
 		kid->count++;

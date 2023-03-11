@@ -48,13 +48,34 @@ int	builtins(t_data *data)
 		exit_function(data, "exit\n", 0);
 	else if (!ft_strcmp(data->args[0], "cd"))
 		ft_cd(data, data->args[1]);
-	else if (!ft_strcmp(data->args[0], "export"))
-		ft_export(data);
-	else if (!ft_strcmp(data->args[0], "unset"))
-		ft_unset(data);
+	/* else if (!ft_strcmp(data->args[0], "export"))
+		ft_export(data); */
+	/* else if (!ft_strcmp(data->args[0], "unset"))
+		ft_unset(data); */
 	/* else if (!ft_strcmp(data->args[0], "env"))
 		ft_print_env(data); */
 	else
+		return (MAKE_CHILDS);
+	return (NO_CHILDS);
+}
+
+int	builtins_in_kid(t_data *data, t_child *kid)
+{
+	if (kid->commands == NULL || kid->commands[0][0] == '\0')
+		return (MAKE_CHILDS);
+	/* if(ft_strcmp(data->args[0], "unset") || ft_strcmp(kid->commands[0], "export"))
+		return (MAKE_CHILDS); */
+	/* if (is_builtin_last(data) == 1)
+		return (NO_CHILDS); */
+	/* else if (!ft_strcmp(data->args[0], "exit"))
+		exit_function(data, "exit\n", 0); */
+/* 	if (!ft_strcmp(data->args[0], "cd"))
+		ft_cd(data, data->args[1]); */
+	if (!ft_strcmp(kid->commands[0], "export"))
+		ft_export(data, kid);
+	else if (!ft_strcmp(kid->commands[0], "unset"))
+		ft_unset(data);
+	else 
 		return (MAKE_CHILDS);
 	return (NO_CHILDS);
 }
