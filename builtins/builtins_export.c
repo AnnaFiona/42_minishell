@@ -1,47 +1,13 @@
 
 #include "../minishell.h"
 
-void	env_list_to_matrix(t_data *data, char equalsign)
-{
-	int			y;
-	char		*line;
-	t_env_list	*tmp;
-
-	y = 0;
-	tmp = data->env_list;
-	free_double_array(data->env);
-	data->env = malloc(sizeof(char *) * (size_of_list(tmp) + 1));
-	if (!data->env)
-		malloc_exit(data, NULL);
-	while (tmp != NULL)
-	{
-		if (tmp->value == NULL)
-		{
-			if (equalsign == '=')
-				data->env[y] = ft_strjoin(tmp->var, "=");
-			else
-				data->env[y] = ft_strdup(tmp->var);
-		}
-		else
-		{
-			line = ft_strjoin(tmp->var, "=");
-			data->env[y] = ft_strjoin(line, tmp->value);
-			free(line);
-		}
-		tmp = tmp->next;
-		y++;
-	}
-	data->env[y] = NULL;
-	return ;
-}
-
 int	is_valid_var(t_data *data, char *var)
 {
 	int	i;
 
 	i = 0;
-	if(is_in_ori_env(data, var) == 1)
-		return(1);
+	if (is_in_ori_env(data, var) == 1)
+		return (1);
 	while (var[i])
 	{
 		if (ft_isalpha(var[i]) == 0)
@@ -58,7 +24,7 @@ int	is_valid_var(t_data *data, char *var)
 
 void	second_arg_null(t_data *data)
 {
-	char *value;
+	char	*value;
 
 	value = NULL;
 	if (is_dub_in_ori(data, data->args[1], NULL) || is_valid_var(data,
@@ -101,15 +67,16 @@ void	save_var(t_data *data)
 
 void	ft_export(t_data *data, t_child *kid)
 {
-	if (kid->commands[1] == NULL)
+/* 	if (kid->commands[1] == NULL)
 	{
 		data->exit_status = 0;
 		sort_env(data, data->env);
-	}
-	else if (!ft_strcmp(data->args[0], "export") && data->args[1] && data->pipe_count == 0)
+	} */
+	if (!ft_strcmp(data->args[0], "export") && data->args[1]
+		&& data->pipe_count == 0)
 	{
 		data->exit_status = 0;
-		if(kid->commands[1][0] == '\0')
+		if (kid->commands[1][0] == '\0')
 		{
 			data->exit_status = 1;
 			ft_printf("minishell: export: `%s': not a valid identifier\n",
