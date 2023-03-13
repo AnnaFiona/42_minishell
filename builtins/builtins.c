@@ -55,7 +55,7 @@ void	ft_dots(t_data *data, t_child *kid)
 		if(!path_var)
 		{
 			ft_printf("minishell: ..: Is a directory\n");
-			data->exit_status = 256;
+			data->exit_status = 1024;
 		}
 		else
 		{
