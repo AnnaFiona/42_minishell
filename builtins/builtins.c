@@ -54,6 +54,8 @@ void	ft_dots(t_data *data, t_child *kid)
 	{
 		if (!path_var)
 			ft_printf("minishell: ..: Is a directory\n");
+		else
+			ft_printf("..: command not found\n");
 	}
 	else
 	{
