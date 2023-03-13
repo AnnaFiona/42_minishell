@@ -23,15 +23,33 @@ static void	actually_cut_arg(t_data *data, int to_cut, \
 	return ;
 }
 
+static int	get_len(t_data *data)
+{
+	int		len;
+
+	len = 0;
+	while (data->args[len])
+		len++;
+	if(len == 1)
+	{
+		free_double_array(data->args);
+		free(data->in_quotes);
+		data->args = NULL;
+		data->in_quotes = NULL;
+		return (-1);
+	}
+	return (len);
+}
+
 void	cut_arg(t_data *data, int to_cut)
 {
 	char	**temp_arg;
 	char	*temp_quote;
 	int		len;
 
-	len = 0;
-	while (data->args[len])
-		len++;
+	len = get_len(data);
+	if (len == -1)
+		return ;
 	temp_arg = malloc (sizeof(char *) * (len));
 	temp_quote = malloc (sizeof(char) * (len));
 	if (!temp_arg || !temp_quote)

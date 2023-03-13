@@ -68,6 +68,7 @@ void	search_syntax_errors(t_data *data)
 	int	x;
 
 	y = 0;
+	data->guard_fork = 0;
 	while (data->args[y])
 	{
 		x = 0;

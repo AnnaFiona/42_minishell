@@ -7,10 +7,10 @@ static void	finish_input(t_data *data)
 
 	y = 0;
 	data->quote = '\0';
-	while (data->args[y])
+	while (data->args && data->args[y])
 	{
 		x = replace_path(data, y);
-		while (data->args[y] && data->args[y][x])
+		while (data->args && data->args[y] && data->args[y][x])
 		{
 			if (data->args[y][x] == '\'' || data->args[y][x] == '"')
 			{
@@ -27,7 +27,7 @@ static void	finish_input(t_data *data)
 			else
 				x++;
 		}
-		if (data->args[y] == NULL)
+		if (data->args == NULL || data->args[y] == NULL)
 			break ;
 		y++;
 	}
@@ -118,7 +118,5 @@ void	get_args(t_data *data, char *line)
 		return ;
 	count_pipes(data);
 	finish_input(data);
-	if (data->args[0] == NULL)
-		data->args = NULL;
 	return ;
 }
