@@ -30,7 +30,7 @@ static int	get_len(t_data *data)
 	len = 0;
 	while (data->args[len])
 		len++;
-	if(len == 1)
+	if (len == 1)
 	{
 		free_double_array(data->args);
 		free(data->in_quotes);

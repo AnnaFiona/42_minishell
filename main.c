@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 int			g_in_fd_copy;
@@ -72,7 +71,7 @@ char	*ft_getenv(t_data *data, char *var)
 	{
 		if (!ft_strcmp(var, tmp->var))
 		{
-			if(!tmp->value)
+			if (!tmp->value)
 				return (NULL);
 			return (ft_strdup(tmp->value));
 		}
