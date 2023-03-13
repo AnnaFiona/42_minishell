@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 static void	renew_data(t_data *data)

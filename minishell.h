@@ -163,12 +163,15 @@ void	matrix_to_list(t_data *data, char **env,
 int		size_2d(char **envp);
 char	**save_envp(char **envp);
 
+//exit.c
+void	exit_function(t_data *data, char *error_message, int error);
+void	malloc_exit(t_data *data, t_child *kid);
+void	ctrl_d_exit(t_data *data);
+
 //frees.c
 void	free_double_array(char **arrarr);
 void	free_kid(t_child *kid);
 void	free_data(t_data *data);
-void	exit_function(t_data *data, char *error_message, int error);
-void	malloc_exit(t_data *data, t_child *kid);
 
 //get_args_cut_args.c
 void	cut_arg(t_data *data, int to_cut);
@@ -209,7 +212,6 @@ char 	*make_heredoc_line(t_data *data, t_child *kid, t_here *doc);
 void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc);
 
 //signals.c
-void	ctrl_d_exit(t_data *data);
 void	sig_controler(int status);
 
 //terminal.c

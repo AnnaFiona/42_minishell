@@ -53,12 +53,14 @@ void	ft_dots(t_data *data, t_child *kid)
 	if(!ft_strcmp(kid->commands[0], ".."))
 	{
 		if(path_var)
-			ft_printf("minishell: ..: Is a directory\n");
+			ft_printf("minishell: ..: command not found\n");
+		data->exit_status = 768;
 	}
 	else
 	{
 		ft_printf("minishell: .: filename argument required\n");
 		ft_printf(".: usage: . filename [arguments]\n");
+		data->exit_status = 512;
 	}
 	if(path_var)
 		free(path_var);

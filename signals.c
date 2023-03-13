@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 void	str_c(int sig)

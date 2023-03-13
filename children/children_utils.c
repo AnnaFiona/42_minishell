@@ -85,6 +85,8 @@ void	wait_for_children(t_data *data, t_child *kid)
 
 void	set_exit_status(t_data *data)
 {
+	if (data->guard_fork == 1)
+		return ;
 	if (data->exit_status == 2)
 		data->exit_status = 130;
 	else if (data->exit_status == 139)

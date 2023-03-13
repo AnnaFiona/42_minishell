@@ -15,11 +15,7 @@ static void	finish_input(t_data *data)
 			if (data->args[y][x] == '\'' || data->args[y][x] == '"')
 			{
 				if (data->quote == '\0' || data->quote == data->args[y][x])
-				{
-					if (cut_quotes(data, y, x) == -1)
-						x++;
-					x--;
-				}
+					x += cut_quotes(data, y, x);
 				x++;
 			}
 			else if (data->args[y][x] == '$' && data->quote != '\'')
