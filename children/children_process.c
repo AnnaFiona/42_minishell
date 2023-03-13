@@ -40,12 +40,14 @@ static void	export_or_env(t_data *data, t_child *kid)
 {
 	if (!ft_strcmp(kid->commands[0], "export"))
 	{
+		signal(SIGPIPE, SIG_IGN);
 		sort_env(data, data->env);
 		free_kid(kid);
 		exit_function(data, NULL, 0);
 	}
 	if (!ft_strcmp(kid->commands[0], "env"))
 	{
+		signal(SIGPIPE, SIG_IGN);
 		ft_print_env(data);
 		free_kid(kid);
 		exit_function(data, NULL, 0);

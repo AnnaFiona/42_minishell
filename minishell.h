@@ -90,8 +90,11 @@ char	*save_relative_path(char *old_path, char *path);
 //builtins_cd.c
 int		ft_cd(t_data *data, t_child *kid, char *path);
 
-//builtins_export_sort.c
+//builtins_env_list_to_matrix.c
+void	save_path_in_data(t_data *data, char *value);
 void	env_list_to_matrix(t_data *data, char equalsign);
+
+//builtins_export_sort.c
 void	sort_env(t_data *data, char **env);
 
 //builtins_export_utils.c
@@ -106,8 +109,6 @@ void	ft_export(t_data *data, t_child *kid);
 char	*export_pwd_null(t_data *data, char *var);
 int		is_in_ori_env(t_data *data, char *var);
 
-//builtins_save_pwd.c
-void	save_path_in_data(t_data *data, char *value);
 
 //builtins_unset.c
 void	ft_unset(t_data *data);

@@ -43,7 +43,8 @@ void	ft_unset(t_data *data)
 {
 	t_env_list	*tmp;
 
-	if (!data->args[1] || is_valid_unset(data, data->args[1]) || data->pipe_count > 0)
+	if (!data->args[1] || is_valid_unset(data, data->args[1])
+		|| data->pipe_count > 0)
 		return ;
 	tmp = data->env_list;
 	while (tmp->next != NULL)

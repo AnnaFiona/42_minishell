@@ -18,10 +18,10 @@ int	is_builtin_last(t_data *data)
 
 void	ft_print_env(t_data *data)
 {
-	int y;
+	int	y;
 
 	y = 0;
-	while(data->env[y] != NULL)
+	while (data->env[y] != NULL)
 	{
 		if (ft_strchr(data->env[y], '=') != 0)
 			ft_printf("%s\n", data->env[y]);
@@ -47,14 +47,14 @@ int	builtins(t_data *data)
 
 void	ft_dots(t_data *data, t_child *kid)
 {
-	char *path_var;
+	char	*path_var;
 
 	path_var = ft_getenv(data, "PATH");
-	if(!ft_strcmp(kid->commands[0], ".."))
+	if (!ft_strcmp(kid->commands[0], ".."))
 	{
-		if(path_var)
-			ft_printf("minishell: ..: command not found\n");
-		data->exit_status = 768;
+		if(!path_var)
+			ft_printf("minishell: ..: Is a directory\n");
+			data->exit_status = 512;
 	}
 	else
 	{
@@ -62,7 +62,7 @@ void	ft_dots(t_data *data, t_child *kid)
 		ft_printf(".: usage: . filename [arguments]\n");
 		data->exit_status = 512;
 	}
-	if(path_var)
+	if (path_var)
 		free(path_var);
 	return ;
 }
@@ -73,13 +73,14 @@ int	builtins_in_kid(t_data *data, t_child *kid)
 		return (MAKE_CHILDS);
 	if (!ft_strcmp(kid->commands[0], "cd"))
 		ft_cd(data, kid, kid->commands[1]);
-	else if (!ft_strcmp(kid->commands[0], "..") || !ft_strcmp(kid->commands[0], "."))
+	else if (!ft_strcmp(kid->commands[0], "..") || !ft_strcmp(kid->commands[0],
+			"."))
 		ft_dots(data, kid);
-	else if (!ft_strcmp(kid->commands[0], "export"))
+	else if (!ft_strcmp(kid->commands[0], "export") && kid->commands[1])
 		ft_export(data, kid);
 	else if (!ft_strcmp(kid->commands[0], "unset"))
 		ft_unset(data);
-	else 
+	else
 		return (MAKE_CHILDS);
 	return (NO_CHILDS);
 }
