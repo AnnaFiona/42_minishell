@@ -6,7 +6,7 @@
 #    By: aplank <aplank@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 12:24:01 by aplank            #+#    #+#              #
-#    Updated: 2022/11/15 15:07:58 by aplank           ###   ########.fr        #
+#    Updated: 2023/03/13 16:47:56 by aplank           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,10 +42,10 @@ bonus: $(MY_OBJECTS) $(MY_BONUS_OBJECTS)
 	@echo making mandatory and bonus .o files
 
 $(MY_BONUS_OBJECTS):
-	@gcc -c -Wall -Werror -Wextra $(MY_BONUS_SOURCES)
+	@cc -c -Wall -Werror -Wextra $(MY_BONUS_SOURCES)
 
 $(MY_OBJECTS): 
-	@gcc -c -Wall -Werror -Wextra $(MY_SOURCES)
+	@cc -c -Wall -Werror -Wextra $(MY_SOURCES)
 
 clean:
 	@rm -f $(MY_OBJECTS) $(MY_BONUS_OBJECTS)

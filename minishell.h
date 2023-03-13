@@ -128,7 +128,7 @@ void 	malloc_pid(t_data *data, t_child *kid);
 void	child_process(t_data *data, t_child *kid);
 
 //children_path.c
-char	*get_path(t_data *data, t_child *kid, char **paths, char *command);
+char	*get_path(t_data *data, t_child *kid, char *command);
 
 //children_utils.c
 int		count_pipes(t_data *data);
@@ -149,9 +149,8 @@ void	add_list_end(t_data *data, t_env_list *top, char *var,
 void	matrix_to_list(t_data *data, char **env,
 			t_env_list **list);
 
-//envp_to_path.c
+//envp_save.c
 int		size_2d(char **envp);
-void	envp_to_path(t_data *data, char **envp);
 char	**save_envp(char **envp);
 
 //frees.c

@@ -89,23 +89,17 @@ void	child_process(t_data *data, t_child *kid)
 		free_kid(kid);
 		exit_function(data, NULL, 0);
 	}
-	if (!ft_strcmp(kid->commands[0], "export"))
-	{
-		if (kid->commands[1] == NULL)
-			sort_env(data, data->env);
-		free_kid(kid);
-		exit_function(data, NULL, 0);
-	}
-	else if (!ft_strcmp(kid->commands[0], "env"))
+	if (!ft_strcmp(kid->commands[0], "env"))
 	{
 		ft_print_env(data);
 		free_kid(kid);
 		exit_function(data, NULL, 0);
 	}
-	path = get_path(data, kid, data->path, kid->commands[0]);
+	path = get_path(data, kid, kid->commands[0]);
 	if (path == NULL)
 	{
-		if (kid->commands[0][0] == '/')
+		path = ft_getenv(data, "PATH");
+		if (kid->commands[0][0] == '/' || !path)
 		{
 			write(2, "minishell: ", 11);
 			write(2, kid->commands[0], ft_strlen(kid->commands[0]));
@@ -116,6 +110,8 @@ void	child_process(t_data *data, t_child *kid)
 			write(2, kid->commands[0], ft_strlen(kid->commands[0]));
 			write(2, ": command not found\n", 20);
 		}
+		if(!path)
+			free(path);
 		free_kid(kid);
 		exit_function(data, NULL, 3);
 	}
