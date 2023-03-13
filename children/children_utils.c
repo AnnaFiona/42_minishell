@@ -72,7 +72,12 @@ void	wait_for_children(t_data *data, t_child *kid)
 	while (i <= data->pipe_count)
 	{
 		if(kid->pid[i] != -1)
-			waitpid(kid->pid[i], &data->exit_status, 0);
+		{
+			if(i == data->pipe_count)
+				waitpid(kid->pid[i], &data->exit_status, 0);
+			else
+				waitpid(kid->pid[i], NULL, 0);
+		}
 		i++;
 	}
 	if (data->exit_status == 2)
@@ -87,7 +92,7 @@ void	wait_for_children(t_data *data, t_child *kid)
 		data->exit_status = 127;
 	else if (data->exit_status == 1024) //4
 		data->exit_status = 126;
-	else if (data->exit_status != 0 && data->exit_status != 131)
+	else if (data->exit_status != 0 && data->exit_status != 1 && data->exit_status != 131)
 		data->exit_status = 255;
 	return ;
 }

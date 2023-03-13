@@ -88,7 +88,7 @@ char	*rm_last_char(char *str);
 char	*save_relative_path(char *old_path, char *path);
 
 //builtins_cd.c
-int		ft_cd(t_data *data, char *path);
+int		ft_cd(t_data *data, t_child *kid, char *path);
 
 //builtins_export_sort.c
 void	env_list_to_matrix(t_data *data, char equalsign);

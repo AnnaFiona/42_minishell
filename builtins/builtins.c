@@ -13,10 +13,10 @@ int	is_builtin_last(t_data *data)
 	last--;
 	if (!ft_strcmp(data->args[last], "exit"))
 		return (1);
-	else if (!ft_strcmp(data->args[last], "cd"))
+	/* else if (!ft_strcmp(data->args[last], "cd"))
 		ft_cd(data, NULL);
 	else if (!ft_strcmp(data->args[last - 1], "cd"))
-		ft_cd(data, data->args[last]);
+		ft_cd(data, data->args[last]); */
 	else if (!ft_strcmp(data->args[last], "unset"))
 		return (1);
 	return (0);
@@ -70,7 +70,7 @@ int	builtins_in_kid(t_data *data, t_child *kid)
 	/* else if (!ft_strcmp(data->args[0], "exit"))
 		exit_function(data, "exit\n", 0); */
 	if (!ft_strcmp(kid->commands[0], "cd"))
-		ft_cd(data, kid->commands[1]);
+		ft_cd(data, kid, kid->commands[1]);
 	else if (!ft_strcmp(kid->commands[0], "export"))
 		ft_export(data, kid);
 	else if (!ft_strcmp(kid->commands[0], "unset"))

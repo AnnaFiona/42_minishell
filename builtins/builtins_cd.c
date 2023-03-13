@@ -186,13 +186,36 @@ static void	save_and_free(t_data *data, char *old_pwd, char *path)
 	return ;
 }
 
-int	ft_cd(t_data *data, char *argv)
+static void	cd_pipe_error_msg(t_data *data, t_child *kid)
+{
+	DIR	*fd;
+
+	if(!kid->commands[1] || kid->commands[1][0] == '\0' || !ft_strcmp(kid->commands[1], ".."))
+	{
+		data->exit_status = 0;
+		return ;
+	}
+	fd = opendir(kid->commands[1]);
+	if (!fd)
+	{
+		ft_printf("minishell: cd: %s: No such file or directory\n", kid->commands[1]);
+		data->exit_status = 1;
+		return ;
+	}
+	closedir(fd);
+	return ;
+}
+
+int	ft_cd(t_data *data, t_child *kid, char *argv)
 {
 	char	*path;
 	char	*old_pwd;
 
 	if(data->pipe_count > 0)
-		return ;
+	{
+		cd_pipe_error_msg(data, kid);
+		return (0);
+	}
 	data->exit_status = 0;
 	if (!argv || argv[0] == '\0')
 	{
