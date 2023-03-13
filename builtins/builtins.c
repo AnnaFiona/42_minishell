@@ -74,7 +74,7 @@ int	builtins_in_kid(t_data *data, t_child *kid)
 	else if (!ft_strcmp(kid->commands[0], "..") || !ft_strcmp(kid->commands[0],
 			"."))
 		ft_dots(data, kid);
-	else if (!ft_strcmp(kid->commands[0], "export") && kid->commands[0])
+	else if (!ft_strcmp(kid->commands[0], "export") && kid->commands[1])
 		ft_export(data, kid);
 	else if (!ft_strcmp(kid->commands[0], "unset"))
 		ft_unset(data);
