@@ -124,9 +124,18 @@ void	cut_token(t_child *kid, int to_cut);
 //children_arrows.c
 void	search_for_arrows(t_data *data, t_child *kid);
 
-//children_prozess.c
+//children_process_utils.c
+void	close_pipes_and_free(t_data *data, t_child *kid);
 void 	malloc_pid(t_data *data, t_child *kid);
+void	dup_input_output(t_data *data, t_child *kid);
+void	change_pwd_mode(t_data *data, t_child *kid);
+
+//children_process.c
+void	free_line(t_data *data, t_index_doc *my_doc);
 void	child_process(t_data *data, t_child *kid);
+
+//children_path_utils.c
+char	*is_absolute_path(t_data *data, t_child *kid, char *cmd);
 
 //children_path.c
 char	*get_path(t_data *data, t_child *kid, char *command);
@@ -135,6 +144,7 @@ char	*get_path(t_data *data, t_child *kid, char *command);
 int		count_pipes(t_data *data);
 void	get_commands(t_data *data, t_child *kid, char **args);
 void	wait_for_children(t_data *data, t_child *kid);
+void	set_exit_status(t_data *data);
 
 //children.c
 void	redirect_children(t_data *data);

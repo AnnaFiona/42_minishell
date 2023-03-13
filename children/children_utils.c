@@ -6,7 +6,7 @@ int	count_pipes(t_data *data)
 
 	y = 0;
 	data->pipe_count = 0;
-	while(data->args[y])
+	while (data->args[y])
 	{
 		if (ft_strcmp(data->args[y], "|") == 0)
 			data->pipe_count++;
@@ -71,28 +71,34 @@ void	wait_for_children(t_data *data, t_child *kid)
 		return ;
 	while (i <= data->pipe_count)
 	{
-		if(kid->pid[i] != -1)
+		if (kid->pid[i] != -1)
 		{
-			if(i == data->pipe_count)
+			if (i == data->pipe_count)
 				waitpid(kid->pid[i], &data->exit_status, 0);
 			else
 				waitpid(kid->pid[i], NULL, 0);
 		}
 		i++;
 	}
+	return ;
+}
+
+void	set_exit_status(t_data *data)
+{
 	if (data->exit_status == 2)
 		data->exit_status = 130;
 	else if (data->exit_status == 139)
 		ft_printf("Segmentation fault (core dumped)\n");
-	else if (data->exit_status == 256) //1
+	else if (data->exit_status == 256)
 		data->exit_status = 1;
-	else if (data->exit_status == 512) //2
+	else if (data->exit_status == 512)
 		data->exit_status = 2;
-	else if (data->exit_status == 768) //3
+	else if (data->exit_status == 768)
 		data->exit_status = 127;
-	else if (data->exit_status == 1024) //4
+	else if (data->exit_status == 1024)
 		data->exit_status = 126;
-	else if (data->exit_status != 0 && data->exit_status != 1 && data->exit_status != 131)
+	else if (data->exit_status != 0 && data->exit_status != 1 \
+			&& data->exit_status != 131)
 		data->exit_status = 255;
 	return ;
 }

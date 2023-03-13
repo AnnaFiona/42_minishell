@@ -18,23 +18,6 @@ static void	initialize_child(t_child *kid)
 	return ;
 }
 
-static void	close_pipes_and_free(t_data *data, t_child *kid)
-{
-	free_double_array(kid->commands);
-	kid->commands = NULL;
-	free(kid->in_quotes);
-	kid->in_quotes = NULL;
-	if (kid->count != 0)
-		close(kid->input_fd);
-	if (kid->count != data->pipe_count)
-		kid->input_fd = dup(kid->pipe_fd[0]);
-	if (kid->pipe_fd[0] != -1)
-		close(kid->pipe_fd[0]);
-	if (kid->count != data->pipe_count)
-		close(kid->pipe_fd[1]);
-	return ;
-}
-
 static void	pipe_controller(t_data *data, t_child *kid, t_index_doc *my_doc)
 {
 	if (kid->count == data->pipe_count)
@@ -52,23 +35,9 @@ static void	pipe_controller(t_data *data, t_child *kid, t_index_doc *my_doc)
 	return ;
 }
 
-static void free_line(t_data *data, t_index_doc *my_doc)
+static void	should_fork(t_data *data, t_child *kid, t_index_doc	*my_doc)
 {
-	int i;
-
-	i = 0;
-	while (i <= data->pipe_count)
-	{
-		if (my_doc[i].doc_line)
-			free(my_doc[i].doc_line);
-		i++;
-	}
-	return ;
-}
-
-static void should_fork(t_data *data, t_child *kid, t_index_doc	*my_doc)
-{
-	if(builtins_in_kid(data, kid) == MAKE_CHILDS)
+	if (builtins_in_kid(data, kid) == MAKE_CHILDS)
 	{
 		sig_controler(SIG_PARRENT);
 		kid->pid[kid->count] = fork();
@@ -96,7 +65,7 @@ static void	make_child(t_data *data, t_child *kid)
 		pipe_controller(data, kid, my_doc);
 		if (data->guard_fork == 1)
 			break ;
-		if(builtins_in_kid(data, kid) == MAKE_CHILDS)
+		if (builtins_in_kid(data, kid) == MAKE_CHILDS)
 			should_fork(data, kid, my_doc);
 		close_pipes_and_free(data, kid);
 		kid->count++;
@@ -120,6 +89,7 @@ void	redirect_children(t_data *data)
 	data->args_y = 0;
 	make_child(data, kid);
 	wait_for_children(data, kid);
+	set_exit_status(data);
 	free_kid(kid);
 	sig_controler(SIG_DEFAULT);
 	return ;
