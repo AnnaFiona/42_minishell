@@ -29,6 +29,8 @@ static int	is_it_variable(t_data *data, int y, int x, char *tokens)
 	int	i;
 
 	i = 0;
+	if (y != 0 && ft_strcmp(data->args[y - 1], "<<") == 0)
+		return (1);
 	if (data->args[y][x] == '\0' || data->args[y][x] == ' ')
 		return (1);
 	while (tokens[i])
@@ -63,9 +65,9 @@ int	replace_variables(t_data *data, int y, int x)
 	char	*var_name;
 	char	*back;
 
-	var_name = variable_name(data->args[y], x);
 	if (is_it_variable(data, y, x + 1, "'\"|/") == 1)
 		return (x + 1);
+	var_name = variable_name(data->args[y], x);
 	front_and_var = get_front_and_var(data, var_name, y, x);
 	back = ft_substr(data->args[y], x + ft_strlen(var_name) + 1, \
 			ft_strlen(data->args[y] + x));
