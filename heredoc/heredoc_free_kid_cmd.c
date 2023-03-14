@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 int	count_fill_order(t_child *kid, t_here *doc, char fill)

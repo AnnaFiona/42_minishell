@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 void	create_env_list(t_data *data, t_env_list **top, char *var, char *value)
@@ -32,21 +31,22 @@ void	add_list_end(t_data *data, t_env_list *top, char *var, char *value)
 
 void	matrix_to_list(t_data *data, char **env, t_env_list **list)
 {
-	int y;
-	char **matrix;
+	char	**matrix;
+	int		y;
 
 	y = 1;
-	if(list)
+	if (list)
 		free_env_list(list);
 	matrix = ft_split(env[0], '=');
 	create_env_list(data, list, ft_strdup(matrix[0]), ft_strdup(matrix[1]));
 	free_double_array(matrix);
 	while (env[y])
 	{
-		if(ft_strchr(env[y], '='))
+		if (ft_strchr(env[y], '='))
 		{
 			matrix = ft_split(env[y], '=');
-			add_list_end(data, *list, ft_strdup(matrix[0]), ft_strdup(matrix[1]));
+			add_list_end(data, *list, ft_strdup(matrix[0]), \
+							ft_strdup(matrix[1]));
 			free_double_array(matrix);
 		}
 		else
