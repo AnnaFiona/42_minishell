@@ -8,7 +8,7 @@ static char	*variable_name(char *arg, int x)
 	x++;
 	len = 0;
 	if (arg[x] == '?')
-		len = 2;
+		len = 1;
 	else
 	{
 		while (arg[x + len])

@@ -45,6 +45,7 @@ static void	should_fork(t_data *data, t_child *kid, t_index_doc	*my_doc)
 		{
 			free_line(data, my_doc);
 			free(my_doc);
+			clear_history();
 			child_process(data, kid);
 		}
 	}
