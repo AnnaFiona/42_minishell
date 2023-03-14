@@ -52,7 +52,7 @@ void	ft_dots(t_data *data, t_child *kid)
 	path_var = ft_getenv(data, "PATH");
 	if (!ft_strcmp(kid->commands[0], ".."))
 	{
-		if(!path_var)
+		if (!path_var)
 		{
 			ft_printf("minishell: ..: Is a directory\n");
 			data->exit_status = 1024;

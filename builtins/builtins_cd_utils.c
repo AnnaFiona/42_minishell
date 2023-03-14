@@ -1,6 +1,17 @@
 
 #include "../minishell.h"
 
+int	chdir_error_msg(t_data *data, char *path)
+{
+	if (chdir(path))
+	{
+		data->exit_status = 1;
+		ft_printf("minishell: cd: %s: No such file or directory\n", path);
+		return (-1);
+	}
+	return (0);
+}
+
 int	is_last_char(char *str, char c)
 {
 	int	len;

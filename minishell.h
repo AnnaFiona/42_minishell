@@ -84,12 +84,14 @@ typedef struct s_index_doc
 
 //builtins_cd_remove_end.c
 char	*remove_end(char *str, char c);
+int		remove_last_char(t_data *data, char *pwd, char *path);
 
 //builtins_cd_save_pwd.c
 void	secure_pwd(t_data *data, char *path);
 void	save_pwd(t_data *data, char *pwd, char *path);
 
 //builtins_cd_utils.c
+int		chdir_error_msg(t_data *data, char *path);
 int 	is_last_char(char *str, char c);
 char	*rm_last_char(char *str);
 char	*save_relative_path(char *old_path, char *path);
