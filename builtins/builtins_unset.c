@@ -30,8 +30,8 @@ static int	is_valid_unset(t_data *data, char *var)
 		if (ft_isalpha(var[i]) == 0)
 		{
 			data->exit_status = 1;
-			ft_printf("minishell: export: `%s': not a valid identifier\n",
-				data->args[1]);
+			ft_printf("minishell: unset: `%s': not a valid identifier\n",
+				var);
 			return (1);
 		}
 		i++;
@@ -39,11 +39,11 @@ static int	is_valid_unset(t_data *data, char *var)
 	return (0);
 }
 
-void	ft_unset(t_data *data)
+void	ft_unset(t_data *data, t_child *kid)
 {
 	t_env_list	*tmp;
 
-	if (!data->args[1] || is_valid_unset(data, data->args[1])
+	if (!kid->commands[1] || is_valid_unset(data, kid->commands[1])
 		|| data->pipe_count > 0)
 		return ;
 	tmp = data->env_list;

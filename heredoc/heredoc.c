@@ -11,18 +11,6 @@ static void	init_doc_struct(t_here *doc)
 	doc->order = NULL;
 }
 
-static void	make_order(t_child *kid, t_here *doc)
-{
-	int	i;
-
-	i = count_fill_order(kid, doc, 'n');
-	doc->order = malloc(sizeof(char *) * (i + 1));
-	if (!doc->order)
-		malloc_exit(NULL, kid);
-	count_fill_order(kid, doc, 'y');
-	return ;
-}
-
 static int	heredoc(t_data *data, t_child *kid, t_index_doc *my_doc)
 {
 	t_here	*doc;
@@ -78,6 +66,23 @@ static void	search_for_heredoc(t_data *data, t_child *kid, t_index_doc *my_doc)
 	return ;
 }
 
+static void	is_valid_kid_command(t_data *data, t_child *kid,
+		t_index_doc *my_doc, int i)
+{
+	if (kid->commands)
+	{
+		search_for_heredoc(data, kid, &my_doc[i]);
+		free_double_array(kid->commands);
+		kid->commands = NULL;
+	}
+	if (kid->in_quotes)
+	{
+		free(kid->in_quotes);
+		kid->in_quotes = NULL;
+	}
+	return ;
+}
+
 void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc)
 {
 	int	i;
@@ -88,17 +93,7 @@ void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc)
 		my_doc[i].doc_line = NULL;
 		my_doc[i].cut_len = -1;
 		get_commands(data, kid, data->args);
-		if (kid->commands)
-		{
-			search_for_heredoc(data, kid, &my_doc[i]);
-			free_double_array(kid->commands);
-			kid->commands = NULL;
-		}
-		if (kid->in_quotes)
-		{
-			free(kid->in_quotes);
-			kid->in_quotes = NULL;
-		}
+		is_valid_kid_command(data, kid, my_doc, i);
 		if (data->guard_fork == 1)
 			break ;
 		i++;

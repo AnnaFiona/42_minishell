@@ -57,3 +57,15 @@ int	is_valid_heredoc(t_data *data, t_child *kid, t_here *doc)
 	doc->range = size_2d(kid->commands);
 	return (len);
 }
+
+void	make_order(t_child *kid, t_here *doc)
+{
+	int	i;
+
+	i = count_fill_order(kid, doc, 'n');
+	doc->order = malloc(sizeof(char *) * (i + 1));
+	if (!doc->order)
+		malloc_exit(NULL, kid);
+	count_fill_order(kid, doc, 'y');
+	return ;
+}

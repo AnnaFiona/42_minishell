@@ -30,7 +30,7 @@ static void	no_execve(t_data *data, t_child *kid)
 		write(2, kid->commands[0], ft_strlen(kid->commands[0]));
 		write(2, ": command not found\n", 20);
 	}
-	if (!path)
+	if (path)
 		free(path);
 	free_kid(kid);
 	exit_function(data, NULL, 3);
