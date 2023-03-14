@@ -67,11 +67,6 @@ void	save_var(t_data *data)
 
 void	ft_export(t_data *data, t_child *kid)
 {
-/* 	if (kid->commands[1] == NULL)
-	{
-		data->exit_status = 0;
-		sort_env(data, data->env);
-	} */
 	if (!ft_strcmp(data->args[0], "export") && data->args[1]
 		&& data->pipe_count == 0)
 	{

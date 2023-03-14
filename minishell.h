@@ -118,7 +118,7 @@ char	*export_pwd_null(t_data *data, char *var);
 int		is_in_ori_env(t_data *data, char *var);
 
 //builtins_unset.c
-void	ft_unset(t_data *data);
+void	ft_unset(t_data *data, t_child *kid);
 
 //builtins.c
 void	ft_print_env(t_data *data);
@@ -212,6 +212,7 @@ void	free_kid_command(t_child *kid, t_index_doc *my_doc);
 
 //heredoc_is_valid.c
 int		is_valid_heredoc(t_data *data, t_child *kid, t_here *doc);
+void	make_order(t_child *kid, t_here *doc);
 
 //heredoc_utils.c
 char	*make_heredoc_line(t_data *data, t_child *kid, t_here *doc);
