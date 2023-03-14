@@ -1,4 +1,3 @@
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -20,7 +19,7 @@
 # define NO_CHILDS 0
 # define MAKE_CHILDS 1
 
-extern int g_in_fd_copy;
+extern int	g_in_fd_copy;
 
 typedef struct s_env_list
 {
@@ -66,14 +65,14 @@ typedef struct s_child
 
 typedef struct s_here
 {
-	int 	len;
-	int 	range;
-	int		index;
-	int		token;
-	int		arrows;
-	char	*line;
-	char	**order;
-	struct 	s_data *data;
+	int				len;
+	int				range;
+	int				index;
+	int				token;
+	int				arrows;
+	char			*line;
+	char			**order;
+	struct s_data	*data;
 }			t_here;
 
 typedef struct s_index_doc
@@ -90,7 +89,7 @@ void	secure_pwd(t_data *data, char *path);
 void	save_pwd(t_data *data, char *pwd, char *path);
 
 //builtins_cd_utils.c
-int 	is_last_char(char *str, char c);
+int		is_last_char(char *str, char c);
 char	*rm_last_char(char *str);
 char	*save_relative_path(char *old_path, char *path);
 
@@ -105,7 +104,7 @@ void	env_list_to_matrix(t_data *data, char equalsign);
 void	sort_env(t_data *data, char **env);
 
 //builtins_export_utils.c
-int 	ft_strcmp(const char *s1, const char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 int		is_dublicate(t_data *data, char *var, char *value);
 int		is_dub_in_ori(t_data *data, char *var, char *value);
 
@@ -115,7 +114,6 @@ void	ft_export(t_data *data, t_child *kid);
 //builtins_ori_env_test.c
 char	*export_pwd_null(t_data *data, char *var);
 int		is_in_ori_env(t_data *data, char *var);
-
 
 //builtins_unset.c
 void	ft_unset(t_data *data);
@@ -133,7 +131,7 @@ void	search_for_arrows(t_data *data, t_child *kid);
 
 //children_process_utils.c
 void	close_pipes_and_free(t_data *data, t_child *kid);
-void 	malloc_pid(t_data *data, t_child *kid);
+void	malloc_pid(t_data *data, t_child *kid);
 void	dup_input_output(t_data *data, t_child *kid);
 void	change_pwd_mode(t_data *data, t_child *kid);
 
@@ -193,7 +191,7 @@ char	*strdup_or_strjoin(char const *s_1, char const *s_2);
 
 //get_args_syntax_errors.c
 int		check_pipes(t_data *data);
-void    search_syntax_errors(t_data *data);
+void	search_syntax_errors(t_data *data);
 
 //get_args_utils.c
 int		find_second_quote(char *line, char quote, int x);
@@ -214,7 +212,7 @@ void	free_kid_command(t_child *kid, t_index_doc *my_doc);
 int		is_valid_heredoc(t_data *data, t_child *kid, t_here *doc);
 
 //heredoc_utils.c
-char 	*make_heredoc_line(t_data *data, t_child *kid, t_here *doc);
+char	*make_heredoc_line(t_data *data, t_child *kid, t_here *doc);
 
 //heredoc.c
 void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc);

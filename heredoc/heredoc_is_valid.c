@@ -1,7 +1,6 @@
-
 #include "../minishell.h"
 
-static int heredoc_is_token(t_data *data, char *cmd)
+static int	heredoc_is_token(t_data *data, char *cmd)
 {
 	int		y;
 

@@ -1,9 +1,8 @@
-
 #include "minishell.h"
 
 int	size_2d(char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i])
@@ -13,16 +12,16 @@ int	size_2d(char **envp)
 
 char	**save_envp(char **envp)
 {
-	int i;
-	int len;
-	char **matrix;
+	char	**matrix;
+	int		len;
+	int		i;
 
 	i = 0;
 	len = size_2d(envp) + 1;
 	matrix = (char **) malloc(len * sizeof(char *));
 	if (!matrix)
 		malloc_exit(NULL, NULL);
-	while(envp[i])
+	while (envp[i])
 	{
 		matrix[i] = ft_strdup(envp[i]);
 		i++;

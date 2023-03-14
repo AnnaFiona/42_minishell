@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 static char	*join_free(char *s1, char *s2)
@@ -25,7 +24,8 @@ static char	*join_free(char *s1, char *s2)
 	return (str);
 }
 
-static int	join_error_handling(t_data *data, t_child *kid, t_here *doc, int line_count)
+static int	join_error_handling(t_data *data, t_child *kid,
+								t_here *doc, int line_count)
 {
 	doc->line = readline("> ");
 	if (!doc->line)

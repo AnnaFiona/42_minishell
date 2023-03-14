@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 void	print_env_list(t_env_list *top)
@@ -9,7 +8,7 @@ void	print_env_list(t_env_list *top)
 	while (top != NULL)
 	{
 		ft_printf("var:   %s\n", top->var);
-		if(top->value != NULL)
+		if (top->value != NULL)
 			ft_printf("value: %s\n", top->value);
 		top = top->next;
 		i++;
@@ -29,7 +28,7 @@ void	free_env_list(t_env_list **top)
 		temp = *top;
 		*top = (*top)->next;
 		free(temp->var);
-		if(temp->value != NULL)
+		if (temp->value != NULL)
 			free(temp->value);
 		free(temp);
 	}
@@ -37,7 +36,7 @@ void	free_env_list(t_env_list **top)
 
 int	size_of_list(t_env_list *top)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (top != NULL)
