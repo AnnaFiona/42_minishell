@@ -1,7 +1,7 @@
 
 #include "../minishell.h"
 
-int	is_valid_var(t_data *data, char *var)
+int	is_valid_var(t_data *data, char *var, int x)
 {
 	int	i;
 
@@ -14,7 +14,7 @@ int	is_valid_var(t_data *data, char *var)
 		{
 			data->exit_status = 1;
 			ft_printf("minishell: export: `%s': not a valid identifier\n",
-				data->args[1]);
+				data->args[x]);
 			return (1);
 		}
 		i++;
@@ -22,32 +22,32 @@ int	is_valid_var(t_data *data, char *var)
 	return (0);
 }
 
-void	second_arg_null(t_data *data)
+void	second_arg_null(t_data *data, int i)
 {
 	char	*value;
 
 	value = NULL;
-	if (is_dub_in_ori(data, data->args[1], NULL) || is_valid_var(data,
-			data->args[1]))
+	if (is_dub_in_ori(data, data->args[i], NULL) || is_valid_var(data,
+			data->args[i], i))
 		return ;
-	if (!(is_dublicate(data, data->args[1], NULL)))
+	if (!(is_dublicate(data, data->args[i], NULL)))
 	{
-		value = export_pwd_null(data, data->args[1]);
-		add_list_end(data, data->env_list, ft_strdup(data->args[1]), value);
+		value = export_pwd_null(data, data->args[i]);
+		add_list_end(data, data->env_list, ft_strdup(data->args[i]), value);
 		env_list_to_matrix(data, 'x');
 	}
 	return ;
 }
 
-void	save_var(t_data *data)
+void	save_var(t_data *data, int i)
 {
 	char	**matrix;
 
-	if (ft_strchr(data->args[1], '=') != NULL)
+	if (ft_strchr(data->args[i], '=') != NULL)
 	{
-		matrix = ft_split(data->args[1], '=');
+		matrix = ft_split(data->args[i], '=');
 		if (is_dub_in_ori(data, matrix[0], matrix[1]) || is_valid_var(data,
-				matrix[0]))
+				matrix[0], i))
 		{
 			free_double_array(matrix);
 			return ;
@@ -61,24 +61,32 @@ void	save_var(t_data *data)
 		free_double_array(matrix);
 		return ;
 	}
-	second_arg_null(data);
+	second_arg_null(data, i);
 	return ;
 }
 
 void	ft_export(t_data *data, t_child *kid)
 {
+	int i;
+
+	(void)kid;
+	i = 1;
 	if (!ft_strcmp(data->args[0], "export") && data->args[1]
 		&& data->pipe_count == 0)
 	{
 		data->exit_status = 0;
-		if (kid->commands[1][0] == '\0')
+		while(data->args[i])
 		{
-			data->exit_status = 1;
-			ft_printf("minishell: export: `%s': not a valid identifier\n",
-				data->args[1]);
-			return ;
+			if (data->args[i][0] == '\0')
+			{
+				data->exit_status = 1;
+				ft_printf("minishell: export: `%s': not a valid identifier\n",
+					data->args[i]);
+			}
+			else
+				save_var(data, i);
+			i++;
 		}
-		save_var(data);
 	}
 	return ;
 }

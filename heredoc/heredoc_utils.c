@@ -32,7 +32,7 @@ static int	join_error_handling(t_data *data, t_child *kid,
 	{
 		if (g_in_fd_copy == 0)
 		{
-			ft_printf("bash: warning: here-document at line");
+			ft_printf("minishell: warning: here-document at line");
 			ft_printf(" %i delimited by end-of-file ", line_count);
 			ft_printf("(wanted `%s')\n", kid->commands[doc->len + 1]);
 			data->guard_fork = 1;
