@@ -1,7 +1,7 @@
 
 #include "../minishell.h"
 
-static int	ft_len_to_char(char *str, char c)
+/* static int	ft_len_to_char(char *str, char c)
 {
 	int	i;
 
@@ -13,9 +13,9 @@ static int	ft_len_to_char(char *str, char c)
 			break ;
 	}
 	return (i);
-}
+} */
 
-static int	is_already_there(t_data *data, char *var)
+/* static int	is_already_there(t_data *data, char *var)
 {
 	int	i;
 	int	len;
@@ -29,9 +29,9 @@ static int	is_already_there(t_data *data, char *var)
 		i++;
 	}
 	return (1);
-}
+} */
 
-int	is_in_ori_env(t_data *data, char *var)
+/* int	is_in_ori_env(t_data *data, char *var)
 {
 	int	i;
 	int	ok;
@@ -55,7 +55,7 @@ int	is_in_ori_env(t_data *data, char *var)
 		i++;
 	}
 	return (1);
-}
+} */
 
 char	*export_pwd_null(t_data *data, char *var)
 {

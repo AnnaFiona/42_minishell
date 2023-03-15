@@ -15,16 +15,16 @@ void	ft_swap_str(char **s1, char **s2)
 	return ;
 }
 
-void	strcmp_sort(char **matrix, int len)
+void	strcmp_sort(char **matrix)
 {
 	int	i;
 	int	x;
 
 	i = 0;
-	while (i < len)
+	while (matrix[i])
 	{
 		x = i + 1;
-		while (x < len)
+		while (matrix[x])
 		{
 			if (ft_strcmp(matrix[i], matrix[x]) > 0)
 				ft_swap_str(&matrix[i], &matrix[x]);
@@ -41,10 +41,8 @@ void	print_export_list(t_env_list *top)
 	{
 		ft_printf("declare -x ");
 		ft_printf("%s", top->var);
-		if (top->value)
+ 		if (top->value)
 			ft_printf("=\"%s\"", top->value);
-		else
-			ft_printf("=\"\"");
 		ft_printf("\n");
 		top = top->next;
 	}
@@ -58,7 +56,7 @@ void	sort_env(t_data *data, char **env)
 
 	tmp = NULL;
 	matrix = save_envp(env);
-	strcmp_sort(matrix, data->len_env);
+	strcmp_sort(matrix);
 	matrix_to_list(data, matrix, &tmp);
 	print_export_list(tmp);
 	free_env_list(&tmp);

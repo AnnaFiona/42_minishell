@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	print_env_list(t_env_list *top)
+/* void	print_env_list(t_env_list *top)
 {
 	int	i;
 
@@ -15,7 +15,7 @@ void	print_env_list(t_env_list *top)
 	}
 	ft_printf("list with %i entries", i);
 	return ;
-}
+} */
 
 void	free_env_list(t_env_list **top)
 {

@@ -24,6 +24,24 @@ void	add_list_end(t_data *data, t_env_list *top, char *var, char *value)
 	if (!tmp->next)
 		malloc_exit(data, NULL);
 	tmp->next->var = var;
+	tmp->next->equal = '-';
+	tmp->next->value = value;
+	tmp->next->next = NULL;
+	return ;
+}
+
+static void	add_node_end(t_data *data, t_env_list *top, char *var, char *value)
+{
+	t_env_list	*tmp;
+
+	tmp = top;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = (t_env_list *)malloc(sizeof(t_env_list));
+	if (!tmp->next)
+		malloc_exit(data, NULL);
+	tmp->next->var = var;
+	tmp->next->equal = '-';
 	tmp->next->value = value;
 	tmp->next->next = NULL;
 	return ;
@@ -45,8 +63,8 @@ void	matrix_to_list(t_data *data, char **env, t_env_list **list)
 		if (ft_strchr(env[y], '='))
 		{
 			matrix = ft_split(env[y], '=');
-			add_list_end(data, *list, ft_strdup(matrix[0]), \
-							ft_strdup(matrix[1]));
+			add_node_end(data, *list, ft_strdup(matrix[0]),
+					ft_strdup(matrix[1]));
 			free_double_array(matrix);
 		}
 		else

@@ -58,7 +58,7 @@ static void	ft_cd_back(t_data *data, char *pwd, char *new_path)
 	secure_pwd(data, tmp);
 	is_dublicate(data, pwd, tmp);
 	free(tmp);
-	env_list_to_matrix(data, 'x');
+	env_list_to_matrix(data);
 	return ;
 }
 
@@ -80,6 +80,6 @@ void	save_pwd(t_data *data, char *pwd, char *path)
 		if (remove_last_char(data, pwd, path))
 			return ;
 	}
-	env_list_to_matrix(data, 'x');
+	env_list_to_matrix(data);
 	return ;
 }

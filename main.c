@@ -19,7 +19,6 @@ static void	initialize_data(t_data *data)
 	data->pipe_count = -1;
 	data->guard_fork = 0;
 	data->args_y = -1;
-	data->len_env = 0;
 	data->protec = 0;
 	g_in_fd_copy = 0;
 	return ;
@@ -39,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	data->env_ori = envp;
 	get_prompt(data);
 	data->env = save_envp(envp);
-	data->len_env = size_2d(data->env);
+	/* data->len_env = size_2d(data->env); */
 	matrix_to_list(data, data->env, &data->env_list);
 	terminal_loop(data);
 	exit_function(data, NULL, 0);

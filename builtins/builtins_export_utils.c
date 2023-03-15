@@ -38,7 +38,7 @@ int	is_dublicate(t_data *data, char *var, char *value)
 	return (0);
 }
 
-int	is_dub_in_ori(t_data *data, char *var, char *value)
+/* int	is_dub_in_ori(t_data *data, char *var, char *value)
 {
 	int			i;
 	t_env_list	*tmp;
@@ -55,4 +55,4 @@ int	is_dub_in_ori(t_data *data, char *var, char *value)
 		i++;
 	}
 	return (0);
-}
+} */

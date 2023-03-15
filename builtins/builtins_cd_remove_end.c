@@ -78,7 +78,7 @@ int	remove_last_char(t_data *data, char *pwd, char *path)
 		is_dublicate(data, pwd, tmp);
 		if (tmp)
 			free(tmp);
-		env_list_to_matrix(data, 'x');
+		env_list_to_matrix(data);
 		return (1);
 	}
 	is_dublicate(data, pwd, path);

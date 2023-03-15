@@ -12,7 +12,7 @@ void	save_path_in_data(t_data *data, char *value)
 	return ;
 }
 
-static void	ft_is_equal(t_data *data, char equalsign, char *var, int y)
+static void	ft_is_equal(t_data *data, char *var, char equalsign, int y)
 {
 	if (equalsign == '=')
 		data->env[y] = ft_strjoin(var, "=");
@@ -21,7 +21,7 @@ static void	ft_is_equal(t_data *data, char equalsign, char *var, int y)
 	return ;
 }
 
-void	env_list_to_matrix(t_data *data, char equalsign)
+void	env_list_to_matrix(t_data *data)
 {
 	int			y;
 	char		*line;
@@ -36,7 +36,7 @@ void	env_list_to_matrix(t_data *data, char equalsign)
 	while (tmp != NULL)
 	{
 		if (tmp->value == NULL)
-			ft_is_equal(data, equalsign, tmp->var, y);
+			ft_is_equal(data, tmp->var, tmp->equal, y);
 		else
 		{
 			line = ft_strjoin(tmp->var, "=");

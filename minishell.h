@@ -24,6 +24,7 @@ extern int	g_in_fd_copy;
 typedef struct s_env_list
 {
 	char				*var;
+	char				equal;
 	char				*value;
 	struct s_env_list	*next;
 }						t_env_list;
@@ -45,7 +46,6 @@ typedef struct s_data
 	int			exit_status;
 	int			pipe_count;
 	int			guard_fork;
-	int			len_env;
 	int			args_y;
 	int			protec;
 }				t_data;
@@ -100,7 +100,7 @@ int		ft_cd(t_data *data, t_child *kid, char *path);
 
 //builtins_env_list_to_matrix.c
 void	save_path_in_data(t_data *data, char *value);
-void	env_list_to_matrix(t_data *data, char equalsign);
+void	env_list_to_matrix(t_data *data);
 
 //builtins_export_sort.c
 void	sort_env(t_data *data, char **env);
@@ -118,6 +118,7 @@ char	*export_pwd_null(t_data *data, char *var);
 int		is_in_ori_env(t_data *data, char *var);
 
 //builtins_unset.c
+int		ft_not_a_valid_char(t_data *data, char *var, char *ex_or_un);
 void	ft_unset(t_data *data, t_child *kid);
 
 //builtins.c
