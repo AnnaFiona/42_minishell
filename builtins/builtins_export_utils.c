@@ -1,6 +1,17 @@
 
 #include "../minishell.h"
 
+char	*export_pwd_null(t_data *data, char *var)
+{
+	char	*value;
+
+	value = NULL;
+	if (ft_strcmp(var, "PWD"))
+		return (value);
+	value = ft_strdup(data->saved_pwd);
+	return (value);
+}
+
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
@@ -26,33 +37,15 @@ int	is_dublicate(t_data *data, char *var, char *value)
 	{
 		if (ft_strcmp(var, tmp->var) == 0)
 		{
-			if (value != NULL)
-			{
+			if (tmp->value)
 				free(tmp->value);
+			if (value)
 				tmp->value = ft_strdup(value);
-			}
+			else
+				tmp->value = NULL;
 			return (1);
 		}
 		tmp = tmp->next;
 	}
 	return (0);
 }
-
-/* int	is_dub_in_ori(t_data *data, char *var, char *value)
-{
-	int			i;
-	t_env_list	*tmp;
-
-	i = 0;
-	tmp = data->env_list;
-	while (i < data->len_env)
-	{
-		if (ft_strcmp(var, tmp->var) == 0)
-		{
-			if (value != NULL)
-				return (1);
-		}
-		i++;
-	}
-	return (0);
-} */

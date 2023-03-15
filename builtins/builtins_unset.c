@@ -48,8 +48,6 @@ static void ft_rm_var(t_data *data, int i)
 	{
 		if (!ft_strcmp(tmp->next->var, data->args[i]))
 		{
-			/* if (data->args[i][0] >= 'A' && data->args[i][0] <= 'Z')
-				data->len_env--; */
 			save_path_in_data(data, tmp->next->value);
 			rm_node(tmp);
 			env_list_to_matrix(data);

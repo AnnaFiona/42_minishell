@@ -41,8 +41,10 @@ void	print_export_list(t_env_list *top)
 	{
 		ft_printf("declare -x ");
 		ft_printf("%s", top->var);
- 		if (top->value)
+		if (top->value)
 			ft_printf("=\"%s\"", top->value);
+		else if (top->equal)
+			ft_printf("=\"\"");
 		ft_printf("\n");
 		top = top->next;
 	}
