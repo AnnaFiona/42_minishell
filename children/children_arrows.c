@@ -13,8 +13,8 @@ static void	open_outfile(t_data *data, t_child *kid, char *file_name,
 	{
 		ft_printf("minishell: %s: ", file_name);
 		perror("");
-		free_kid(kid);
-		exit_function(data, NULL, 1);
+		data->exit_status = 1;
+		kid->no_fork = 1;
 	}
 	return ;
 }
@@ -28,8 +28,8 @@ static void	open_infile(t_data *data, t_child *kid, char *file_name)
 	{
 		ft_printf("minishell: %s: ", file_name);
 		perror("");
-		free_kid(kid);
-		exit_function(data, NULL, 1);
+		data->exit_status = 1;
+		kid->no_fork = 1;
 	}
 	return ;
 }
@@ -49,6 +49,7 @@ void	search_for_arrows(t_data *data, t_child *kid)
 	int	y;
 
 	y = 0;
+	kid->no_fork = 0;
 	while (kid->commands[y])
 	{
 		if (!ft_strcmp(kid->commands[y], ">") && kid->in_quotes[y] != 'q')
@@ -57,6 +58,8 @@ void	search_for_arrows(t_data *data, t_child *kid)
 			y = in_or_out(data, kid, y, 1);
 		else if (!ft_strcmp(kid->commands[y], "<") && kid->in_quotes[y] != 'q')
 			y = in_or_out(data, kid, y, 2);
+		if (kid->no_fork == 1 || kid->commands == NULL)
+			break;
 		y++;
 	}
 	return ;

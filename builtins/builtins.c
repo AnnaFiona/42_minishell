@@ -57,6 +57,8 @@ void	ft_dots(t_data *data, t_child *kid)
 
 int	builtins_in_kid(t_data *data, t_child *kid)
 {
+	if (kid->no_fork == 1)
+		return (NO_CHILDS);
 	if (kid->commands == NULL || kid->commands[0][0] == '\0')
 		return (MAKE_CHILDS);
 	if (!ft_strcmp(kid->commands[0], "cd"))

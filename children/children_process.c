@@ -62,7 +62,7 @@ void	child_process(t_data *data, t_child *kid)
 	path = NULL;
 	change_pwd_mode(data, kid);
 	sig_controler(SIG_KID);
-	dup_input_output(data, kid);
+	dup_input_output(kid);
 	if (kid->commands == NULL || kid->commands[0] == NULL)
 	{
 		free_kid(kid);

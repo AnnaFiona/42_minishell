@@ -13,6 +13,7 @@ static void	initialize_child(t_child *kid)
 	kid->pipe_fd[1] = -1;
 	kid->output_fd = -1;
 	kid->input_fd = -1;
+	kid->no_fork = 0;
 	kid->count = 0;
 	kid->pid = NULL;
 	return ;
@@ -26,6 +27,9 @@ static void	pipe_controller(t_data *data, t_child *kid, t_index_doc *my_doc)
 		pipe(kid->pipe_fd);
 	get_commands(data, kid, data->args);
 	if (kid->commands == NULL)
+		return ;
+	search_for_arrows(data, kid);
+	if (kid->no_fork == 1)
 		return ;
 	if (my_doc[kid->count].cut_len > -1)
 	{

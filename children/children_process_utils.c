@@ -2,10 +2,13 @@
 
 void	close_pipes_and_free(t_data *data, t_child *kid)
 {
-	free_double_array(kid->commands);
-	kid->commands = NULL;
-	free(kid->in_quotes);
-	kid->in_quotes = NULL;
+	if (kid->commands != NULL)
+	{
+		free_double_array(kid->commands);
+		kid->commands = NULL;
+		free(kid->in_quotes);
+		kid->in_quotes = NULL;
+	}
 	if (kid->count != 0)
 		close(kid->input_fd);
 	if (kid->count != data->pipe_count)
@@ -45,14 +48,12 @@ static void	clone_pipe_out(t_child *kid)
 	return ;
 }
 
-void	dup_input_output(t_data *data, t_child *kid)
+void	dup_input_output(t_child *kid)
 {
 	int	out;
 	int	in;
 
 	clone_pipe_out(kid);
-	if (kid->commands != NULL)
-		search_for_arrows(data, kid);
 	if (kid->input_fd != -1)
 	{
 		in = dup2(kid->input_fd, STDIN_FILENO);
