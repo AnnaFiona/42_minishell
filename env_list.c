@@ -55,14 +55,14 @@ void	matrix_to_list(t_data *data, char **env, t_env_list **list)
 	y = 1;
 	if (list)
 		free_env_list(list);
-	matrix = ft_split(env[0], '=');
+	matrix = ft_divide_at_char(env[0], '=');
 	create_env_list(data, list, ft_strdup(matrix[0]), ft_strdup(matrix[1]));
 	free_double_array(matrix);
 	while (env[y])
 	{
 		if (ft_strchr(env[y], '='))
 		{
-			matrix = ft_split(env[y], '=');
+			matrix = ft_divide_at_char(env[y], '=');
 			add_node_end(data, *list, ft_strdup(matrix[0]),
 					ft_strdup(matrix[1]));
 			free_double_array(matrix);

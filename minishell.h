@@ -109,14 +109,13 @@ void	sort_env(t_data *data, char **env);
 //builtins_export_utils.c
 int		ft_strcmp(const char *s1, const char *s2);
 int		is_dublicate(t_data *data, char *var, char *value);
-int		is_dub_in_ori(t_data *data, char *var, char *value);
 
 //builtins_export.c
+char	**ft_divide_at_char(char *args, char divider);
 void	ft_export(t_data *data, t_child *kid);
 
 //builtins_ori_env_test.c
 char	*export_pwd_null(t_data *data, char *var);
-int		is_in_ori_env(t_data *data, char *var);
 
 //builtins_unset.c
 int		ft_not_a_valid_char(t_data *data, char *var, char *ex_or_un);
