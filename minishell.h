@@ -60,6 +60,7 @@ typedef struct s_child
 	int		*pid;
 	int		output_fd;
 	int		input_fd;
+	int		no_fork;
 	int		count;
 }			t_child;
 
@@ -135,7 +136,7 @@ void	search_for_arrows(t_data *data, t_child *kid);
 //children_process_utils.c
 void	close_pipes_and_free(t_data *data, t_child *kid);
 void	malloc_pid(t_data *data, t_child *kid);
-void	dup_input_output(t_data *data, t_child *kid);
+void	dup_input_output(t_child *kid);
 void	change_pwd_mode(t_data *data, t_child *kid);
 
 //children_process.c
