@@ -156,13 +156,11 @@ void	set_exit_status(t_data *data);
 void	redirect_children(t_data *data);
 
 //env_list_utils.c
-void	print_env_list(t_env_list *top);
 void	free_env_list(t_env_list **top);
 int		size_of_list(t_env_list *top);
 
 //env_list.c
-void	add_list_end(t_data *data, t_env_list *top, char *var,
-			char *value);
+void	add_list_end(t_data *data, t_env_list *top, char *var, char *value, char sing);
 void	matrix_to_list(t_data *data, char **env,
 			t_env_list **list);
 
