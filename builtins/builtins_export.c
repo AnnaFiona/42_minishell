@@ -8,7 +8,7 @@ void	second_arg_null(t_data *data, int i)
 	if (!(is_dublicate(data, data->args[i], NULL)))
 	{
 		value = export_pwd_null(data, data->args[i]);
-		add_list_end(data, data->env_list, ft_strdup(data->args[i]), value);
+		add_list_end(data, data->env_list, ft_strdup(data->args[i]), value, '-');
 		env_list_to_matrix(data);
 	}
 	return ;
@@ -67,9 +67,9 @@ void	save_var(t_data *data, int i)
 		if (!is_dublicate(data, matrix[0], matrix[1]))
 		{
 			add_list_end(data, data->env_list, ft_strdup(matrix[0]),
-				ft_strdup(matrix[1]));
+				ft_strdup(matrix[1]), '=');
 		}
-		if (ft_strchr(data->args[i], '=') && !matrix[1])
+		if (!matrix[1])
 			add_equal_to_list(data, matrix[0]);
 		env_list_to_matrix(data);
 		free_double_array(matrix);
