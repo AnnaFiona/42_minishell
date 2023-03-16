@@ -28,7 +28,8 @@ static void	pipe_controller(t_data *data, t_child *kid, t_index_doc *my_doc)
 	get_commands(data, kid, data->args);
 	if (kid->commands == NULL)
 		return ;
-	search_for_arrows(data, kid);
+	if (data->guard_fork != 1)
+		search_for_arrows(data, kid);
 	if (kid->no_fork == 1)
 		return ;
 	if (my_doc[kid->count].cut_len > -1)
