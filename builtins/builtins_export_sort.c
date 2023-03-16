@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 void	ft_swap_str(char **s1, char **s2)

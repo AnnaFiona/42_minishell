@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 void	second_arg_null(t_data *data, int i)
@@ -90,7 +89,7 @@ void	ft_export(t_data *data, t_child *kid)
 	data->exit_status = 0;
 	while (kid->commands[i])
 	{
-		if (ft_not_a_valid_char(data, kid->commands[i], "unset") == 0)
+		if (ft_not_a_valid_char(data, kid->commands[i], "export") == 0)
 		{
 			if (data->pipe_count == 0)
 				save_var(data, i);

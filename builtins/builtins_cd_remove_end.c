@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 static int	remove_end_malloc(char *str, char c)

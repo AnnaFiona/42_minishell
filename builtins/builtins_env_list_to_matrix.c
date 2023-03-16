@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 void	save_path_in_data(t_data *data, char *value)

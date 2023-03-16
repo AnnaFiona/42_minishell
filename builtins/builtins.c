@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 void	ft_print_env(t_data *data)
