@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 void	second_arg_null(t_data *data, int i)

@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 static void	ft_is_dir(char *new_path)

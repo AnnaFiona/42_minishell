@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 static void	save_home_in_env(t_data *data, char *path)

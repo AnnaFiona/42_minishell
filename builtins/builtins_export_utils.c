@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 char	*export_pwd_null(t_data *data, char *var)

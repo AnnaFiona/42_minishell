@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 int	chdir_error_msg(t_data *data, char *path)

@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 static void	rm_node(t_env_list *top)
@@ -30,8 +29,8 @@ int	ft_not_a_valid_char(t_data *data, char *var, char *ex_or_un)
 		if (ft_isalpha(var[i]) == 0 && var[i] != '_')
 		{
 			data->exit_status = 1;
-			ft_printf("minishell: %s: `%s': not a valid identifier\n",
-				ex_or_un, var);
+			ft_printf("minishell: %s: `%s': ", ex_or_un, var);
+			ft_printf("not a valid identifier\n");
 			return (1);
 		}
 		i++;
@@ -39,7 +38,7 @@ int	ft_not_a_valid_char(t_data *data, char *var, char *ex_or_un)
 	return (0);
 }
 
-static void ft_rm_var(t_data *data, int i)
+static void	ft_rm_var(t_data *data, int i)
 {
 	t_env_list	*tmp;
 
@@ -60,17 +59,17 @@ static void ft_rm_var(t_data *data, int i)
 
 void	ft_unset(t_data *data, t_child *kid)
 {
-	int i;
+	int	i;
 
 	if (!kid->commands[1])
 		return ;
 	i = 1;
 	data->exit_status = 0;
-	while(kid->commands[i])
+	while (kid->commands[i])
 	{
-		if(ft_not_a_valid_char(data, kid->commands[i], "unset") == 0)
+		if (ft_not_a_valid_char(data, kid->commands[i], "unset") == 0)
 		{
-			if(data->pipe_count == 0)
+			if (data->pipe_count == 0)
 				ft_rm_var(data, i);
 		}
 		i++;
