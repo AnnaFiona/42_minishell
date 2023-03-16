@@ -220,6 +220,9 @@ char	*make_heredoc_line(t_data *data, t_child *kid, t_here *doc);
 //heredoc.c
 void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc);
 
+//shell_level.c
+void	increase_shlvl(data);
+
 //signals.c
 void	sig_controler(int status);
 
