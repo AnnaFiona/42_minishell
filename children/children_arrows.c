@@ -59,7 +59,7 @@ void	search_for_arrows(t_data *data, t_child *kid)
 		else if (!ft_strcmp(kid->commands[y], "<") && kid->in_quotes[y] != 'q')
 			y = in_or_out(data, kid, y, 2);
 		if (kid->no_fork == 1 || kid->commands == NULL)
-			break;
+			break ;
 		y++;
 	}
 	return ;

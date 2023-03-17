@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 	data->env_ori = envp;
 	get_prompt(data);
 	data->env = save_envp(envp);
-	matrix_to_list(data, data->env, &data->env_list);
+	matrix_to_list(data, data->env);
 	terminal_loop(data);
 	exit_function(data, NULL, 0);
 	return (0);

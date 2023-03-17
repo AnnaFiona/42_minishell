@@ -160,9 +160,8 @@ void	free_env_list(t_env_list **top);
 int		size_of_list(t_env_list *top);
 
 //env_list.c
-void	add_list_end(t_data *data, t_env_list *top, char *var, char *value, char sing);
-void	matrix_to_list(t_data *data, char **env,
-			t_env_list **list);
+void	add_list_end(t_data *data, char *var, char *value, char sing);
+void	matrix_to_list(t_data *data, char **env);
 
 //envp_save.c
 int		size_2d(char **envp);
