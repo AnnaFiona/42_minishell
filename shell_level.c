@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 static int	get_lvl(char *value)
 {
 	int	minus;
@@ -45,7 +44,6 @@ static void	set_to_one(t_data *data)
 	return ;
 }
 
-
 static void	set_shlvl(t_data *data)
 {
 	ft_printf("+\n");
@@ -62,7 +60,7 @@ void	increase_shlvl(t_data *data)
 	while (temp != NULL)
 	{
 		if (ft_strcmp(temp->var, "SHLVL") == 0)
-			break;
+			break ;
 		temp = temp->next;
 	}
 	if (temp == NULL)
