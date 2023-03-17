@@ -47,5 +47,4 @@ void	env_list_to_matrix(t_data *data)
 		y++;
 	}
 	data->env[y] = NULL;
-	return ;
 }
