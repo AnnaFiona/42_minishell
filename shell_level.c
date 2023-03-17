@@ -39,14 +39,13 @@ static void	increase(t_data *data, t_env_list *temp)
 static void	set_to_one(t_data *data)
 {
 	add_equal_to_list(data, "SHLVL");
-	is_dublicate(data, "SHLVL", ft_strdup("1"));
+	is_dublicate(data, "SHLVL", "1");
 	env_list_to_matrix(data);
 	return ;
 }
 
 static void	set_shlvl(t_data *data)
 {
-	ft_printf("+\n");
 	add_list_end(data, ft_strdup("SHLVL"), ft_strdup("1"), '=');
 	env_list_to_matrix(data);
 	return ;
