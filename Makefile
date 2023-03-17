@@ -50,6 +50,8 @@ MY_OBJECTS = $(MY_SOURCES:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra
 
+CC = @cc
+
 DEF_COLOR = \033[0;39m
 GRAY = \033[0;90m
 RED = \033[0;91m

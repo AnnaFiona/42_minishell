@@ -6,7 +6,7 @@
 #    By: aplank <aplank@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/09 12:24:01 by aplank            #+#    #+#              #
-#    Updated: 2023/03/13 16:47:56 by aplank           ###   ########.fr        #
+#    Updated: 2023/03/17 18:36:09 by aplank           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,23 +29,21 @@ MY_BONUS_OBJECTS = $(MY_BONUS_SOURCES:.c=.o)
 
 MY_OBJECTS = $(MY_SOURCES:.c=.o)
 
+CFLAGS += -Wall -Werror -Wextra
+
+CC = @cc
+
 .PHONY: clean fclean all bonus
 
 all: $(NAME)
 
 $(NAME): $(MY_OBJECTS)
-	@ar -src $@ $(MY_OBJECTS)
+	@ar rcs $(MY_OBJECTS) -o $(NAME)
 	@echo making mandatory .o files
 
 bonus: $(MY_OBJECTS) $(MY_BONUS_OBJECTS)
-	@ar -src $(NAME) $(MY_OBJECTS) $(MY_BONUS_OBJECTS)
+	@ar rcs $(NAME) $(MY_OBJECTS) $(MY_BONUS_OBJECTS)
 	@echo making mandatory and bonus .o files
-
-$(MY_BONUS_OBJECTS):
-	@cc -c -Wall -Werror -Wextra $(MY_BONUS_SOURCES)
-
-$(MY_OBJECTS): 
-	@cc -c -Wall -Werror -Wextra $(MY_SOURCES)
 
 clean:
 	@rm -f $(MY_OBJECTS) $(MY_BONUS_OBJECTS)
