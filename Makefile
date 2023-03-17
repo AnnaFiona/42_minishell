@@ -42,6 +42,7 @@ MY_SOURCES 	= $(BUILTINS) \
 			exit.c \
 			frees.c \
 			main.c \
+			shell_level.c \
 			signals.c \
 			terminal.c
 
