@@ -7,6 +7,7 @@ BUILTINS	= $(PATH_B)_cd_remove_end.c \
 			$(PATH_B)_cd_save_pwd.c \
 			$(PATH_B)_cd_utils.c \
 			$(PATH_B)_cd.c \
+			$(PATH_B)_echo.c \
 			$(PATH_B)_env_list_to_matrix.c \
 			$(PATH_B)_export_sort.c \
 			$(PATH_B)_export_utils.c \

@@ -99,6 +99,9 @@ char	*save_relative_path(char *old_path, char *path);
 //builtins_cd.c
 int		ft_cd(t_data *data, t_child *kid, char *path);
 
+//builtins_echo.c
+void    ft_echo(t_child *kid);
+
 //builtins_env_list_to_matrix.c
 void	save_path_in_data(t_data *data, char *value);
 void	env_list_to_matrix(t_data *data);

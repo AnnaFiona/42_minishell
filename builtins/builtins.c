@@ -60,7 +60,9 @@ int	builtins_in_kid(t_data *data, t_child *kid)
 		return (NO_CHILDS);
 	if (kid->commands == NULL || kid->commands[0][0] == '\0')
 		return (MAKE_CHILDS);
-	if (!ft_strcmp(kid->commands[0], "cd"))
+	if (!ft_strcmp(kid->commands[0], "echo"))
+		ft_echo(kid);
+	else if (!ft_strcmp(kid->commands[0], "cd"))
 		ft_cd(data, kid, kid->commands[1]);
 	else if (!ft_strcmp(kid->commands[0], "exit"))
 		end_minishell(data, kid);
