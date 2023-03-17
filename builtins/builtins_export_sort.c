@@ -52,15 +52,13 @@ void	print_export_list(t_env_list *top)
 
 void	sort_env(t_data *data, char **env)
 {
-	t_env_list	*tmp;
-	char		**matrix;
+	char	**matrix;
 
-	tmp = NULL;
 	matrix = save_envp(env);
 	strcmp_sort(matrix);
-	matrix_to_list(data, matrix, &tmp);
-	print_export_list(tmp);
-	free_env_list(&tmp);
+	matrix_to_list(data, matrix);
+	print_export_list(data->env_list);
+	free_env_list(&data->env_list);
 	free_double_array(matrix);
 	return ;
 }

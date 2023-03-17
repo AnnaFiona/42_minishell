@@ -112,6 +112,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 int		is_dublicate(t_data *data, char *var, char *value);
 
 //builtins_export.c
+void	add_equal_to_list(t_data *data, char *var);
 char	**ft_divide_at_char(char *args, char divider);
 void	ft_export(t_data *data, t_child *kid);
 
@@ -160,9 +161,8 @@ void	free_env_list(t_env_list **top);
 int		size_of_list(t_env_list *top);
 
 //env_list.c
-void	add_list_end(t_data *data, t_env_list *top, char *var, char *value, char sing);
-void	matrix_to_list(t_data *data, char **env,
-			t_env_list **list);
+void	add_list_end(t_data *data, char *var, char *value, char sign);
+void	matrix_to_list(t_data *data, char **env);
 
 //envp_save.c
 int		size_2d(char **envp);
@@ -219,7 +219,7 @@ char	*make_heredoc_line(t_data *data, t_child *kid, t_here *doc);
 void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc);
 
 //shell_level.c
-void	increase_shlvl(data);
+void	increase_shlvl(t_data *data);
 
 //signals.c
 void	sig_controler(int status);

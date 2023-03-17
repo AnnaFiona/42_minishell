@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 
-static int	get_lvl(char	*value)
+static int	get_lvl(char *value)
 {
 	int	minus;
 	int	lvl;
@@ -9,9 +9,6 @@ static int	get_lvl(char	*value)
 
 	x = 0;
 	minus = 0;
-	if (value == NULL)
-		return (1);
-	//????^
 	if (value[0] == '-')
 	{
 		minus = 1;
@@ -29,42 +26,50 @@ static int	get_lvl(char	*value)
 	return (lvl + 1);
 }
 
-void	increase_shlvl(t_env_list *temp)
+static void	increase(t_data *data, t_env_list *temp)
 {
 	int	lvl;
 
 	lvl = get_lvl(temp->value);
 	free(temp->value);
 	temp->value = ft_itoa(lvl);
+	env_list_to_matrix(data);
 	return ;
 }
 
-void	set_to_one(t_env_list *temp)
+static void	set_to_one(t_data *data)
 {
-	
+	add_equal_to_list(data, "SHLVL");
+	is_dublicate(data, "SHLVL", ft_strdup("1"));
+	env_list_to_matrix(data);
+	return ;
 }
 
 
-void	set_shlvl(t_env_list *temp)
+static void	set_shlvl(t_data *data)
 {
-	add_list_end(data, )
+	ft_printf("+\n");
+	add_list_end(data, ft_strdup("SHLVL"), ft_strdup("1"), '=');
+	env_list_to_matrix(data);
+	return ;
 }
 
-void	increase_shlvl(data)
+void	increase_shlvl(t_data *data)
 {
 	t_env_list	*temp;
 
 	temp = data->env_list;
 	while (temp != NULL)
 	{
-		if (ft_strcmp(temp->value, "SHLVL") == 0)
+		if (ft_strcmp(temp->var, "SHLVL") == 0)
 			break;
 		temp = temp->next;
 	}
 	if (temp == NULL)
 		set_shlvl(data);
-	else if (!temp->value)
+	else if (temp->value == NULL)
 		set_to_one(data);
-	else if (ft_atoi(temp->value))
-		increase_shlvl();
+	else
+		increase(data, temp);
+	return ;
 }

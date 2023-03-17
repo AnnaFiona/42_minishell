@@ -13,7 +13,7 @@ static char	*variable_name(char *arg, int x)
 	{
 		while (arg[x + len])
 		{
-			if (ft_isalnum(arg[x + len]) == 0)
+			if (ft_isalnum(arg[x + len]) == 0 && arg[x + len] != '_')
 				break ;
 			len++;
 		}
