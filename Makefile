@@ -69,7 +69,7 @@ all: $(NAME)
 
 $(NAME): $(MY_OBJECTS)
 	@$(MAKE) bonus -C libft
-	@cc $(CFLAGS) $(MY_OBJECTS) libft/libft.a -lreadline -o $(NAME)
+	@cc $(CFLAGS) $(MY_OBJECTS) libft/libft.a -lreadline -lhistory -o $(NAME)
 	@echo "$(GREEN)// Minishell created //$(DEF_COLOR)"
 
 clean:

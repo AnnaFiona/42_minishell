@@ -40,7 +40,7 @@ void	end_minishell(t_data *data, t_child *kid)
 			ft_printf("bash: exit: %s: numeric argument required\n",
 				kid->commands[1]);
 		else if (ft_strlen(kid->commands[1]) < 4)
-			exit = atoi(kid->commands[1]);
+			exit = ft_atoi(kid->commands[1]);
 	}
 	if (data->pipe_count > 0)
 		return ;

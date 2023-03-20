@@ -116,7 +116,7 @@ int		is_dublicate(t_data *data, char *var, char *value);
 
 //builtins_export.c
 void	add_equal_to_list(t_data *data, char *var);
-char	**ft_divide_at_char(char *args, char divider);
+char	**ft_divide_at_char(t_data *data, char *args, char divider);
 void	ft_export(t_data *data, t_child *kid);
 
 //builtins_unset.c
