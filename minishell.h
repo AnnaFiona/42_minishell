@@ -171,9 +171,11 @@ void	matrix_to_list(t_data *data, char **env);
 int		size_2d(char **envp);
 char	**save_envp(char **envp);
 
+//exit_status.c
+void	end_minishell(t_data *data, t_child *kid);
+
 //exit.c
 void	exit_function(t_data *data, char *error_message, int error);
-void	end_minishell(t_data *data, t_child *kid);
 void	malloc_exit(t_data *data, t_child *kid);
 void	ctrl_d_exit(t_data *data);
 
