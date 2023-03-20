@@ -78,6 +78,7 @@ static void	make_child(t_data *data, t_child *kid)
 	}
 	if (kid->input_fd != -1)
 		close(kid->input_fd);
+	free_line(data, my_doc);
 	free(my_doc);
 	return ;
 }

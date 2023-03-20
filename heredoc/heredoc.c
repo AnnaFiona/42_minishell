@@ -94,8 +94,6 @@ void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc)
 		my_doc[i].cut_len = -1;
 		get_commands(data, kid, data->args);
 		is_valid_kid_command(data, kid, my_doc, i);
-		if (data->guard_fork == 1)
-			break ;
 		i++;
 	}
 	kid->commands = NULL;
