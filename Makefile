@@ -40,6 +40,7 @@ MY_SOURCES 	= $(BUILTINS) \
 			env_list_utils.c \
 			env_list.c \
 			envp_save.c \
+			exit_status.c \
 			exit.c \
 			frees.c \
 			main.c \
