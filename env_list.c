@@ -38,7 +38,7 @@ void	matrix_to_list(t_data *data, char **env)
 	y = 1;
 	if (data->env_list)
 		free_env_list(&data->env_list);
-	matrix = ft_divide_at_char(env[0], '=');
+	matrix = ft_divide_at_char(data, env[0], '=');
 	create_env_list(data, &data->env_list, ft_strdup(matrix[0]),
 		ft_strdup(matrix[1]));
 	free_double_array(matrix);
@@ -46,7 +46,7 @@ void	matrix_to_list(t_data *data, char **env)
 	{
 		if (ft_strchr(env[y], '='))
 		{
-			matrix = ft_divide_at_char(env[y], '=');
+			matrix = ft_divide_at_char(data, env[y], '=');
 			add_list_end(data, ft_strdup(matrix[0]), ft_strdup(matrix[1]), '=');
 			free_double_array(matrix);
 		}

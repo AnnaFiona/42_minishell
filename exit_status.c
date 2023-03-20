@@ -76,7 +76,7 @@ void	end_minishell(t_data *data, t_child *kid)
             exit = 2;
 		}
 		else if (data->pipe_count == 0)
-			exit = atoi(kid->commands[1]);
+			exit = ft_atoi(kid->commands[1]);
 	}
 	if (data->pipe_count > 0)
 		return ;

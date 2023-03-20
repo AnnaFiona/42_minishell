@@ -31,26 +31,28 @@ void	add_equal_to_list(t_data *data, char *var)
 	return ;
 }
 
-char	**ft_divide_at_char(char *args, char divider)
+char	**ft_divide_at_char(t_data *data, char *args, char divider, int len)
 {
 	int		i;
-	int		len;
 	char	**matrix;
 
 	if (!args)
 		return (NULL);
 	i = 0;
-	len = ft_strlen(args);
 	while (args[i] && args[i] != divider)
 		i++;
 	if (args[i + 1] == '\0')
 	{
 		matrix = malloc(sizeof(char *) * 2);
+		if (!matrix)
+			malloc_exit(data, NULL);
 		matrix[0] = ft_substr(args, 0, i);
 		matrix[1] = NULL;
 		return (matrix);
 	}
 	matrix = malloc(sizeof(char *) * 3);
+	if (!matrix)
+		malloc_exit(data, NULL);
 	matrix[0] = ft_substr(args, 0, i);
 	matrix[1] = ft_substr(args, i + 1, len);
 	matrix[2] = NULL;
@@ -63,7 +65,8 @@ void	save_var(t_data *data, int i)
 
 	if (ft_strchr(data->args[i], '=') != NULL)
 	{
-		matrix = ft_divide_at_char(data->args[i], '=');
+		matrix = ft_divide_at_char(data, data->args[i], '=', \
+									ft_strlen(data->args[i]));
 		if (!is_dublicate(data, matrix[0], matrix[1]))
 			add_list_end(data, ft_strdup(matrix[0]), ft_strdup(matrix[1]), '=');
 		if (!matrix[1])

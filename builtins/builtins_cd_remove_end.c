@@ -73,13 +73,14 @@ int	remove_last_char(t_data *data, char *pwd, char *path)
 	if (is_last_char(path, '/') == 0)
 	{
 		tmp = rm_last_char(path);
-		secure_pwd(data, path);
+		secure_pwd(data, tmp);
 		is_dublicate(data, pwd, tmp);
 		if (tmp)
 			free(tmp);
 		env_list_to_matrix(data);
 		return (1);
 	}
+	secure_pwd(data, path);
 	is_dublicate(data, pwd, path);
 	return (0);
 }

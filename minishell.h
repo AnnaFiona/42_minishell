@@ -100,7 +100,7 @@ char	*save_relative_path(char *old_path, char *path);
 int		ft_cd(t_data *data, t_child *kid, char *path);
 
 //builtins_echo.c
-void    ft_echo(t_child *kid);
+void	ft_echo(t_child *kid);
 
 //builtins_env_list_to_matrix.c
 void	save_path_in_data(t_data *data, char *value);
@@ -116,7 +116,7 @@ int		is_dublicate(t_data *data, char *var, char *value);
 
 //builtins_export.c
 void	add_equal_to_list(t_data *data, char *var);
-char	**ft_divide_at_char(char *args, char divider);
+char	**ft_divide_at_char(t_data *data, char *args, char divider, int len);
 void	ft_export(t_data *data, t_child *kid);
 
 //builtins_unset.c
@@ -168,6 +168,7 @@ void	add_list_end(t_data *data, char *var, char *value, char sign);
 void	matrix_to_list(t_data *data, char **env);
 
 //envp_save.c
+void	get_pwd(t_data *data);
 int		size_2d(char **envp);
 char	**save_envp(char **envp);
 
