@@ -126,7 +126,7 @@ void	ft_unset(t_data *data, t_child *kid);
 //builtins.c
 void	ft_print_env(t_data *data);
 int		builtins(t_data *data);
-int		builtins_in_kid(t_data *data, t_child *kid);
+int		builtins_in_kid(t_data *data, t_child *kid, t_index_doc *doc);
 
 //children_arrows_utils.c
 void	cut_token(t_child *kid, int to_cut);
@@ -173,7 +173,7 @@ int		size_2d(char **envp);
 char	**save_envp(char **envp);
 
 //exit_status.c
-void	end_minishell(t_data *data, t_child *kid);
+void	end_minishell(t_data *data, t_child *kid, t_index_doc *doc);
 
 //exit.c
 void	exit_function(t_data *data, char *error_message, int error);

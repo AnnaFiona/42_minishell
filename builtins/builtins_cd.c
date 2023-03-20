@@ -88,7 +88,7 @@ int	ft_cd(t_data *data, t_child *kid, char *argv)
 	if (chdir_error_msg(data, argv))
 		return (0);
 	path = ft_strdup(argv);
-	old_pwd = ft_getenv(data, "PWD");
+	old_pwd = ft_strdup(data->saved_pwd);
 	if (!(path[0] == '/') && ft_strcmp(path, ".."))
 		path = save_relative_path(old_pwd, path);
 	save_and_free(data, old_pwd, path);

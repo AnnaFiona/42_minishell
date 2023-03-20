@@ -42,7 +42,7 @@ static void	pipe_controller(t_data *data, t_child *kid, t_index_doc *my_doc)
 
 static void	should_fork(t_data *data, t_child *kid, t_index_doc	*my_doc)
 {
-	if (builtins_in_kid(data, kid) == MAKE_CHILDS)
+	if (builtins_in_kid(data, kid, my_doc) == MAKE_CHILDS)
 	{
 		sig_controler(SIG_PARRENT);
 		kid->pid[kid->count] = fork();
@@ -71,7 +71,7 @@ static void	make_child(t_data *data, t_child *kid)
 		pipe_controller(data, kid, my_doc);
 		if (data->guard_fork == 1)
 			break ;
-		if (builtins_in_kid(data, kid) == MAKE_CHILDS)
+		if (builtins_in_kid(data, kid, my_doc) == MAKE_CHILDS)
 			should_fork(data, kid, my_doc);
 		close_pipes_and_free(data, kid);
 		kid->count++;

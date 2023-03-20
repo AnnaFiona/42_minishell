@@ -59,7 +59,7 @@ static int	is_valid_num(char *cmd)
 	return (1);
 }
 
-void	end_minishell(t_data *data, t_child *kid)
+void	end_minishell(t_data *data, t_child *kid, t_index_doc *doc)
 {
 	int	exit;
 
@@ -82,7 +82,8 @@ void	end_minishell(t_data *data, t_child *kid)
 		return ;
 	if (exit < 0 || exit > 255)
 		exit = exit % 256;
-	ft_printf("%i", exit);
+	free_line(data, doc);
+	free(doc);
 	free_kid(kid);
 	exit_function(data, NULL, exit);
 }

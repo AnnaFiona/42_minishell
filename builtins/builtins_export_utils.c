@@ -5,9 +5,10 @@ char	*export_pwd_null(t_data *data, char *var)
 	char	*value;
 
 	value = NULL;
-	if (ft_strcmp(var, "PWD"))
-		return (value);
-	value = ft_strdup(data->saved_pwd);
+	if (!ft_strcmp(var, "PWD"))
+		value = ft_strdup(data->saved_pwd);
+	else if (!ft_strcmp(var, "OLDPWD"))
+		value = ft_strdup(data->saved_pwd);
 	return (value);
 }
 

@@ -54,7 +54,7 @@ void	ft_dots(t_data *data, t_child *kid)
 	return ;
 }
 
-int	builtins_in_kid(t_data *data, t_child *kid)
+int	builtins_in_kid(t_data *data, t_child *kid, t_index_doc *doc)
 {
 	if (kid->no_fork == 1)
 		return (NO_CHILDS);
@@ -68,7 +68,7 @@ int	builtins_in_kid(t_data *data, t_child *kid)
 	else if (!ft_strcmp(kid->commands[0], "pwd"))
 		ft_printf("%s\n", data->saved_pwd);
 	else if (!ft_strcmp(kid->commands[0], "exit"))
-		end_minishell(data, kid);
+		end_minishell(data, kid, doc);
 	else if (!ft_strcmp(kid->commands[0], "..") || !ft_strcmp(kid->commands[0],
 			"."))
 		ft_dots(data, kid);
