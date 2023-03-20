@@ -30,7 +30,7 @@ void	ft_echo(t_child *kid)
 		n = '-';
 		y++;
 	}
-	while(kid->commands[y])
+	while (kid->commands[y])
 	{
 		ft_putstr_fd(kid->commands[y], 1);
 		y++;

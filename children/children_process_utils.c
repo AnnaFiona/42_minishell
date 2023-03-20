@@ -71,25 +71,12 @@ void	dup_input_output(t_child *kid)
 
 void	change_pwd_mode(t_data *data, t_child *kid)
 {
-	char	**tmp;
-
 	if (!kid->commands)
 		return ;
 	if (!ft_strcmp(kid->commands[0], "cd"))
 	{
 		free_kid(kid);
 		exit_function(data, NULL, 3);
-	}
-	if (!ft_strcmp(kid->commands[0], "pwd") && !kid->commands[1])
-	{
-		tmp = malloc(sizeof(char *) * 3);
-		if (!tmp)
-			malloc_exit(data, kid);
-		tmp[0] = ft_strdup(kid->commands[0]);
-		tmp[1] = ft_strdup("-L");
-		tmp[2] = NULL;
-		free_double_array(kid->commands);
-		kid->commands = tmp;
 	}
 	return ;
 }

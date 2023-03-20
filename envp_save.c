@@ -1,5 +1,18 @@
 #include "minishell.h"
 
+void	get_pwd(t_data *data)
+{
+	char	*buf;
+
+	buf = malloc(sizeof(char) * 1000);
+	if (!buf)
+		malloc_exit(data, NULL);
+	getcwd(buf, 1000);
+	data->saved_pwd = ft_strdup(buf);
+	free (buf);
+	return ;
+}
+
 int	size_2d(char **envp)
 {
 	int	i;
