@@ -38,6 +38,13 @@ static void	no_execve(t_data *data, t_child *kid)
 
 static void	export_or_env(t_data *data, t_child *kid)
 {
+	if (!ft_strcmp(kid->commands[0], "echo"))
+	{
+		signal(SIGPIPE, SIG_IGN);
+		ft_echo(kid);
+		free_kid(kid);
+		exit_function(data, NULL, 0);
+	}
 	if (!ft_strcmp(kid->commands[0], "export"))
 	{
 		signal(SIGPIPE, SIG_IGN);
