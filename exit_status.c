@@ -71,7 +71,7 @@ void	end_minishell(t_data *data, t_child *kid, t_index_doc *doc)
 	{
 		if (!is_valid_num(kid->commands[1]))
 		{
-			ft_printf("bash: exit: %s: numeric argument required\n",
+			ft_printf("minishell: exit: %s: numeric argument required\n",
 				kid->commands[1]);
 			exit = 2;
 		}
