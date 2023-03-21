@@ -24,25 +24,26 @@ static char	*join_free(char *s1, char *s2)
 	return (str);
 }
 
-static int	join_error_handling(t_data *data, t_child *kid,
-								t_here *doc, int line_count)
+static int	join_error_handling(t_data *data, t_here *doc)
 {
+	if (data->guard_fork == 2)
+		return (0);
 	doc->line = readline("> ");
 	if (!doc->line)
 	{
 		if (g_in_fd_copy == 0)
 		{
-			ft_printf("minishell: warning: here-document at line");
-			ft_printf(" %i delimited by end-of-file ", line_count);
-			ft_printf("(wanted `%s')\n", kid->commands[doc->len + 1]);
-			data->guard_fork = 1;
+			ft_printf("minishell: warning: here-document");
+			ft_printf(" delimited by end-of-file ");
+			ft_printf("(wanted `%s')\n", doc->order[doc->index]);
 			sig_controler(SIG_DEFAULT);
-			return (0);
+			doc->index++;
+			return (1);
 		}
 		write(1, "\n", 1);
 		dup2(g_in_fd_copy, 0);
 		g_in_fd_copy = 0;
-		data->guard_fork = 1;
+		data->guard_fork = 2;
 		sig_controler(SIG_DEFAULT);
 		return (0);
 	}
@@ -81,16 +82,14 @@ static void	is_order(t_here *doc)
 	}
 }
 
-char	*make_heredoc_line(t_data *data, t_child *kid, t_here *doc)
+char	*make_heredoc_line(t_data *data, t_here *doc)
 {
 	int		len;
-	int		line_count;
 	int		doc_exit_line;
 	char	*buf;
 	char	*line_nl;
 
 	len = 0;
-	line_count = 0;
 	doc_exit_line = 0;
 	buf = NULL;
 	line_nl = NULL;
@@ -98,8 +97,7 @@ char	*make_heredoc_line(t_data *data, t_child *kid, t_here *doc)
 	{
 		if (doc->line)
 			free(doc->line);
-		line_count++;
-		if (join_error_handling(data, kid, doc, line_count) == 0)
+		if (join_error_handling(data, doc) == 0)
 			break ;
 		is_order(doc);
 		line_nl = ft_strjoin(doc->line, "\n");

@@ -69,7 +69,7 @@ static void	make_child(t_data *data, t_child *kid)
 	while (kid->count <= data->pipe_count)
 	{
 		pipe_controller(data, kid, my_doc);
-		if (data->guard_fork == 1)
+		if (data->guard_fork == 1 || data->guard_fork == 2)
 			break ;
 		if (builtins_in_kid(data, kid, my_doc) == MAKE_CHILDS)
 			should_fork(data, kid, my_doc);

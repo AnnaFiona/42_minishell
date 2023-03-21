@@ -31,7 +31,7 @@ static int	heredoc(t_data *data, t_child *kid, t_index_doc *my_doc)
 	doc->len = len;
 	my_doc->cut_len = len;
 	make_order(kid, doc);
-	my_doc->doc_line = make_heredoc_line(data, kid, doc);
+	my_doc->doc_line = make_heredoc_line(data, doc);
 	free_kid_command(kid, my_doc);
 	if (doc->order)
 		free_double_array(doc->order);
@@ -61,7 +61,7 @@ static void	search_for_heredoc(t_data *data, t_child *kid, t_index_doc *my_doc)
 		}
 		y++;
 	}
-	if (data->guard_fork != 1)
+	if (data->guard_fork == 0)
 		data->exit_status = 0;
 	return ;
 }
@@ -100,5 +100,7 @@ void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc)
 	data->args_y = 0;
 	if (data->guard_fork == 1)
 		data->exit_status = 2;
+	if (data->guard_fork == 2)
+		data->exit_status = 130;
 	return ;
 }

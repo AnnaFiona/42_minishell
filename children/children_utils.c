@@ -65,7 +65,7 @@ void	wait_for_children(t_data *data, t_child *kid)
 	int	i;
 
 	i = 0;
-	if (data->guard_fork == 1)
+	if (data->guard_fork == 1 || data->guard_fork == 2)
 		return ;
 	while (i <= data->pipe_count)
 	{
@@ -83,7 +83,7 @@ void	wait_for_children(t_data *data, t_child *kid)
 
 void	set_exit_status(t_data *data)
 {
-	if (data->guard_fork == 1)
+	if (data->guard_fork == 1 || data->guard_fork == 2)
 		return ;
 	if (data->exit_status == 2)
 		data->exit_status = 130;

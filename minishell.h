@@ -219,7 +219,7 @@ int		is_valid_heredoc(t_data *data, t_child *kid, t_here *doc);
 void	make_order(t_child *kid, t_here *doc);
 
 //heredoc_utils.c
-char	*make_heredoc_line(t_data *data, t_child *kid, t_here *doc);
+char	*make_heredoc_line(t_data *data, t_here *doc);
 
 //heredoc.c
 void	get_heredoc_line(t_data *data, t_child *kid, t_index_doc *my_doc);
