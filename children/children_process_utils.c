@@ -18,7 +18,10 @@ void	close_pipes_and_free(t_data *data, t_child *kid)
 	if (kid->count != data->pipe_count)
 		close(kid->pipe_fd[1]);
 	if (kid->output_fd != -1)
+	{
 		close(kid->output_fd);
+		kid->output_fd = -1;
+	}
 	return ;
 }
 
@@ -46,6 +49,7 @@ static void	clone_pipe_out(t_child *kid)
 	{
 		kid->output_fd = dup(kid->pipe_fd[1]);
 		close(kid->pipe_fd[1]);
+		kid->pipe_fd[1] = -1;
 	}
 	return ;
 }
@@ -64,6 +68,8 @@ void	dup_input_output(t_child *kid)
 	}
 	if (kid->output_fd != -1)
 	{
+		if (kid->pipe_fd[1] != -1)
+			close (kid->pipe_fd[1]);
 		out = dup2(kid->output_fd, STDOUT_FILENO);
 		close(kid->output_fd);
 		kid->output_fd = dup(out);
