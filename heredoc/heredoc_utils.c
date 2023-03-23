@@ -70,8 +70,9 @@ static void	is_order(t_here *doc)
 {
 	if (!ft_strcmp(doc->line, doc->order[doc->index]))
 	{
-		doc->token = 1;
 		doc->index++;
+		if (size_2d(doc->order) - 1 == doc->index)
+			doc->token = 1;
 		free(doc->line);
 		doc->line = NULL;
 	}
