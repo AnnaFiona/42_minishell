@@ -87,9 +87,12 @@ int	ft_cd(t_data *data, t_child *kid, char *argv)
 	old_pwd = NULL;
 	if (chdir_error_msg(data, argv))
 		return (0);
-	path = ft_strdup(argv);
+	if(ft_strcmp(argv, "..") && ft_strchr(argv, '.') != NULL)
+		path = ft_cd_with_dot(argv, data->saved_pwd);
+	else
+		path = ft_strdup(argv);
 	old_pwd = ft_strdup(data->saved_pwd);
-	if (!(path[0] == '/') && ft_strcmp(path, ".."))
+	if (path && !(path[0] == '/') && ft_strcmp(path, ".."))
 		path = save_relative_path(old_pwd, path);
 	save_and_free(data, old_pwd, path);
 	return (0);

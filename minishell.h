@@ -82,6 +82,9 @@ typedef struct s_index_doc
 	int		cut_len;
 }			t_index_doc;
 
+//builtins_cd_dot.c
+char	*ft_cd_with_dot(char *argv, char *data_pwd);
+
 //builtins_cd_remove_end.c
 char	*remove_end(char *str, char c);
 int		remove_last_char(t_data *data, char *pwd, char *path);
