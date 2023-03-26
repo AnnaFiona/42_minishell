@@ -82,7 +82,11 @@ typedef struct s_index_doc
 	int		cut_len;
 }			t_index_doc;
 
+//builtins_cd_dot_utils.c
+char	*remove_dot_dot_slash(char **matrix);
+
 //builtins_cd_dot.c
+char	*ft_strmerge_free_s2(char *s1, char *s2);
 char	*ft_cd_with_dot(char *argv, char *data_pwd);
 
 //builtins_cd_remove_end.c

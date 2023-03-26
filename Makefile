@@ -3,7 +3,8 @@ PATH_B		= builtins/builtins
 PATH_C		= children/children
 PATH_G		= get_args/get_args
 PATH_H		= heredoc/heredoc
-BUILTINS	= $(PATH_B)_cd_dot.c \
+BUILTINS	= $(PATH_B)_cd_dot_utils.c \
+			$(PATH_B)_cd_dot.c \
 			$(PATH_B)_cd_remove_end.c \
 			$(PATH_B)_cd_save_pwd.c \
 			$(PATH_B)_cd_utils.c \

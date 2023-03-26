@@ -31,14 +31,14 @@ char	*ft_strmerge_free_s2(char *s1, char *s2)
 char	*remove_dot_slash(char **matrix)
 {
 	int		i;
-	int		not_first;
-	char	*path;
 	char	*tmp;
+	char	*path;
+	int		not_first;
 
 	i = 0;
 	tmp = NULL;
-	not_first = 0;
 	path = NULL;
+	not_first = 0;
 	while (matrix[i])
 	{
 		if (matrix[i] && ft_strcmp(matrix[i], "."))
@@ -49,11 +49,7 @@ char	*remove_dot_slash(char **matrix)
 				tmp = ft_strjoin("/", matrix[i]);
 			not_first = 1;
 			path = ft_strmerge(path, tmp);
-			if (tmp)
-			{
-				free(tmp);
-				tmp = NULL;
-			}
+			free(tmp);
 		}
 		i++;
 	}
@@ -72,59 +68,10 @@ char	*ft_join_and_remove_dots(char **matrix, char *path)
 	return (path);
 }
 
-int	how_many_returns(char **matrix, int i)
-{
-	int	back_count;
-
-	back_count = 0;
-	while (i >= 0)
-	{
-		if (!ft_strcmp(matrix[i], ".."))
-			back_count += 2;
-		else if (ft_strcmp(matrix[i], "."))
-			return (back_count);
-		i--;
-	}
-	return (back_count);
-}
-
-char	*remove_dot_dot_slash(char **matrix)
-{
-	int		len_matrix;
-	char	*path;
-	char	*tmp;
-
-	tmp = NULL;
-	path = NULL;
-	len_matrix = size_2d(matrix) - 1;
-	while (len_matrix >= 0)
-	{
-		len_matrix -= how_many_returns(matrix, len_matrix);
-		if (len_matrix < 0)
-		{
-			if (path && path[0] != '/')
-				path = ft_strmerge_free_s2("/", path);
-			return (path);
-		}
-		if (matrix[len_matrix] && ft_strcmp(matrix[len_matrix], ".."))
-		{
-			tmp = ft_strjoin("/", matrix[len_matrix]);
-			path = ft_strmerge_free_s2(tmp, path);
-			if (tmp)
-			{
-				free(tmp);
-				tmp = NULL;
-			}
-		}
-		len_matrix--;
-	}
-	return (path);
-}
-
 char	*ft_cd_with_dot(char *argv, char *data_pwd)
 {
-	char *path;
-	char **matrix;
+	char	*path;
+	char	**matrix;
 
 	path = NULL;
 	matrix = NULL;
