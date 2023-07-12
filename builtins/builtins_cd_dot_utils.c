@@ -34,9 +34,7 @@ char	*remove_dot_dot_slash(char **matrix)
 {
 	int		len_matrix;
 	char	*path;
-	char	*tmp;
 
-	tmp = NULL;
 	path = NULL;
 	len_matrix = size_2d(matrix) - 1;
 	while (len_matrix >= 0)

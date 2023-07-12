@@ -97,5 +97,6 @@ val: all
 		--track-origins=yes \
 		--verbose \
 		--log-file=valgrind-out.txt \
+		--suppressions=readline_ignore.txt \
 		./$(NAME)
 	code valgrind-out.txt

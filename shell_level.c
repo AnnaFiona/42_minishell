@@ -2,17 +2,12 @@
 
 static int	get_lvl(char *value)
 {
-	int	minus;
 	int	lvl;
 	int	x;
 
 	x = 0;
-	minus = 0;
 	if (value[0] == '-')
-	{
-		minus = 1;
 		x++;
-	}
 	while (value[x])
 	{
 		if (ft_isdigit(value[x]) == 0)

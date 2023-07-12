@@ -85,13 +85,9 @@ static void	is_order(t_here *doc)
 
 char	*make_heredoc_line(t_data *data, t_here *doc)
 {
-	int		len;
-	int		doc_exit_line;
 	char	*buf;
 	char	*line_nl;
 
-	len = 0;
-	doc_exit_line = 0;
 	buf = NULL;
 	line_nl = NULL;
 	while (start_stop(doc) != 0)

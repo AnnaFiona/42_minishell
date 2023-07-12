@@ -19,9 +19,6 @@ static void	is_dir(t_data *data, t_child *kid, char *cmd)
 
 char	*is_absolute_path(t_data *data, t_child *kid, char *cmd)
 {
-	char	*tmp;
-
-	tmp = NULL;
 	if (access(cmd, X_OK) != 0)
 		return (NULL);
 	is_dir(data, kid, cmd);
