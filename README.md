@@ -15,8 +15,8 @@ to create the executable. Now start the program by executing:
 
 ## Features
 - history (up/down arrows)
-- ' single quotes
-- " double quotes
+- ' (single quotes)
+- " (double quotes)
 - \> >> < << (redirections)
 - | (pipes)
 - environment variables
@@ -30,3 +30,9 @@ to create the executable. Now start the program by executing:
 - unset
 - env
 - exit
+
+## Contributors
+[AnnaFiona](https://github.com/AnnaFiona)
+
+[Nikola-Prljic](https://github.com/Nikola-Prljic)
+
